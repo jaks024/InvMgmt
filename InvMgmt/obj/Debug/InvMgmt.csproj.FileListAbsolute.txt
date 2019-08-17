@@ -1,0 +1,15 @@
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\InvMgmt.exe.config
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\InvMgmt.exe
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\InvMgmt.pdb
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csprojAssemblyReference.cache
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\MainWindow.g.cs
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\App.g.cs
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt_MarkupCompile.cache
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt_MarkupCompile.lref
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\MainWindow.baml
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.g.resources
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.Properties.Resources.resources
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.GenerateResource.cache
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.CoreCompileInputs.cache
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.exe
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.pdb
