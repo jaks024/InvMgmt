@@ -1,12 +1,49 @@
 ﻿<Window x:Class="InvMgmt.MainWindow"
+        xmlns:custns="clr-namespace:InvMgmt"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvMgmt"
         mc:Ignorable="d"
-        Title="InvMngt" Height="450" Width="800">
-    <Grid>
+        Title="InvMngt" Height="720" Width="1280">
+    <Window.Resources>
+        <DataTemplate x:Key="dtItem">
+            <StackPanel>
+                <TextBlock Name="tbId" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Name="tbName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Name="tbDescription" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Name="tbCategory" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Name="tbQuantity" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Name="tbPrice" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
         
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left">
+            <TabItem Header="TabItem" Height="50" Width="100">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="dgItemList" ItemTemplate="{StaticResource dtItem}" ItemsSource="{Binding Path=items}">
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem" Height="50" Width="100">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TabItem" Height="50" Width="100">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TabItem" Height="50" Width="100">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
