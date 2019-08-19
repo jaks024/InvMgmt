@@ -8,16 +8,18 @@ namespace InvMgmt
 {
     public class ItemViewModel : ViewModelBase
     {
-        private readonly Item item = new Item();
+        private Item item;
 
-        public ItemViewModel(int _id, string _name, string _desc, Category _cat, int _quantity, double _price)
+        public ItemViewModel() { }
+        public ItemViewModel(int _id, string _name, string _desc, CategoryViewModel _cat, int _quantity, double _price)
         {
-            item.Id = _id;
-            item.Name = _name;
-            item.Description = _desc;
-            item.Category = _cat;
-            item.Quantity = _quantity;
-            item.Price = _price;
+            item = new Item();
+            Id = _id;
+            Name = _name;
+            Description = _desc;
+            Category = _cat;
+            Quantity = _quantity;
+            Price = _price;
         }
 
         public int Id
@@ -42,7 +44,6 @@ namespace InvMgmt
                 {
                     item.Name = value;
                     NotifyPropertyChanged("Name");
-                    Console.WriteLine(item.Name);
                 }
             }
         }
@@ -60,14 +61,14 @@ namespace InvMgmt
             }
         }
 
-        public Category Category
+        public CategoryViewModel Category
         {
             get { return item.Category; }
             set
             {
-                if(item.Category != value)
+                if (item.Category != value)
                 {
-                    item.Category = Category;
+                    item.Category = value;
                     NotifyPropertyChanged("Category");
                 }
             }

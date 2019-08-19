@@ -29,10 +29,16 @@ namespace InvMgmt
 
             for (int i = 0; i < 20; i++)
             {
-                items.Add(new ItemViewModel(i, "Dark Maple Cabinet", "Dark maple color kitchen cabinet", new Category() { Id = i, Description = "des", Name="Cat " +i }, i * 2, i * 3.33));
+                items.Add(new ItemViewModel(i, "Dark Maple Cabinet", "Dark maple color kitchen cabinet", new CategoryViewModel(i, "des", "Cat " +i), i * 2, i * 3.33));
             }
+
             dgItemList.DataContext = this;
-            //dgItemList.ItemsSource = items;
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(items[dgItemList.SelectedIndex].Category.Id);
         }
     }
 }

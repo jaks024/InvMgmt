@@ -13,3 +13,4 @@ C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.CoreC
 C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.exe
 C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.pdb
 C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csprojAssemblyReference.cache
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\GeneratedInternalTypeHelper.g.cs
