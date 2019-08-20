@@ -11,7 +11,7 @@ namespace InvMgmt
     {
         private Category category;
 
-        public CategoryViewModel() { }
+        public CategoryViewModel() { category = new Category(); }
         public CategoryViewModel(int _id, string _name, string _desc)
         {
             category = new Category();
@@ -24,11 +24,10 @@ namespace InvMgmt
             get { return category.Id; }
             set
             {
-                if(category.Id != value)
-                {
-                    category.Id = value;
-                    NotifyPropertyChanged("Id");
-                }
+                if (category.Id == value)
+                    return;
+                category.Id = value;
+                NotifyPropertyChanged("Id");
             }
         }
         public string Name
@@ -36,11 +35,10 @@ namespace InvMgmt
             get { return category.Name; }
             set
             {
-                if (category.Name != value)
-                {
-                    category.Name = value;
-                    NotifyPropertyChanged("Name");
-                }
+                if (category.Name == value)
+                    return;
+                category.Name = value;
+                NotifyPropertyChanged("Name");
             }
         }
 
@@ -49,11 +47,10 @@ namespace InvMgmt
             get { return category.Description; }
             set
             {
-                if (category.Description != value)
-                {
-                    category.Description = value;
-                    NotifyPropertyChanged("Description");
-                }
+                if (category.Description == value)
+                    return;
+                category.Description = value;
+                NotifyPropertyChanged("Description");
             }
         }
         public ObservableCollection<ItemViewModel> Items
@@ -61,11 +58,10 @@ namespace InvMgmt
             get { return category.Items; }
             set
             {
-                if(category.Items != value)
-                {
-                    category.Items = value;
-                    NotifyPropertyChanged("Items");
-                }
+                if (category.Items == value)
+                    return;
+                category.Items = value;
+                NotifyPropertyChanged("Items");
             }
         }
         public void AddItem(ItemViewModel _item)

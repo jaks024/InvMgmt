@@ -10,8 +10,8 @@ namespace InvMgmt
     {
         private Item item;
 
-        public ItemViewModel() { }
-        public ItemViewModel(int _id, string _name, string _desc, CategoryViewModel _cat, int _quantity, double _price)
+        public ItemViewModel() { item = new Item(); }
+        public ItemViewModel(int _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, double _price, ItemDetailViewModel _detail)
         {
             item = new Item();
             Id = _id;
@@ -20,6 +20,7 @@ namespace InvMgmt
             Category = _cat;
             Quantity = _quantity;
             Price = _price;
+            Detail = _detail;
         }
 
         public int Id
@@ -27,11 +28,10 @@ namespace InvMgmt
             get { return item.Id; }
             set
             {
-                if (item.Id != value)
-                {
-                    item.Id = value;
-                    NotifyPropertyChanged("Id");
-                } 
+                if (item.Id == value)
+                    return;
+                item.Id = value;
+                NotifyPropertyChanged("Id");
             }
         }
 
@@ -40,11 +40,10 @@ namespace InvMgmt
             get { return item.Name; }
             set
             {
-                if(item.Name != value)
-                {
-                    item.Name = value;
-                    NotifyPropertyChanged("Name");
-                }
+                if (item.Name == value)
+                    return;
+                item.Name = value;
+                NotifyPropertyChanged("Name");
             }
         }
 
@@ -53,11 +52,10 @@ namespace InvMgmt
             get { return item.Description; }
             set
             {
-                if(item.Description != value)
-                {
-                    item.Description = value;
-                    NotifyPropertyChanged("Description");
-                }
+                if (item.Description == value)
+                    return;
+                item.Description = value;
+                NotifyPropertyChanged("Description");
             }
         }
 
@@ -66,24 +64,22 @@ namespace InvMgmt
             get { return item.Category; }
             set
             {
-                if (item.Category != value)
-                {
-                    item.Category = value;
-                    NotifyPropertyChanged("Category");
-                }
+                if (item.Category == value)
+                    return;
+                item.Category = value;
+                NotifyPropertyChanged("Category");
             }
         }
 
-        public int Quantity
+        public QuantityViewModel Quantity
         {
             get { return item.Quantity; }
             set
             {
-                if(item.Quantity != value)
-                {
-                    item.Quantity = value;
-                    NotifyPropertyChanged("Quantity");
-                }
+                if (item.Quantity == value)
+                    return;
+                item.Quantity = value;
+                NotifyPropertyChanged("Quantity");
             }
         }
 
@@ -92,11 +88,22 @@ namespace InvMgmt
             get { return item.Price; }
             set
             {
-                if(item.Price != value)
-                {
-                    item.Price = value;
-                    NotifyPropertyChanged("Price");
-                }
+                if (item.Price == value)
+                    return;
+                item.Price = value;
+                NotifyPropertyChanged("Price");
+            }
+        }
+
+        public ItemDetailViewModel Detail
+        {
+            get { return item.Detail; }
+            set
+            {
+                if (item.Detail == value)
+                    return;
+                item.Detail = value;
+                NotifyPropertyChanged("Detail");
             }
         }
     }

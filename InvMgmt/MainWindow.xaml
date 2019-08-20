@@ -34,28 +34,65 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Margin="5 5" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <ComboBox Width="100" />
+                        </StackPanel>
+                        
+                        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1">
                             <TextBox Name="tbItemSearch"
                                  Grid.Row="1" Width="225"/>
                             <Button Content="Search"
                                Margin="5 0" Width="50" />
                         </StackPanel>
 
-                        <StackPanel Margin="5 5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
+                        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
                             <TextBlock Text="Selected: 0" VerticalAlignment="Center" Margin="0"/>
                             <Button x:Name="btnDelete" Content="Delete" Margin="5 0" Width="50"/>
                         </StackPanel>
                     </Grid>
 
-                    <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Path=items}">
+                    <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
+                              ItemsSource="{Binding Path=items}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}"/>
-                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                            <DataGridTemplateColumn Header="Category">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox SelectedIndex="{Binding Category.Id}" Background="GhostWhite">
+                                            <ComboBoxItem Content="Cat 1"/>
+                                            <ComboBoxItem Content="Cat 2"/>
+                                            <ComboBoxItem Content="Cat 3"/>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Total Quantity" Binding="{Binding Quantity.Total}"/>
+                            <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today}"/>
+                            <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly}"/>
+                            <DataGridTextColumn Header="Used Monthly" Binding="{Binding Quantity.Monthly}"/>
                             <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
                         </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Margin="5 5 10 5" Text="{Binding Detail.Company, StringFormat='Company: {0}'}"/>
+                                    <TextBlock Margin="5 5 10 5" Grid.Row="1" Text="{Binding Detail.Phone, StringFormat='Phone: {0}'}"/>
+                                    <TextBlock Margin="5" Grid.Column="1" Text="{Binding Detail.Address, StringFormat='Address: {0}'}"/>
+                                    <TextBlock Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Date, StringFormat='Date: {0}'}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
                     </DataGrid>
                     <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Margin="10,570,0,0"/>
                 </Grid>

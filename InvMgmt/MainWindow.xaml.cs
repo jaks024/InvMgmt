@@ -29,7 +29,15 @@ namespace InvMgmt
 
             for (int i = 0; i < 20; i++)
             {
-                items.Add(new ItemViewModel(i, "Dark Maple Cabinet", "Dark maple color kitchen cabinet", new CategoryViewModel(i, "des", "Cat " +i), i * 2, i * 3.33));
+                items.Add(
+                    new ItemViewModel(
+                        i, 
+                        "Dark Maple Cabinet", 
+                        "Dark maple color kitchen cabinet", 
+                        new CategoryViewModel(0, "des", "Cat " +i), 
+                        new QuantityViewModel(i * 100, i * 2, i * 6, i*30), 
+                        i * 3.33,
+                        new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
 
             dgItemList.DataContext = this;
