@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         Title="InvMngt" Height="720" Width="1280">
 
+    
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -17,12 +19,40 @@
         <TabControl Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left">
             <TabItem Header="TabItem" Height="50" Width="100">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Path=items}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="5 5" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBox Name="tbItemSearch"
+                                 Grid.Row="1" Width="225"/>
+                            <Button Content="Search"
+                               Margin="5 0" Width="50" />
+                        </StackPanel>
+
+                        <StackPanel Margin="5 5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
+                            <TextBlock Text="Selected: 0" VerticalAlignment="Center" Margin="0"/>
+                            <Button x:Name="btnDelete" Content="Delete" Margin="5 0" Width="50"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Path=items}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Header="Category" Binding="{Binding Category.Id}"/>
+                            <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}"/>
                             <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
                             <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
                         </DataGrid.Columns>
