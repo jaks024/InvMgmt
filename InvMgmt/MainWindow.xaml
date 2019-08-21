@@ -43,7 +43,34 @@
                         <Label Grid.Row="3" Content="Category Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Grid.Row="4" Grid.ColumnSpan="2" Margin="5" />
                     </Grid>
-                    
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Add New Item"/>
+                        <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+                        
+                        <Label Grid.Row="1" Content="Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+
+                        <Label Grid.Row="1" Content="Description" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+
+                        <Label Grid.Row="1" Content="Price" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+                        <Label Grid.Row="1" Content="Price" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Height="35" Width="100">
@@ -101,11 +128,14 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Total Quantity" Binding="{Binding Quantity.Total}"/>
-                            <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today}"/>
-                            <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly}"/>
-                            <DataGridTextColumn Header="Used Monthly" Binding="{Binding Quantity.Monthly}"/>
-                            <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                            <DataGridTextColumn Header="Total Quantity" Binding="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Used Monthly" Binding="{Binding Quantity.Monthly, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Current Price" Binding="{Binding Price.CurrentPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Regular Price" Binding="{Binding Price.RegularPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Sale Price" Binding="{Binding Price.SalePrice, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridCheckBoxColumn Header="On Sale" Binding="{Binding Price.IsOnSale, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>

@@ -13,7 +13,7 @@ namespace InvMgmt
         public string Description;
         public CategoryViewModel Category;
         public QuantityViewModel Quantity;
-        public double Price;
+        public PriceViewModel Price;
         public ItemDetailViewModel Detail;
     }
 }

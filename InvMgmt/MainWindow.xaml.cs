@@ -36,7 +36,7 @@ namespace InvMgmt
                         "Dark maple color kitchen cabinet", 
                         new CategoryViewModel(0, "des", "Cat " +i), 
                         new QuantityViewModel(i * 100, i * 2, i * 6, i*30), 
-                        i * 3.33,
+                        new PriceViewModel(i * 5, i * 6, i * 3),
                         new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
 

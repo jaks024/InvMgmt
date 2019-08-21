@@ -60,6 +60,8 @@
     <Compile Include="CategoryViewModel.cs" />
     <Compile Include="ItemDetail.cs" />
     <Compile Include="ItemDetailViewModel.cs" />
+    <Compile Include="Price.cs" />
+    <Compile Include="PriceViewModel.cs" />
     <Compile Include="Quantity.cs" />
     <Compile Include="QuantityViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />

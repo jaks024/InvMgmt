@@ -11,7 +11,7 @@ namespace InvMgmt
         private Item item;
 
         public ItemViewModel() { item = new Item(); }
-        public ItemViewModel(int _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, double _price, ItemDetailViewModel _detail)
+        public ItemViewModel(int _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
         {
             item = new Item();
             Id = _id;
@@ -83,7 +83,7 @@ namespace InvMgmt
             }
         }
 
-        public double Price
+        public PriceViewModel Price
         {
             get { return item.Price; }
             set
