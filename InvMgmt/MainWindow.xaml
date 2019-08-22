@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="InvMngt" Height="720" Width="1280">
 
-    
-    
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -20,6 +20,7 @@
             <TabItem Header="Add" Height="35" Width="100">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
@@ -34,16 +35,23 @@
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
                         </Grid.RowDefinitions>
                         <Label Content="Add New Category"/>
                         <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Grid.Row="2" Margin="5" Width="100"/>
                         <Label Grid.Row="1" Grid.Column="1" Content="Category Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
-                        <Label Grid.Row="3" Content="Category Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <Label Grid.Row="3" Content="Description" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Grid.Row="4" Grid.ColumnSpan="2" Margin="5" />
+
+                        <Button Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"/>
+                        <Button Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Right" Content="Submit" Margin="5"/>
                     </Grid>
-                    <Grid Grid.Column="1">
+                    
+                    <Rectangle Grid.Column="1" Width="1" VerticalAlignment="Stretch" Fill="LightSlateGray"/>
+                    
+                    <Grid Grid.Column="2" Background="GhostWhite">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -54,54 +62,60 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
                             <RowDefinition Height="35"/>
                         </Grid.RowDefinitions>
                         <Label Content="Add New Item" Margin="5 0 0 0"/>
-                        <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <TextBox Grid.Row="2" Margin="5" Width="100"/>
-                        
-                        <Label Grid.Row="1" Grid.Column="1" Content="Name" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+
+                        <Label Grid.Row="1" Grid.Column="1" Content="Name" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Width="100"/>
 
-                        <Label Grid.Row="1" Grid.Column="2" Content="Category" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <Label Grid.Row="1" Grid.Column="2" Content="Category" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <ComboBox Grid.Row="2" Grid.Column="2" Margin="5" Width="100"/>
-                        
-                        <Label Grid.Row="1" Grid.Column="3" Content="Description" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True"/>
+
+                        <Label Grid.Row="1" Grid.Column="3" Content="Description" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
 
 
-                        <Label Grid.Row="3" Content="Quantity Info" Margin="5 0 0 0"/>
-                        <Label Grid.Row="4" Content="Total In Stock" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="5" Margin="5" Width="100"/>
+                        <Label Grid.Row="4" Content="Quantity Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="5" Content="Total In Stock" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="6" Margin="5" Width="100"/>
 
-                        <Label Grid.Row="3" Grid.Column="1" Content="Price Info" Margin="5 0 0 0"/>
-                        <Label Grid.Row="4" Grid.Column="1" Content="Regular Price" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" Margin="5" Width="100"/>
-                        
-                        <Label Grid.Row="4" Grid.Column="2" Content="Sale Price" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="5" Grid.Column="2" Margin="5" Width="100"/>
-                        
-                        <Label Grid.Row="4" Grid.Column="3" Content="Is On Sale" Margin="5 0 0 0"/>
-                        <CheckBox Grid.Row="5" Grid.Column="3" Margin="5" Width="20" HorizontalAlignment="Left"/>
+                        <Label Grid.Row="4" Grid.Column="1" Content="Price Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="5" Grid.Column="1" Content="Regular Price" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" Margin="5" Width="100"/>
 
-                        
-                        <Label Grid.Row="6" Content="Other Info" Margin="5 0 0 0"/>
-                        <Label Grid.Row="7" Content="Company" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="8" Margin="5" Width="100"/>
-                        
-                        <Label Grid.Row="7" Grid.Column="1" Content="Address" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="8" Grid.Column="1" Margin="5" Width="100"/>
+                        <Label Grid.Row="5" Grid.Column="2" Content="Sale Price" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Width="100"/>
 
-                        <Label Grid.Row="7" Grid.Column="2" Content="Phone" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="8" Grid.Column="2" Margin="5" Width="100"/>
+                        <Label Grid.Row="5" Grid.Column="3" Content="Is On Sale" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <CheckBox Grid.Row="6" Grid.Column="3" Margin="5" Width="20" HorizontalAlignment="Left"/>
 
-                        <Label Grid.Row="7" Grid.Column="3" Content="Date" Margin="5 0 0 0"/>
-                        <DatePicker Grid.Row="8" Grid.Column="3" Margin="5" Width="150" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="7" Content="Other Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="8" Content="Company" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="9" Margin="5" Width="100"/>
+
+                        <Label Grid.Row="8" Grid.Column="1" Content="Phone" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="9" Grid.Column="1" Margin="5" Width="100"/>
+
+                        <Label Grid.Row="8" Grid.Column="3" Content="Address" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="9" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
+                        <Label Grid.Row="8" Grid.Column="2" Content="Date" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <DatePicker Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" HorizontalAlignment="Left"/>
+
+                        <Button Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"/>
+                        <Button Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Right" Content="Submit" Margin="5"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -125,7 +139,7 @@
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
                             <ComboBox Width="100" Name="cmbSortByCategory"/>
                         </StackPanel>
-                        
+
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1">
                             <TextBox Name="tbItemSearch"
                                  Grid.Row="1" Width="225"/>
@@ -136,7 +150,7 @@
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2">
                             <ComboBox Width="100" Name="cmbChangeItemCategory" />
                         </StackPanel>
-                        
+
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
                             <TextBlock Text="Selected: 0" VerticalAlignment="Center" Margin="0"/>
                             <Button x:Name="btnDelete" Content="Delete" Margin="5 0" Width="50"/>
