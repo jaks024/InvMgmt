@@ -22,7 +22,7 @@ namespace InvMgmt
     public partial class MainWindow : Window
     {
         public ObservableCollection<ItemViewModel> items { get; } = new ObservableCollection<ItemViewModel>();
-
+        public FormViewModel form { get; } = new FormViewModel();
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace InvMgmt
                         new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
 
-            dgItemList.DataContext = this;
+           dgItemList.DataContext = this;
 
         }
 

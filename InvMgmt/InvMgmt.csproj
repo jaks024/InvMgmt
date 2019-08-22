@@ -58,6 +58,7 @@
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CategoryManagerViewModel.cs" />
     <Compile Include="CategoryViewModel.cs" />
+    <Compile Include="FormViewModel.cs" />
     <Compile Include="ItemDetail.cs" />
     <Compile Include="ItemDetailViewModel.cs" />
     <Compile Include="Price.cs" />

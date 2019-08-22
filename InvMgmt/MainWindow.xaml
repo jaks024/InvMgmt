@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         Title="InvMngt" Height="720" Width="1280">
 
-
+    <Window.Resources>
+        <local:FormViewModel x:Key="Form"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +26,8 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Background="WhiteSmoke">
+                    
+                    <Grid Background="WhiteSmoke" DataContext="{StaticResource Form}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -37,13 +40,17 @@
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="35"/>
                         </Grid.RowDefinitions>
+                        
                         <Label Content="Add New Category"/>
+                        
                         <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+                        <TextBox Text="{Binding SetId, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="5" Width="100"/>
+                        
                         <Label Grid.Row="1" Grid.Column="1" Content="Category Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
+                        <TextBox Text="{Binding SetName, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatName" Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
+                        
                         <Label Grid.Row="3" Content="Description" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
-                        <TextBox Grid.Row="4" Grid.ColumnSpan="2" Margin="5" />
+                        <TextBox Text="{Binding SetDescription, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatDesc" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" />
 
                         <Button Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"/>
                         <Button Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Right" Content="Submit" Margin="5"/>
@@ -97,9 +104,14 @@
                         <Label Grid.Row="5" Grid.Column="2" Content="Sale Price" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Width="100"/>
 
-                        <Label Grid.Row="5" Grid.Column="3" Content="Is On Sale" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <CheckBox Grid.Row="6" Grid.Column="3" Margin="5" Width="20" HorizontalAlignment="Left"/>
-
+                        <StackPanel Grid.Row="5" Grid.Column="3" Orientation="Horizontal">
+                            <Label Content="Sale Price" Width="100" Margin="5 0 0 0" VerticalAlignment="Bottom" />
+                            <Label Content="Is On Sale" Margin="5 0 0 0" VerticalAlignment="Bottom" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="6" Grid.Column="3" Orientation="Horizontal">
+                            <TextBox Margin="5" Width="100" HorizontalAlignment="Left"/>
+                            <CheckBox Margin="5" Width="20" HorizontalAlignment="Right"/>
+                        </StackPanel>
 
                         <Label Grid.Row="7" Content="Other Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <Label Grid.Row="8" Content="Company" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
