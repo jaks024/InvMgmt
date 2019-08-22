@@ -12,5 +12,7 @@ namespace InvMgmt
         public int usedToday;
         public int usedWeekly;
         public int usedMonthly;
+        public int usedAnnually;
+        public int usedTotal;
     }
 }

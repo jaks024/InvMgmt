@@ -67,5 +67,17 @@ namespace InvMgmt
                 NotifyPropertyChanged("Monthly");
             }
         }
+
+        public int Annually
+        {
+            get { return quantity.usedAnnually; }
+            set
+            {
+                if (quantity.usedAnnually == value)
+                    return;
+                quantity.usedAnnually = value;
+                NotifyPropertyChanged("Annually");
+            }
+        }
     }
 }
