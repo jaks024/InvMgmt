@@ -12,9 +12,10 @@ namespace InvMgmt
         public FormViewModel()
         {
             category = new CategoryViewModel();
+            NotifyPropertyChanged();
         }
 
-        public int SetId
+        public string Id
         {
             get { return category.Id; }
             set
@@ -22,12 +23,12 @@ namespace InvMgmt
                 if (category.Id == value)
                     return;
                 category.Id = value;
-                NotifyPropertyChanged("SetId");
+                NotifyPropertyChanged("Id");
                 Console.WriteLine(category.Id);
             }
         }
 
-        public string SetName
+        public string Name
         {
             get { return category.Name; }
             set
@@ -35,12 +36,12 @@ namespace InvMgmt
                 if (string.Equals(category.Name, value))
                     return;
                 category.Name = value;
-                NotifyPropertyChanged("SetName");
+                NotifyPropertyChanged("Name");
                 Console.WriteLine(category.Name);
             }
         }
 
-        public string SetDescription
+        public string Description
         {
             get { return category.Description; }
             set
@@ -48,9 +49,37 @@ namespace InvMgmt
                 if (string.Equals(category.Description, value))
                     return;
                 category.Description = value;
-                NotifyPropertyChanged("SetDescription");
+                NotifyPropertyChanged("Description");
                 Console.WriteLine(category.Description);
             }
+        }
+        
+        public CategoryViewModel GetCategory
+        {
+            get { return category; }
+        }
+
+        public void Reset()
+        {
+            category = new CategoryViewModel();
+            NotifyPropertyChanged("Id");
+            NotifyPropertyChanged("Name");
+            NotifyPropertyChanged("Description");
+        }
+
+        public bool IsAllFieldFull()
+        {
+            return !string.IsNullOrWhiteSpace(Id) && !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Description) ? true : false;
+        }
+
+        public bool IsOneFieldFilled()
+        {
+            return !string.IsNullOrWhiteSpace(Id) || !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(Description) ? true : false;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Id: {0},  Name: {1},  Desc: {2}", Id, Name, Description);
         }
     }
 }

@@ -22,7 +22,9 @@ namespace InvMgmt
     public partial class MainWindow : Window
     {
         public ObservableCollection<ItemViewModel> items { get; } = new ObservableCollection<ItemViewModel>();
-        public FormViewModel form { get; } = new FormViewModel();
+        public FormViewModel form { get; set; } = new FormViewModel();
+
+        public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
         public MainWindow()
         {
             InitializeComponent();
@@ -31,22 +33,37 @@ namespace InvMgmt
             {
                 items.Add(
                     new ItemViewModel(
-                        i, 
+                        i.ToString(), 
                         "Dark Maple Cabinet", 
                         "Dark maple color kitchen cabinet", 
-                        new CategoryViewModel(0, "des", "Cat " +i), 
+                        new CategoryViewModel("0", "des", "Cat " +i), 
                         new QuantityViewModel(i * 100, i * 2, i * 6, i*30), 
                         new PriceViewModel(i * 5, i * 6, i * 3),
                         new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
 
-           dgItemList.DataContext = this;
-
+            dgItemList.DataContext = this;
+            gridNewCat.DataContext = form;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(items[dgItemList.SelectedIndex].Category.Id);
+        }
+
+        private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
+        {
+            if (!form.IsAllFieldFull())
+                return;
+            categoryManager.AddCategoryToList(form.GetCategory);
+            form.Reset();
+        }
+
+        private void BtnClearNewCat_Click(object sender, RoutedEventArgs e)
+        {
+            if (!form.IsOneFieldFilled())
+                return;
+            form.Reset();
         }
     }
 }

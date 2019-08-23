@@ -9,7 +9,7 @@ namespace InvMgmt
 {
     public class Category
     {
-        public int Id;
+        public string Id;
         public string Name;
         public string Description;
         public ObservableCollection<ItemViewModel> Items;

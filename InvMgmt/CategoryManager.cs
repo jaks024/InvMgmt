@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace InvMgmt
 {
-    class CategoryManager
+    public class CategoryManager
     {
-        public ObservableCollection<CategoryViewModel> Categories { get; } = new ObservableCollection<CategoryViewModel>();
+        public ObservableCollection<CategoryViewModel> Categories = new ObservableCollection<CategoryViewModel>();
         public int currentCategoryIndex = 0;
-
-        public void AddNewCategory(CategoryViewModel _cat)
-        {
-            Categories.Add(_cat);
-        }
     }
 }

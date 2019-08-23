@@ -12,14 +12,14 @@ namespace InvMgmt
         private Category category;
 
         public CategoryViewModel() { category = new Category(); }
-        public CategoryViewModel(int _id, string _name, string _desc)
+        public CategoryViewModel(string _id, string _name, string _desc)
         {
             category = new Category();
             Id = _id;
             Name = _name;
             Description = _desc;
         }
-        public int Id
+        public string Id
         {
             get { return category.Id; }
             set
@@ -71,7 +71,7 @@ namespace InvMgmt
 
         public override string ToString()
         {
-            return Id + ": " + Name;
+            return string.Format("Id: {0},  Name: {1},  Desc: {2}", Id, Name, Description);
         }
     }
 }
