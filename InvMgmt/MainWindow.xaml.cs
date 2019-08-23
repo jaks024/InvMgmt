@@ -23,7 +23,7 @@ namespace InvMgmt
     {
         public ObservableCollection<ItemViewModel> items { get; } = new ObservableCollection<ItemViewModel>();
         public FormViewModel form { get; set; } = new FormViewModel();
-
+        public ItemFormViewModel itemForm { get; set; } = new ItemFormViewModel();
         public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
         public MainWindow()
         {
@@ -44,6 +44,9 @@ namespace InvMgmt
 
             dgItemList.DataContext = this;
             gridNewCat.DataContext = form;
+            gridNewItem.DataContext = itemForm;
+            gridExistingCat.DataContext = categoryManager;
+            cbNewItemCategory.DataContext = categoryManager;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,6 +67,23 @@ namespace InvMgmt
             if (!form.IsOneFieldFilled())
                 return;
             form.Reset();
+        }
+
+        private void BtnRemoveExistingCat_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgExistingCat.SelectedItem == null)
+                return;
+            categoryManager.RemoveCategoryFromList((CategoryViewModel)dgExistingCat.SelectedItem);
+        }
+
+        private void BtnSubmitNewItem_Click(object sender, RoutedEventArgs e)
+        {
+            categoryManager.AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem, itemForm);
+        }
+
+        private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
+        {
+            itemForm.Reset();
         }
     }
 }

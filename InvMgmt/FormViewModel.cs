@@ -12,7 +12,6 @@ namespace InvMgmt
         public FormViewModel()
         {
             category = new CategoryViewModel();
-            NotifyPropertyChanged();
         }
 
         public string Id
@@ -62,9 +61,7 @@ namespace InvMgmt
         public void Reset()
         {
             category = new CategoryViewModel();
-            NotifyPropertyChanged("Id");
-            NotifyPropertyChanged("Name");
-            NotifyPropertyChanged("Description");
+            NotifyPropertyChanged("");
         }
 
         public bool IsAllFieldFull()

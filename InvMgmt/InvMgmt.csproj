@@ -61,6 +61,7 @@
     <Compile Include="FormViewModel.cs" />
     <Compile Include="ItemDetail.cs" />
     <Compile Include="ItemDetailViewModel.cs" />
+    <Compile Include="ItemFormViewModel.cs" />
     <Compile Include="Price.cs" />
     <Compile Include="PriceViewModel.cs" />
     <Compile Include="Quantity.cs" />

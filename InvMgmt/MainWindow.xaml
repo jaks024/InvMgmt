@@ -11,7 +11,6 @@
     <Window.Resources>
         <local:FormViewModel x:Key="Form"/>
     </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -26,11 +25,11 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Grid Name="gridNewCat" Background="WhiteSmoke">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="210"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
@@ -39,28 +38,58 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="35"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        
+
                         <Label Content="Add New Category"/>
-                        
+
                         <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="5" Width="100"/>
-                        
+
                         <Label Grid.Row="1" Grid.Column="1" Content="Category Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatName" Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
-                        
+
                         <Label Grid.Row="3" Content="Description" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
-                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatDesc" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" />
+                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatDesc" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Width="310"/>
 
                         <Button Name="btnClearNewCat" Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"
                                 Click="BtnClearNewCat_Click"/>
                         <Button Name="btnSubmitNewCat" Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Right" Content="Submit" Margin="5"
                                 Click="BtnSubmitNewCat_Click"/>
+
+                        <Grid Name="gridExistingCat" Grid.Row="7" Grid.ColumnSpan="2" Margin="0 0 0 5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Existing Categories" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                            <DataGrid Name="dgExistingCat" Grid.Row="1" Margin="5" ItemsSource="{Binding Categories}" SelectionMode="Single"
+                                    AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridTextColumn Header="Item Count" Binding="{Binding ItemCount, Mode=OneWay}"/>
+                                </DataGrid.Columns>
+                                <DataGrid.RowDetailsTemplate>
+                                    <DataTemplate>
+                                        <TextBox Margin="5 0" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                                    </DataTemplate>
+                                </DataGrid.RowDetailsTemplate>
+                            </DataGrid>
+                            <TextBlock Name="tbCatCount" Grid.Row="2" Text="{Binding CategoryCount, StringFormat='Categories: {0}', Mode=OneWay}" VerticalAlignment="Center" Margin="5 0 0 0" Width="100" HorizontalAlignment="Left"/>
+                            <Button Name="btnRemoveExistingCat" Grid.Row="2" Width="95" HorizontalAlignment="Right" Content="Delete" Margin="5"
+                                Click="BtnRemoveExistingCat_Click"/>
+                        </Grid>
+
                     </Grid>
-                    
+
                     <Rectangle Grid.Column="1" Width="1" VerticalAlignment="Stretch" Fill="LightSlateGray"/>
-                    
-                    <Grid Grid.Column="2" Background="GhostWhite">
+
+                    <Grid Name="gridNewItem" Grid.Column="2" Background="GhostWhite">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -83,53 +112,74 @@
                         </Grid.RowDefinitions>
                         <Label Content="Add New Item" Margin="5 0 0 0"/>
                         <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="2" Margin="5" Width="100"/>
+                        <TextBox Grid.Row="2" Margin="5" Width="100" 
+                                 Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="1" Grid.Column="1" Content="Name" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Width="100"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Width="100" 
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="1" Grid.Column="2" Content="Category" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <ComboBox Grid.Row="2" Grid.Column="2" Margin="5" Width="100"/>
+                        <ComboBox Grid.Row="2" Grid.Column="2" Margin="5" Width="100" 
+                                  Name="cbNewItemCategory" ItemsSource="{Binding Categories}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
                         <Label Grid.Row="1" Grid.Column="3" Content="Description" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                        <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" 
+                                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                         <Label Grid.Row="4" Content="Quantity Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <Label Grid.Row="5" Content="Total In Stock" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="6" Margin="5" Width="100"/>
+                        <TextBox Grid.Row="6" Margin="5" Width="100" 
+                                 Text="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="4" Grid.Column="1" Content="Price Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <Label Grid.Row="5" Grid.Column="1" Content="Regular Price" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="6" Grid.Column="1" Margin="5" Width="100"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" Margin="5" Width="100" 
+                                 Text="{Binding Price.RegularPrice, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="5" Grid.Column="2" Content="Sale Price" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Width="100"/>
+                        <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Width="100" 
+                                 Text="{Binding Price.SalePrice, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <StackPanel Grid.Row="5" Grid.Column="3" Orientation="Horizontal">
-                            <Label Content="Sale Price" Width="100" Margin="5 0 0 0" VerticalAlignment="Bottom" />
+                            <Label Content="Current Price" Width="100" Margin="5 0 0 0" VerticalAlignment="Bottom" />
                             <Label Content="Is On Sale" Margin="5 0 0 0" VerticalAlignment="Bottom" />
                         </StackPanel>
                         <StackPanel Grid.Row="6" Grid.Column="3" Orientation="Horizontal">
-                            <TextBox Margin="5" Width="100" HorizontalAlignment="Left"/>
-                            <CheckBox Margin="5" Width="20" HorizontalAlignment="Right"/>
+                            <TextBox Margin="5" Width="100" HorizontalAlignment="Left" 
+                                     Text="{Binding Price.CurrentPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                            <CheckBox Margin="5" Width="20" HorizontalAlignment="Right" 
+                                      IsChecked="{Binding Price.IsOnSale, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
 
                         <Label Grid.Row="7" Content="Other Info" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <Label Grid.Row="8" Content="Company" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="9" Margin="5" Width="100"/>
+                        <TextBox Grid.Row="9" Margin="5" Width="100"
+                                 Text="{Binding Detail.Company, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="8" Grid.Column="1" Content="Phone" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="9" Grid.Column="1" Margin="5" Width="100"/>
-
-                        <Label Grid.Row="8" Grid.Column="3" Content="Address" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="9" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                        <TextBox Grid.Row="9" Grid.Column="1" Margin="5" Width="100" 
+                                 Text="{Binding Detail.Phone, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="8" Grid.Column="2" Content="Date" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <DatePicker Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" HorizontalAlignment="Left"/>
+                        <DatePicker Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" HorizontalAlignment="Left" 
+                                    Text="{Binding Detail.Date, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Button Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"/>
-                        <Button Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Right" Content="Submit" Margin="5"/>
+                        <Label Grid.Row="8" Grid.Column="3" Content="Address" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="9" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" 
+                                 Text="{Binding Detail.Address, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button Name="btnClearNewItem" Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"
+                                Click="BtnClearNewItem_Click"/>
+                        <Button Name="btnSubmitNewItem" Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Right" Content="Submit" Margin="5"
+                                Click="BtnSubmitNewItem_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -172,9 +222,9 @@
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
-                              ItemsSource="{Binding Path=items}">
+                              ItemsSource="{Binding items}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                             <DataGridTemplateColumn Header="Category">

@@ -9,7 +9,17 @@ namespace InvMgmt
     public class ItemViewModel : ViewModelBase
     {
         private Item item;
-
+        public Item Item
+        {
+            get { return item; }
+            set
+            {
+                if (item == value)
+                    return;
+                item = value;
+                NotifyPropertyChanged("");
+            }
+        }
         public ItemViewModel() { item = new Item(); }
         public ItemViewModel(string _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
         {
@@ -32,6 +42,7 @@ namespace InvMgmt
                     return;
                 item.Id = value;
                 NotifyPropertyChanged("Id");
+                Console.WriteLine(item.Id);
             }
         }
 

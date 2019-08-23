@@ -29,6 +29,9 @@ namespace InvMgmt
             }
         }
 
+        private int categoryCount = 0;
+        public int CategoryCount { get { return categoryCount; } set { categoryCount = value; NotifyPropertyChanged("CategoryCount"); } }
+
         public int CurrentCategoryIndex
         {
             get { return manager.currentCategoryIndex; }
@@ -44,9 +47,29 @@ namespace InvMgmt
         public void AddCategoryToList(CategoryViewModel _cat)
         {
             Categories.Add(_cat);
+            UpdateCategoryCount();
             Console.WriteLine("added: " + manager.Categories.Count);
             foreach (CategoryViewModel c in manager.Categories)
                 Console.WriteLine(c.ToString());
+
+        }
+
+        public void RemoveCategoryFromList(CategoryViewModel _cat)
+        {
+            Categories.Remove(_cat);
+            UpdateCategoryCount();
+            Console.WriteLine("remove: " + manager.Categories.Count);
+            foreach (CategoryViewModel c in manager.Categories)
+                Console.WriteLine(c.ToString());
+        }
+
+        public void AddNewItemToCategory(CategoryViewModel _cat, ItemViewModel _item)
+        {
+            Categories[Categories.IndexOf(_cat)].AddItem(_item);
+        }
+        private void UpdateCategoryCount()
+        {
+            CategoryCount = Categories.Count;
         }
     }
 }

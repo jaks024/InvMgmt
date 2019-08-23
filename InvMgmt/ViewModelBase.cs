@@ -16,5 +16,7 @@ namespace InvMgmt
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        //public abstract bool IsAllFieldEmpty();
     }
 }

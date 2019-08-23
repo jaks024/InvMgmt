@@ -12,7 +12,7 @@ namespace InvMgmt
         public string Id;
         public string Name;
         public string Description;
-        public ObservableCollection<ItemViewModel> Items;
+        public ObservableCollection<ItemViewModel> Items = new ObservableCollection<ItemViewModel>();
 
     }
 }

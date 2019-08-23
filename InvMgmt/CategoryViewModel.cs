@@ -39,6 +39,7 @@ namespace InvMgmt
                     return;
                 category.Name = value;
                 NotifyPropertyChanged("Name");
+                Console.WriteLine(category.Name);
             }
         }
 
@@ -64,6 +65,8 @@ namespace InvMgmt
                 NotifyPropertyChanged("Items");
             }
         }
+        public string ItemCount { get { return Items.Count.ToString(); } }
+
         public void AddItem(ItemViewModel _item)
         {
             category.Items.Add(_item);
