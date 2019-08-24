@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -120,6 +121,36 @@ namespace InvMgmt
         private void CmbSortByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dgItemList.Items.Refresh();
+        }
+
+        private static readonly Regex _regex = new Regex("[^0-9.-]+");
+        public bool IntValidationAllow(string y)
+        {
+            if (!_regex.IsMatch(y))
+            {
+                int ignore;
+                if (int.TryParse(y, out ignore))
+                    return true;
+                return false;
+            }
+            return false;
+        }
+        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IntValidationAllow(e.Text);
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Back || e.Key == Key.Delete)
+            {
+                if (((TextBox)sender).Text.Length == 1)
+                {
+                    ((TextBox)sender).Text = "0";
+                    ((TextBox)sender).SelectionStart = 1;
+                    e.Handled = true;
+                }
+            }
         }
     }
 }

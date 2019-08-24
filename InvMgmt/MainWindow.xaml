@@ -12,6 +12,22 @@
         <DataTemplate x:Key="cbCategoryTemplate">
             <TextBlock Text="{Binding Name}"/>
         </DataTemplate>
+        <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                        <Viewbox Height="250"
+                         Width="250">
+                            <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -223,35 +239,53 @@
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
                               ItemsSource="{Binding Items}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Category" Binding="{Binding Category.Name, Mode=OneWay}"/>
-                            <DataGridTextColumn Header="Total Quantity" Binding="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Used Monthly" Binding="{Binding Quantity.Monthly, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Current Price" Binding="{Binding Price.CurrentPrice, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Regular Price" Binding="{Binding Price.RegularPrice, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Sale Price" Binding="{Binding Price.SalePrice, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridCheckBoxColumn Header="On Sale" Binding="{Binding Price.IsOnSale, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTemplateColumn Header="Total Quantity">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxLength="7" PreviewTextInput="NumberOnly_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Used Monthly" Binding="{Binding Quantity.Monthly, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Current Price" Binding="{Binding Price.CurrentPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Regular Price" Binding="{Binding Price.RegularPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Sale Price" Binding="{Binding Price.SalePrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridCheckBoxColumn Header="On Sale" Binding="{Binding Price.IsOnSale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="75"/>
+                                        <ColumnDefinition Width="auto" MinWidth="100"/>
+                                        <ColumnDefinition Width="75"/>
+                                        <ColumnDefinition Width="auto" MinWidth="100"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="25"/>
-                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="20"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Margin="5 5 10 5" Text="{Binding Detail.Company, StringFormat='Company: {0}'}"/>
-                                    <TextBlock Margin="5 5 10 5" Grid.Row="1" Text="{Binding Detail.Phone, StringFormat='Phone: {0}'}"/>
-                                    <TextBlock Margin="5" Grid.Column="1" Text="{Binding Detail.Address, StringFormat='Address: {0}'}"/>
-                                    <TextBlock Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Date, StringFormat='Date: {0}'}"/>
+                                    <TextBlock Text="Company: " Margin="5 0"/>
+                                    <TextBox Margin="5 0" Grid.Column="1" Text="{Binding Detail.Company, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                                   
+                                    <TextBlock Text="Address: " Grid.Row="1" Margin="5 0"/>
+                                    <TextBox Margin="5 0" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Address, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                                    <TextBlock Text="Phone: " Grid.Column="2" Margin="5 0"/>
+                                    <TextBox Margin="5 0" Grid.Column="3" Text="{Binding Detail.Phone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    
+                                    <TextBlock Text="Date: " Grid.Row="1" Grid.Column="2" Margin="5 0"/>
+                                    <Viewbox Margin="5 0" Grid.Row="1" Grid.Column="3">
+                                        <DatePicker  Focusable="False" FontSize="14" CalendarStyle="{StaticResource styleCalendar}" Text="{Binding Detail.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    </Viewbox>
                                 </Grid>
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
