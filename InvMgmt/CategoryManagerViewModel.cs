@@ -34,10 +34,7 @@ namespace InvMgmt
             get
             {
                 if (IsCategoryEmpty)
-                {
                     return null;
-                }
-                Console.WriteLine("get: " + manager.Categories[CurrentCategoryIndex].Items[0].ToString());
                 return manager.Categories[CurrentCategoryIndex].Items;
             }
         }
@@ -55,6 +52,7 @@ namespace InvMgmt
                     return;
                 manager.currentCategoryIndex = value;
                 NotifyPropertyChanged("CurrentCategoryIndex");
+                NotifyPropertyChanged("Items");
             }
         }
 
@@ -62,27 +60,19 @@ namespace InvMgmt
         {
             Categories.Add(_cat);
             UpdateCategoryCount();
-            Console.WriteLine("added: " + manager.Categories.Count);
-            foreach (CategoryViewModel c in manager.Categories)
-                Console.WriteLine(c.ToString());
-
         }
 
         public void RemoveCategoryFromList(CategoryViewModel _cat)
         {
             Categories.Remove(_cat);
             UpdateCategoryCount();
-            Console.WriteLine("remove: " + manager.Categories.Count);
-            foreach (CategoryViewModel c in manager.Categories)
-                Console.WriteLine(c.ToString());
         }
 
         public void AddNewItemToCategory(CategoryViewModel _cat, ItemViewModel _item)
         {
+            _item.Category = _cat;
             Categories[Categories.IndexOf(_cat)].AddItem(_item);
             NotifyPropertyChanged("Items");
-            //Console.WriteLine("added: " + _item.ToString());
-           // Console.WriteLine("added to list: " + Categories[CurrentCategoryIndex].Items[0].ToString());
         }
         private void UpdateCategoryCount()
         {

@@ -9,7 +9,6 @@
         Title="InvMngt" Height="720" Width="1280">
 
     <Window.Resources>
-        <local:FormViewModel x:Key="Form"/>
         <DataTemplate x:Key="cbCategoryTemplate">
             <TextBlock Text="{Binding Name}"/>
         </DataTemplate>
@@ -46,13 +45,13 @@
 
                         <Label Content="Add New Category"/>
 
-                        <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <Label Grid.Row="1" Content="ID *" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="5" Width="100"/>
 
-                        <Label Grid.Row="1" Grid.Column="1" Content="Category Name" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <Label Grid.Row="1" Grid.Column="1" Content="Category Name *" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatName" Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
 
-                        <Label Grid.Row="3" Content="Description" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                        <Label Grid.Row="3" Content="Description *" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                         <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Name="tbNewCatDesc" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Width="310"/>
 
                         <Button Name="btnClearNewCat" Grid.Row="5" Grid.Column="1" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"
@@ -114,20 +113,20 @@
                             <RowDefinition Height="35"/>
                         </Grid.RowDefinitions>
                         <Label Content="Add New Item" Margin="5 0 0 0"/>
-                        <Label Grid.Row="1" Content="ID" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="1" Content="ID *" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <TextBox Grid.Row="2" Margin="5" Width="100" 
                                  Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Label Grid.Row="1" Grid.Column="1" Content="Name" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="1" Grid.Column="1" Content="Name *" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Width="100" 
                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Label Grid.Row="1" Grid.Column="2" Content="Category" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="1" Grid.Column="2" Content="Category *" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <ComboBox Grid.Row="2" Grid.Column="2" Margin="5" Width="100" 
                                   Name="cbNewItemCategory" ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource cbCategoryTemplate}">
                         </ComboBox>
 
-                        <Label Grid.Row="1" Grid.Column="3" Content="Description" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <Label Grid.Row="1" Grid.Column="3" Content="Description *" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" 
                                  Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -227,7 +226,7 @@
                             <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Category, Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Category" Binding="{Binding Category.Name, Mode=OneWay}"/>
                             <DataGridTextColumn Header="Total Quantity" Binding="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly, UpdateSourceTrigger=PropertyChanged}"/>

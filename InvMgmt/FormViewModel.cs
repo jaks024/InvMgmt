@@ -23,7 +23,6 @@ namespace InvMgmt
                     return;
                 category.Id = value;
                 NotifyPropertyChanged("Id");
-                Console.WriteLine(category.Id);
             }
         }
 
@@ -36,7 +35,6 @@ namespace InvMgmt
                     return;
                 category.Name = value;
                 NotifyPropertyChanged("Name");
-                Console.WriteLine(category.Name);
             }
         }
 
@@ -49,7 +47,6 @@ namespace InvMgmt
                     return;
                 category.Description = value;
                 NotifyPropertyChanged("Description");
-                Console.WriteLine(category.Description);
             }
         }
         

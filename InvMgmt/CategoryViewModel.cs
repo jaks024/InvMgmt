@@ -39,7 +39,6 @@ namespace InvMgmt
                     return;
                 category.Name = value;
                 NotifyPropertyChanged("Name");
-                Console.WriteLine(category.Name);
             }
         }
 
@@ -54,9 +53,10 @@ namespace InvMgmt
                 NotifyPropertyChanged("Description");
             }
         }
+
         public ObservableCollection<ItemViewModel> Items
         {
-            get { Console.WriteLine("from items get cat view model" + category.Items[0].ToString()); return category.Items; }
+            get { return category.Items; }
             set
             {
                 if (category.Items == value)
@@ -69,12 +69,7 @@ namespace InvMgmt
 
         public void AddItem(ItemViewModel _item)
         {
-            if (category.Items == null)
-                Items = new ObservableCollection<ItemViewModel>();
-
             category.Items.Add(_item);
-            Console.WriteLine("cat view model" + _item.ToString());
-            Console.WriteLine("cat view model after list" + category.Items[0].ToString());
         }
 
         public override string ToString()

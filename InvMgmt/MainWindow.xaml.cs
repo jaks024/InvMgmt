@@ -43,7 +43,20 @@ namespace InvMgmt
                         new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
             */
-            
+            form.Id = "13123";
+            form.Name = "dsfafdsfasf";
+            form.Description = "dfjslkvja jdsflajvs afs";
+
+            AddCategoryToList();
+
+
+            itemForm.Name = "fdsvdnn";
+            itemForm.Description = "fdsvsv";
+            itemForm.Id = "1231";
+            AddNewItemToCategory(categoryManager.Categories[0]);
+
+            Console.WriteLine("from main " + categoryManager.Categories[0].Items[0]);
+
             gridNewCat.DataContext = form;
             gridNewItem.DataContext = itemForm;
             gridExistingCat.DataContext = categoryManager;
@@ -56,6 +69,11 @@ namespace InvMgmt
         {
             if (!form.IsAllFieldFull())
                 return;
+            AddCategoryToList();
+        }
+
+        private void AddCategoryToList()
+        {
             categoryManager.AddCategoryToList(form.GetCategory);
             form.Reset();
         }
@@ -78,11 +96,15 @@ namespace InvMgmt
         {
             if (itemForm.CanAddItem && !categoryManager.IsCategoryEmpty && cbNewItemCategory.SelectedItem != null)
             {
-                categoryManager.AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem, itemForm);
-                dgExistingCat.Items.Refresh();
-                NewItemReset();
+                AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem);
                 //Console.WriteLine("added: " + categoryManager.Items[0].ToString());
             }
+        }
+        private void AddNewItemToCategory(CategoryViewModel _cat)
+        {
+            categoryManager.AddNewItemToCategory(_cat, itemForm.GetItem);
+            dgExistingCat.Items.Refresh();
+            NewItemReset();
         }
 
         private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
@@ -97,9 +119,7 @@ namespace InvMgmt
 
         private void CmbSortByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgItemList.ItemsSource = categoryManager.Items;
             dgItemList.Items.Refresh();
-            Console.WriteLine("refreshed");
         }
     }
 }

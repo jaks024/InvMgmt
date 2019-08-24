@@ -6,11 +6,107 @@ using System.Threading.Tasks;
 
 namespace InvMgmt
 {
-    public class ItemFormViewModel : ItemViewModel
+    public class ItemFormViewModel : ViewModelBase
     {
+        private ItemViewModel item;
+
+        public ItemFormViewModel()
+        {
+            item = new ItemViewModel();
+        }
+        public string Id
+        {
+            get { return item.Id; }
+            set
+            {
+                if (item.Id == value)
+                    return;
+                item.Id = value;
+                NotifyPropertyChanged("Id");
+                Console.WriteLine(item.Id);
+            }
+        }
+
+        public string Name
+        {
+            get { return item.Name; }
+            set
+            {
+                if (item.Name == value)
+                    return;
+                item.Name = value;
+                NotifyPropertyChanged("Name");
+            }
+        }
+
+        public string Description
+        {
+            get { return item.Description; }
+            set
+            {
+                if (item.Description == value)
+                    return;
+                item.Description = value;
+                NotifyPropertyChanged("Description");
+            }
+        }
+
+        public CategoryViewModel Category
+        {
+            get { return item.Category; }
+            set
+            {
+                if (item.Category == value)
+                    return;
+                item.Category = value;
+                NotifyPropertyChanged("Category");
+            }
+        }
+
+        public QuantityViewModel Quantity
+        {
+            get { return item.Quantity; }
+            set
+            {
+                if (item.Quantity == value)
+                    return;
+                item.Quantity = value;
+                NotifyPropertyChanged("Quantity");
+            }
+        }
+
+        public PriceViewModel Price
+        {
+            get { return item.Price; }
+            set
+            {
+                if (item.Price == value)
+                    return;
+                item.Price = value;
+                NotifyPropertyChanged("Price");
+            }
+        }
+
+        public ItemDetailViewModel Detail
+        {
+            get { return item.Detail; }
+            set
+            {
+                if (item.Detail == value)
+                    return;
+                item.Detail = value;
+                NotifyPropertyChanged("Detail");
+            }
+        }
+
+        public ItemViewModel GetItem
+        {
+            get { return item; }
+        }
         public void Reset()
         {
-            base.Item = new Item();
+            item = new ItemViewModel();
+            NotifyPropertyChanged("");
         }
 
         public bool IsDetailFull
