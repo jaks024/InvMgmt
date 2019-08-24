@@ -71,5 +71,9 @@ namespace InvMgmt
         {
             CategoryCount = Categories.Count;
         }
+        public bool IsCategoryEmpty
+        {
+            get { return CategoryCount > 0 ? false : true; }
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace InvMgmt
                 NotifyPropertyChanged("");
             }
         }
+
         public ItemViewModel() { item = new Item(); }
         public ItemViewModel(string _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
         {

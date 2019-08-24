@@ -78,10 +78,22 @@ namespace InvMgmt
 
         private void BtnSubmitNewItem_Click(object sender, RoutedEventArgs e)
         {
-            categoryManager.AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem, itemForm);
+            Console.WriteLine(string.Format("{0}, {1}, {2}",itemForm.CanAddItem.ToString(), categoryManager.IsCategoryEmpty.ToString(), cbNewItemCategory.SelectedItem != null));
+            if (itemForm.CanAddItem && !categoryManager.IsCategoryEmpty && cbNewItemCategory.SelectedItem != null)
+            {
+                categoryManager.AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem, itemForm);
+                NewItemReset();
+                dgExistingCat.Items.Refresh();
+                Console.WriteLine("added");
+            }
         }
 
         private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
+        {
+            NewItemReset();
+        }
+
+        private void NewItemReset()
         {
             itemForm.Reset();
         }

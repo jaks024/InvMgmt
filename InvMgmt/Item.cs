@@ -11,9 +11,9 @@ namespace InvMgmt
         public string Id;
         public string Name;
         public string Description;
-        public CategoryViewModel Category;
-        public QuantityViewModel Quantity;
-        public PriceViewModel Price;
-        public ItemDetailViewModel Detail;
+        public CategoryViewModel Category = new CategoryViewModel();
+        public QuantityViewModel Quantity = new QuantityViewModel();
+        public PriceViewModel Price = new PriceViewModel();
+        public ItemDetailViewModel Detail = new ItemDetailViewModel();
     }
 }
