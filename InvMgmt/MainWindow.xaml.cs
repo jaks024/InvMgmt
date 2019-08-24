@@ -21,7 +21,7 @@ namespace InvMgmt
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<ItemViewModel> items { get; } = new ObservableCollection<ItemViewModel>();
+        //public ObservableCollection<ItemViewModel> items { get; } = new ObservableCollection<ItemViewModel>();
         public FormViewModel form { get; set; } = new FormViewModel();
         public ItemFormViewModel itemForm { get; set; } = new ItemFormViewModel();
         public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
@@ -29,6 +29,7 @@ namespace InvMgmt
         {
             InitializeComponent();
 
+            /*
             for (int i = 0; i < 20; i++)
             {
                 items.Add(
@@ -41,17 +42,14 @@ namespace InvMgmt
                         new PriceViewModel(i * 5, i * 6, i * 3),
                         new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
-
-            dgItemList.DataContext = this;
+            */
+            
             gridNewCat.DataContext = form;
             gridNewItem.DataContext = itemForm;
             gridExistingCat.DataContext = categoryManager;
             cbNewItemCategory.DataContext = categoryManager;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine(items[dgItemList.SelectedIndex].Category.Id);
+            tabInventory.DataContext = categoryManager;
+            
         }
 
         private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
@@ -78,13 +76,12 @@ namespace InvMgmt
 
         private void BtnSubmitNewItem_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(string.Format("{0}, {1}, {2}",itemForm.CanAddItem.ToString(), categoryManager.IsCategoryEmpty.ToString(), cbNewItemCategory.SelectedItem != null));
             if (itemForm.CanAddItem && !categoryManager.IsCategoryEmpty && cbNewItemCategory.SelectedItem != null)
             {
                 categoryManager.AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem, itemForm);
-                NewItemReset();
                 dgExistingCat.Items.Refresh();
-                Console.WriteLine("added");
+                NewItemReset();
+                //Console.WriteLine("added: " + categoryManager.Items[0].ToString());
             }
         }
 
@@ -96,6 +93,13 @@ namespace InvMgmt
         private void NewItemReset()
         {
             itemForm.Reset();
+        }
+
+        private void CmbSortByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dgItemList.ItemsSource = categoryManager.Items;
+            dgItemList.Items.Refresh();
+            Console.WriteLine("refreshed");
         }
     }
 }

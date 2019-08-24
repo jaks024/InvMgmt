@@ -118,5 +118,10 @@ namespace InvMgmt
                 NotifyPropertyChanged("Detail");
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Name: {1}, Desc: {2}", Id, Name, Description);
+        }
     }
 }

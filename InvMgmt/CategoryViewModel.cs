@@ -56,7 +56,7 @@ namespace InvMgmt
         }
         public ObservableCollection<ItemViewModel> Items
         {
-            get { return category.Items; }
+            get { Console.WriteLine("from items get cat view model" + category.Items[0].ToString()); return category.Items; }
             set
             {
                 if (category.Items == value)
@@ -69,7 +69,12 @@ namespace InvMgmt
 
         public void AddItem(ItemViewModel _item)
         {
+            if (category.Items == null)
+                Items = new ObservableCollection<ItemViewModel>();
+
             category.Items.Add(_item);
+            Console.WriteLine("cat view model" + _item.ToString());
+            Console.WriteLine("cat view model after list" + category.Items[0].ToString());
         }
 
         public override string ToString()

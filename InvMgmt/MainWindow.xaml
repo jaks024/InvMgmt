@@ -10,6 +10,9 @@
 
     <Window.Resources>
         <local:FormViewModel x:Key="Form"/>
+        <DataTemplate x:Key="cbCategoryTemplate">
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -121,12 +124,7 @@
 
                         <Label Grid.Row="1" Grid.Column="2" Content="Category" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <ComboBox Grid.Row="2" Grid.Column="2" Margin="5" Width="100" 
-                                  Name="cbNewItemCategory" ItemsSource="{Binding Categories}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
+                                  Name="cbNewItemCategory" ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource cbCategoryTemplate}">
                         </ComboBox>
 
                         <Label Grid.Row="1" Grid.Column="3" Content="Description" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
@@ -183,7 +181,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Inventory" Height="35" Width="100">
+            <TabItem Header="Inventory" Name="tabInventory" Height="35" Width="100">
                 <Grid Background="GhostWhite">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
@@ -201,7 +199,9 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
-                            <ComboBox Width="100" Name="cmbSortByCategory"/>
+                            <ComboBox Width="100" Name="cbSortByCategory" ItemTemplate="{StaticResource cbCategoryTemplate}"
+                                      ItemsSource="{Binding Categories}" SelectedIndex="{Binding CurrentCategoryIndex}"
+                                      SelectionChanged="CmbSortByCategory_SelectionChanged"/>
                         </StackPanel>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1">
@@ -222,22 +222,12 @@
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
-                              ItemsSource="{Binding items}">
+                              ItemsSource="{Binding Items}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                            <DataGridTemplateColumn Header="Category">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ComboBox SelectedIndex="{Binding Category.Id}" Background="GhostWhite">
-                                            <ComboBoxItem Content="Cat 1"/>
-                                            <ComboBoxItem Content="Cat 2"/>
-                                            <ComboBoxItem Content="Cat 3"/>
-                                        </ComboBox>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Category, Mode=OneWay}"/>
                             <DataGridTextColumn Header="Total Quantity" Binding="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly, UpdateSourceTrigger=PropertyChanged}"/>
@@ -267,7 +257,6 @@
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
-                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Margin="10,570,0,0"/>
                 </Grid>
             </TabItem>
 

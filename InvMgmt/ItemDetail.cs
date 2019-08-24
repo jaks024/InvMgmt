@@ -11,6 +11,6 @@ namespace InvMgmt
         public string Company;
         public string Address;
         public string Phone;
-        public DateTime Date;
+        public DateTime Date = DateTime.Now;
     }
 }

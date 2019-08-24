@@ -11,7 +11,6 @@ namespace InvMgmt
         public void Reset()
         {
             base.Item = new Item();
-            Console.WriteLine("cleared: " + Id);
         }
 
         public bool IsDetailFull
@@ -39,7 +38,7 @@ namespace InvMgmt
         {
             get
             {
-                return  IsDetailFull && IsItemFull ? true : false;
+                return IsItemFull ? true : false;
             }
         }
     }

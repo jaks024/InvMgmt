@@ -29,6 +29,20 @@ namespace InvMgmt
             }
         }
 
+        public ObservableCollection<ItemViewModel> Items
+        {
+            get
+            {
+                if (IsCategoryEmpty)
+                {
+                    return null;
+                }
+                Console.WriteLine("get: " + manager.Categories[CurrentCategoryIndex].Items[0].ToString());
+                return manager.Categories[CurrentCategoryIndex].Items;
+            }
+        }
+
+
         private int categoryCount = 0;
         public int CategoryCount { get { return categoryCount; } set { categoryCount = value; NotifyPropertyChanged("CategoryCount"); } }
 
@@ -66,6 +80,9 @@ namespace InvMgmt
         public void AddNewItemToCategory(CategoryViewModel _cat, ItemViewModel _item)
         {
             Categories[Categories.IndexOf(_cat)].AddItem(_item);
+            NotifyPropertyChanged("Items");
+            //Console.WriteLine("added: " + _item.ToString());
+           // Console.WriteLine("added to list: " + Categories[CurrentCategoryIndex].Items[0].ToString());
         }
         private void UpdateCategoryCount()
         {
