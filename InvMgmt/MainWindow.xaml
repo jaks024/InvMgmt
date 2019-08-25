@@ -243,19 +243,55 @@
                             <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Category" Binding="{Binding Category.Name, Mode=OneWay}"/>
-                            <DataGridTemplateColumn Header="Total Quantity">
+                            <DataGridTemplateColumn Header="Total Quantity" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Quantity.Total, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxLength="7" PreviewTextInput="NumberOnly_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+                                        <TextBox Text="{Binding Quantity.Total, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Used Today" Binding="{Binding Quantity.Today, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="Used Weekly" Binding="{Binding Quantity.Weekly, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="Used Monthly" Binding="{Binding Quantity.Monthly, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="Current Price" Binding="{Binding Price.CurrentPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="Regular Price" Binding="{Binding Price.RegularPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="Sale Price" Binding="{Binding Price.SalePrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTemplateColumn Header="Used Today" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Quantity.Today, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Used Weekly" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Quantity.Weekly, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Used Monthly" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Quantity.Monthly, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Current Price" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Price.CurrentPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Regular Price" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Price.RegularPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Sale Price" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Price.SalePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridCheckBoxColumn Header="On Sale" Binding="{Binding Price.IsOnSale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>

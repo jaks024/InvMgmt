@@ -8,11 +8,11 @@ namespace InvMgmt
 {
     public class Quantity
     {
-        public int totalAvailable;
-        public int usedToday;
-        public int usedWeekly;
-        public int usedMonthly;
-        public int usedAnnually;
-        public int usedTotal;
+        public int totalAvailable = 0;
+        public int usedToday = 0;
+        public int usedWeekly = 0;
+        public int usedMonthly = 0;
+        public int usedAnnually = 0;
+        public int usedTotal = 0;
     }
 }

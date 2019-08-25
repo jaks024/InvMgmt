@@ -63,7 +63,7 @@ namespace InvMgmt
             gridExistingCat.DataContext = categoryManager;
             cbNewItemCategory.DataContext = categoryManager;
             tabInventory.DataContext = categoryManager;
-            
+
         }
 
         private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
@@ -123,34 +123,52 @@ namespace InvMgmt
             dgItemList.Items.Refresh();
         }
 
-        private static readonly Regex _regex = new Regex("[^0-9.-]+");
-        public bool IntValidationAllow(string y)
+        private void TextBoxDoubleOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!_regex.IsMatch(y))
+            if (((TextBox)sender).Text.Length == 0)
             {
-                int ignore;
-                if (int.TryParse(y, out ignore))
-                    return true;
-                return false;
+                ((TextBox)sender).Text = "0";
+                return;
             }
-            return false;
-        }
-        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !IntValidationAllow(e.Text);
+
+            double temp;
+            if (!double.TryParse(((TextBox)sender).Text, out temp))
+            {
+                ((TextBox)sender).Text = "0";
+                MessageBox.Show("This field is number only");
+                return;
+            }
+            if (temp < 0)
+            {
+                ((TextBox)sender).Text = "0";
+                MessageBox.Show("This field cannot be negative");
+                return;
+            }
+            ((TextBox)sender).Text = temp.ToString();
         }
 
-        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void TextBoxIntOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Back || e.Key == Key.Delete)
+            if (((TextBox)sender).Text.Length == 0)
             {
-                if (((TextBox)sender).Text.Length == 1)
-                {
-                    ((TextBox)sender).Text = "0";
-                    ((TextBox)sender).SelectionStart = 1;
-                    e.Handled = true;
-                }
+                ((TextBox)sender).Text = "0";
+                return;
             }
+
+            int temp;
+            if (!int.TryParse(((TextBox)sender).Text, out temp))
+            {
+                ((TextBox)sender).Text = "0";
+                MessageBox.Show("This field is integer only");
+                return;
+            }
+            if(temp < 0)
+            {
+                ((TextBox)sender).Text = "0";
+                MessageBox.Show("This field cannot be negative");
+                return;
+            }
+            ((TextBox)sender).Text = temp.ToString("N0");
         }
     }
 }

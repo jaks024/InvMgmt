@@ -8,9 +8,9 @@ namespace InvMgmt
 {
     public class Price
     {
-        public double CurrentPrice;
-        public double RegularPrice;
-        public double SalePrice;
-        public bool IsOnSale;
+        public double CurrentPrice = 0;
+        public double RegularPrice = 0;
+        public double SalePrice = 0;
+        public bool IsOnSale = false;
     }
 }

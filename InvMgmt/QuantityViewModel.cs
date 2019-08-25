@@ -28,6 +28,7 @@ namespace InvMgmt
                 if (quantity.totalAvailable == value)
                     return;
                 quantity.totalAvailable = value;
+                Console.WriteLine("quantity " + quantity.totalAvailable);
                 NotifyPropertyChanged("Total");
             }
         }

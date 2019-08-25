@@ -24,6 +24,7 @@ namespace InvMgmt
             get { return price.CurrentPrice; }
             set
             {
+                Console.WriteLine(value);
                 if (price.CurrentPrice == value)
                     return;
                 price.CurrentPrice = value;
@@ -61,8 +62,8 @@ namespace InvMgmt
                 if (price.IsOnSale == value)
                     return;
                 price.IsOnSale = value;
-                NotifyPropertyChanged("IsOnSale");
                 CurrentPrice = value ? SalePrice : RegularPrice;
+                NotifyPropertyChanged("IsOnSale");
             }
         }
 
