@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace InvMgmt
+using InvMgmt.Information.ViewModels;
+namespace InvMgmt.Information.Objects
 {
     public class Item 
     {

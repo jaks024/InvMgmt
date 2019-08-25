@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace InvMgmt
+using InvMgmt.Information.Objects;
+namespace InvMgmt.Information.ViewModels
 {
-    public class ItemFormViewModel : ViewModelBase
+    public class ItemViewModel : ViewModelBase
     {
-        private ItemViewModel item;
-
-        public ItemFormViewModel()
+        private Item item;
+        public ItemViewModel() { item = new Item(); }
+        public ItemViewModel(string _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
         {
-            item = new ItemViewModel();
+            item = new Item();
+            Id = _id;
+            Name = _name;
+            Description = _desc;
+            Category = _cat;
+            Quantity = _quantity;
+            Price = _price;
+            Detail = _detail;
         }
+
         public string Id
         {
             get { return item.Id; }
@@ -99,43 +107,9 @@ namespace InvMgmt
             }
         }
 
-        public ItemViewModel GetItem
+        public override string ToString()
         {
-            get { return item; }
-        }
-        public void Reset()
-        {
-            item = new ItemViewModel();
-            NotifyPropertyChanged("");
-        }
-
-        public bool IsDetailFull
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Detail.Company) &&
-                    !string.IsNullOrWhiteSpace(Detail.Address) &&
-                    Detail.Date != null &&
-                    !string.IsNullOrWhiteSpace(Detail.Company) ? true : false;
-            }
-        }
-
-        public bool IsItemFull
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Id) &&
-                    !string.IsNullOrWhiteSpace(Name) &&
-                    !string.IsNullOrWhiteSpace(Description) ? true : false;
-            }
-        }
-
-        public bool CanAddItem
-        {
-            get
-            {
-                return IsItemFull ? true : false;
-            }
+            return string.Format("Id: {0}, Name: {1}, Desc: {2}", Id, Name, Description);
         }
     }
 }

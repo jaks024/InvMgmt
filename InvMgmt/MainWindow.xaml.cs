@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using InvMgmt.Information.ViewModels;
+
 namespace InvMgmt
 {
     /// <summary>

@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace InvMgmt
+using InvMgmt.Information.Objects;
+namespace InvMgmt.Information.ViewModels
 {
     public class CategoryManagerViewModel : ViewModelBase
     {
