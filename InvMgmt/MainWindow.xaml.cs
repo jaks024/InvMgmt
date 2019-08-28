@@ -65,7 +65,7 @@ namespace InvMgmt
             gridExistingCat.DataContext = categoryManager;
             cbNewItemCategory.DataContext = categoryManager;
             tabInventory.DataContext = categoryManager;
-
+            cmbChangeItemCategory.DataContext = categoryManager;
         }
 
         private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
@@ -171,6 +171,21 @@ namespace InvMgmt
                 return;
             }
             ((TextBox)sender).Text = temp.ToString("N0");
+        }
+
+        private void DgItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgItemList.SelectedItem == null)
+                return;
+            cmbChangeItemCategory.SelectedItem = ((ItemViewModel)dgItemList.SelectedItem).Category;
+            
+        }
+
+        private void CmbChangeItemCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgItemList.SelectedItem == null)
+                return;
+            categoryManager.ChangeSingleItemCategory(((ItemViewModel)dgItemList.SelectedItem), ((CategoryViewModel)cmbChangeItemCategory.SelectedItem));
         }
     }
 }

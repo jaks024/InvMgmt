@@ -39,6 +39,12 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
+        public void ChangeSingleItemCategory(ItemViewModel _item, CategoryViewModel _changeTo)
+        {
+            Categories[Categories.IndexOf(_item.Category)].RemoveItem(_item);
+            _item.Category = _changeTo;
+            Categories[Categories.IndexOf(_changeTo)].AddItem(_item);
+        }
 
         private int categoryCount = 0;
         public int CategoryCount { get { return categoryCount; } set { categoryCount = value; NotifyPropertyChanged("CategoryCount"); } }

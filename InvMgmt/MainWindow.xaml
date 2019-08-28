@@ -227,7 +227,8 @@
                         </StackPanel>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2">
-                            <ComboBox Width="100" Name="cmbChangeItemCategory" />
+                            <ComboBox Width="100" Name="cmbChangeItemCategory" SelectionChanged="CmbChangeItemCategory_SelectionChanged"
+                                       ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource cbCategoryTemplate}"/>
                         </StackPanel>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
@@ -237,7 +238,7 @@
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
-                              ItemsSource="{Binding Items}">
+                              ItemsSource="{Binding Items}" SelectionChanged="DgItemList_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

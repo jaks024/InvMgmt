@@ -72,6 +72,10 @@ namespace InvMgmt.Information.ViewModels
         {
             category.Items.Add(_item);
         }
+        public void RemoveItem(ItemViewModel _item)
+        {
+            category.Items.Remove(_item);
+        }
 
         public override string ToString()
         {
