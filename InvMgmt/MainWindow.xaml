@@ -329,7 +329,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="TabItem" Height="50" Width="100">
+            <TabItem Header="Settings" Height="35" Width="100">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="TabItem" Height="50" Width="100">
