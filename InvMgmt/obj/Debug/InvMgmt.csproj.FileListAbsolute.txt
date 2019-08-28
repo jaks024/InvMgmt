@@ -13,7 +13,6 @@ C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.CoreC
 C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.exe
 C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.pdb
 C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csprojAssemblyReference.cache
-C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\InvMgmt.exe.config
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\InvMgmt.exe
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\InvMgmt.pdb
