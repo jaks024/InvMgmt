@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Objects\CategoryManager.cs" />
+    <Compile Include="Objects\SaveFileManager.cs" />
     <Compile Include="ViewModels\CategoryManagerViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\FormViewModel.cs" />
