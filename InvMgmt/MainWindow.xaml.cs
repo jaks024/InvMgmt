@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,25 +30,13 @@ namespace InvMgmt
         public ItemFormViewModel itemForm { get; set; } = new ItemFormViewModel();
         public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
 
-		public SaveFileManagerViewModel saveFileManager { get; } = new SaveFileManagerViewModel();
+		public SettingManager settingManager = new SettingManager();
         public MainWindow()
         {
             InitializeComponent();
 
-            /*
-            for (int i = 0; i < 20; i++)
-            {
-                items.Add(
-                    new ItemViewModel(
-                        i.ToString(), 
-                        "Dark Maple Cabinet", 
-                        "Dark maple color kitchen cabinet", 
-                        new CategoryViewModel("0", "des", "Cat " +i), 
-                        new QuantityViewModel(i * 100, i * 2, i * 6, i*30), 
-                        new PriceViewModel(i * 5, i * 6, i * 3),
-                        new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
-            }
-            */
+			//setting loading
+			settingManager.ReadFromSetting();
 
 			//temp item start
             form.Id = "13123";
@@ -69,8 +58,15 @@ namespace InvMgmt
             cbNewItemCategory.DataContext = categoryManager;
             tabInventory.DataContext = categoryManager;
             cmbChangeItemCategory.DataContext = categoryManager;
-			tbSaveFolderPath.DataContext = saveFileManager;
+			tbSaveFolderPath.DataContext = settingManager.SaveFileManager;
         }
+
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			base.OnClosing(e);
+			settingManager.WriteToSetting();
+		}
+
 
 		#region add menu category section
 		private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
@@ -206,7 +202,7 @@ namespace InvMgmt
 
 		private void BtnChangeFolder_Click(object sender, RoutedEventArgs e)
 		{
-			saveFileManager.SaveFolderPath = saveFileManager.GetPathFolderDialog;
+			settingManager.SaveFileManager.SaveFolderPath = settingManager.GetPathFolderDialog;
 		}
 
 		#endregion
