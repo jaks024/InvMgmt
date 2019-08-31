@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace InvMgmt.Information.Objects
 {
-	public class SaveFileManager
+	class SettingManager
 	{
-		public string saveFolderPath = "";
+		public string saveFilePath;
 	}
 }
- 

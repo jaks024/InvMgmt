@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Objects\CategoryManager.cs" />
     <Compile Include="Objects\SaveFileManager.cs" />
+    <Compile Include="Objects\SettingManager.cs" />
     <Compile Include="ViewModels\CategoryManagerViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\FormViewModel.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="ViewModels\PriceViewModel.cs" />
     <Compile Include="Objects\Quantity.cs" />
     <Compile Include="ViewModels\QuantityViewModel.cs" />
+    <Compile Include="ViewModels\SaveFileManagerViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

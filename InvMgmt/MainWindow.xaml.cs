@@ -28,6 +28,8 @@ namespace InvMgmt
         public FormViewModel form { get; set; } = new FormViewModel();
         public ItemFormViewModel itemForm { get; set; } = new ItemFormViewModel();
         public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
+
+		public SaveFileManagerViewModel saveFileManager { get; } = new SaveFileManagerViewModel();
         public MainWindow()
         {
             InitializeComponent();
@@ -46,29 +48,32 @@ namespace InvMgmt
                         new ItemDetailViewModel("Kolier Inc", "492 McNicoll Cir. North York, M3P 3T2", "1-123-423-2123", DateTime.Now)));
             }
             */
+
+			//temp item start
             form.Id = "13123";
             form.Name = "dsfafdsfasf";
             form.Description = "dfjslkvja jdsflajvs afs";
 
             AddCategoryToList();
 
-
             itemForm.Name = "fdsvdnn";
             itemForm.Description = "fdsvsv";
             itemForm.Id = "1231";
             AddNewItemToCategory(categoryManager.Categories[0]);
+			//temp item end
 
-            Console.WriteLine("from main " + categoryManager.Categories[0].Items[0]);
-
+			//setting data contexts
             gridNewCat.DataContext = form;
             gridNewItem.DataContext = itemForm;
             gridExistingCat.DataContext = categoryManager;
             cbNewItemCategory.DataContext = categoryManager;
             tabInventory.DataContext = categoryManager;
             cmbChangeItemCategory.DataContext = categoryManager;
+			tbSaveFolderPath.DataContext = saveFileManager;
         }
 
-        private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
+		#region add menu category section
+		private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
         {
             if (!form.IsAllFieldFull())
                 return;
@@ -94,8 +99,10 @@ namespace InvMgmt
                 return;
             categoryManager.RemoveCategoryFromList((CategoryViewModel)dgExistingCat.SelectedItem);
         }
+		#endregion
 
-        private void BtnSubmitNewItem_Click(object sender, RoutedEventArgs e)
+		#region add menu item selection
+		private void BtnSubmitNewItem_Click(object sender, RoutedEventArgs e)
         {
             if (itemForm.CanAddItem && !categoryManager.IsCategoryEmpty && cbNewItemCategory.SelectedItem != null)
             {
@@ -173,7 +180,11 @@ namespace InvMgmt
             ((TextBox)sender).Text = temp.ToString("N0");
         }
 
-        private void DgItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		#endregion
+
+		#region item menu item list modification
+
+		private void DgItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgItemList.SelectedItem == null)
                 return;
@@ -187,5 +198,18 @@ namespace InvMgmt
                 return;
             categoryManager.ChangeSingleItemCategory(((ItemViewModel)dgItemList.SelectedItem), ((CategoryViewModel)cmbChangeItemCategory.SelectedItem));
         }
-    }
+
+		#endregion
+
+		#region settings menu save file section
+
+
+		private void BtnChangeFolder_Click(object sender, RoutedEventArgs e)
+		{
+			saveFileManager.SaveFolderPath = saveFileManager.GetPathFolderDialog;
+		}
+
+		#endregion
+
+	}
 }

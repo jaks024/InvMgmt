@@ -333,7 +333,7 @@
             <TabItem Header="Settings" Height="35" Width="100">
                 <Grid Background="GhostWhite">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="500"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -342,8 +342,9 @@
                     </Grid.RowDefinitions>
                     <Label Content="Save Folder Path" Margin="5 0" VerticalAlignment="Bottom"/>
                     <DockPanel Grid.Row="1">
-                        <TextBox Name="tbSaveFolderPath" IsReadOnly="True" Margin="5" Width="220" DockPanel.Dock="Left"/>
-                        <Button Name="btnChangeFolder" Content="Select" Margin="5" DockPanel.Dock="Right"/>
+                        <TextBox Name="tbSaveFolderPath" IsReadOnly="True" Margin="5" Width="420" DockPanel.Dock="Left" TextWrapping="Wrap"
+                                 Text="{Binding SaveFolderPath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Name="btnChangeFolder" Content="Select" Margin="5" DockPanel.Dock="Right" Click="BtnChangeFolder_Click"/>
                     </DockPanel>
                     
                 </Grid>
