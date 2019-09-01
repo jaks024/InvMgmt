@@ -51,7 +51,7 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
-        public CategoryViewModel Category
+        public string Category
         {
             get { return item.Category; }
             set

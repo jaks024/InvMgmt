@@ -39,6 +39,7 @@ namespace InvMgmt
 			settingManager.ReadFromSetting();
 
 			//temp item start
+			/*
             form.Id = "13123";
             form.Name = "dsfafdsfasf";
             form.Description = "dfjslkvja jdsflajvs afs";
@@ -50,6 +51,7 @@ namespace InvMgmt
             itemForm.Id = "1231";
             AddNewItemToCategory(categoryManager.Categories[0]);
 			//temp item end
+			*/
 
 			//setting data contexts
             gridNewCat.DataContext = form;
@@ -59,7 +61,14 @@ namespace InvMgmt
             tabInventory.DataContext = categoryManager;
             cmbChangeItemCategory.DataContext = categoryManager;
 			tbSaveFolderPath.DataContext = settingManager.SaveFileManager;
-        }
+
+			SaveDataHandler.InitializeConnection("data.sqlite", settingManager.SaveFileManager.FirstLaunch);
+			if(settingManager.SaveFileManager.FirstLaunch)
+				settingManager.NoLongerFirstLaunch();
+
+			AddCategoryToListDataBase();
+			AddNewItemToCategoryFromDatabase(SaveDataHandler.ReadItemTable(categoryManager.Categories[0].Name));
+		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
@@ -81,6 +90,10 @@ namespace InvMgmt
             categoryManager.AddCategoryToList(form.GetCategory);
             form.Reset();
         }
+		private void AddCategoryToListDataBase()
+		{
+			categoryManager.AddCategoryToList(SaveDataHandler.ReadCategoryTable());
+		}
 
         private void BtnClearNewCat_Click(object sender, RoutedEventArgs e)
         {
@@ -112,8 +125,14 @@ namespace InvMgmt
             dgExistingCat.Items.Refresh();
             NewItemReset();
         }
+		private void AddNewItemToCategoryFromDatabase(ObservableCollection<ItemViewModel> _items)
+		{
+			categoryManager.AddListItemToCategoryFromDatabase(_items);
+			dgExistingCat.Items.Refresh();
+			NewItemReset();
+		}
 
-        private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
+		private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
         {
             NewItemReset();
         }
@@ -184,7 +203,7 @@ namespace InvMgmt
         {
             if (dgItemList.SelectedItem == null)
                 return;
-            cmbChangeItemCategory.SelectedItem = ((ItemViewModel)dgItemList.SelectedItem).Category;
+            cmbChangeItemCategory.SelectedItem = categoryManager.FindCategoryUsingName(((ItemViewModel)dgItemList.SelectedItem).Category);
             
         }
 

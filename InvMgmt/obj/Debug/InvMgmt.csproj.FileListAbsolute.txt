@@ -28,3 +28,13 @@ C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.Generat
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.CoreCompileInputs.cache
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.exe
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.pdb
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\EntityFramework.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\EntityFramework.xml
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.xml
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.dll.config
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.CopyComplete

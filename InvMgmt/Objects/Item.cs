@@ -11,7 +11,7 @@ namespace InvMgmt.Information.Objects
         public string Id;
         public string Name;
         public string Description;
-        public CategoryViewModel Category = new CategoryViewModel();
+        public string Category;
         public QuantityViewModel Quantity = new QuantityViewModel();
         public PriceViewModel Price = new PriceViewModel();
         public ItemDetailViewModel Detail = new ItemDetailViewModel();

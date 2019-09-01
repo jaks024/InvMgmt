@@ -18,6 +18,7 @@ namespace InvMgmt
 			try
 			{
 				SaveFileManager.SaveFolderPath = Properties.Settings.Default["SaveFolderPath"].ToString();
+				SaveFileManager.FirstLaunch = (bool)Properties.Settings.Default["FirstLaunch"];
 			}
 			catch (Exception e)
 			{
@@ -25,9 +26,16 @@ namespace InvMgmt
 			}
 		}
 	
+		public void NoLongerFirstLaunch()
+		{
+			SaveFileManager.FirstLaunch = false;
+			Properties.Settings.Default["FirstLaunch"] = SaveFileManager.FirstLaunch;
+			Properties.Settings.Default.Save();
+		}
 		public void WriteToSetting()
 		{
 			Properties.Settings.Default["SaveFolderPath"] = SaveFileManager.SaveFolderPath;
+			Properties.Settings.Default["FirstLaunch"] = SaveFileManager.FirstLaunch;
 			Properties.Settings.Default.Save();
 		}
 		public string GetPathFolderDialog

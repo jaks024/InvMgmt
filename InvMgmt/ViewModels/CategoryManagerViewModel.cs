@@ -41,10 +41,20 @@ namespace InvMgmt.Information.ViewModels
 
         public void ChangeSingleItemCategory(ItemViewModel _item, CategoryViewModel _changeTo)
         {
-            Categories[Categories.IndexOf(_item.Category)].RemoveItem(_item);
-            _item.Category = _changeTo;
+            FindCategoryUsingName(_item.Category).RemoveItem(_item);
+            _item.Category = _changeTo.Name;
             Categories[Categories.IndexOf(_changeTo)].AddItem(_item);
         }
+
+		public CategoryViewModel FindCategoryUsingName(string _name)
+		{
+			for(int i = 0; i < categoryCount; i++)
+			{
+				if (Categories[i].Name.Equals(_name))
+					return Categories[i];
+			}
+			return Categories[0];
+		}
 
         private int categoryCount = 0;
         public int CategoryCount { get { return categoryCount; } set { categoryCount = value; NotifyPropertyChanged("CategoryCount"); } }
@@ -76,11 +86,18 @@ namespace InvMgmt.Information.ViewModels
 
         public void AddNewItemToCategory(CategoryViewModel _cat, ItemViewModel _item)
         {
-            _item.Category = _cat;
+            _item.Category = _cat.Name;
             Categories[Categories.IndexOf(_cat)].AddItem(_item);
             NotifyPropertyChanged("Items");
         }
-        private void UpdateCategoryCount()
+		public void AddListItemToCategoryFromDatabase(ObservableCollection<ItemViewModel> _item)
+		{
+			if (_item.Count == 0)
+				return;
+			FindCategoryUsingName(_item[0].Category).AddItem(_item);
+			NotifyPropertyChanged("Items");
+		}
+		private void UpdateCategoryCount()
         {
             CategoryCount = Categories.Count;
         }

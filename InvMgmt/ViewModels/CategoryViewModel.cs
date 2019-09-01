@@ -72,14 +72,21 @@ namespace InvMgmt.Information.ViewModels
         {
             category.Items.Add(_item);
         }
-        public void RemoveItem(ItemViewModel _item)
+		public void AddItem(ObservableCollection<ItemViewModel> _item)
+		{
+			foreach(var i in _item)
+			{
+				category.Items.Add(i);
+			}
+		}
+		public void RemoveItem(ItemViewModel _item)
         {
             category.Items.Remove(_item);
         }
 
         public override string ToString()
         {
-            return string.Format("Id: {0},  Name: {1},  Desc: {2}", Id, Name, Description);
+            return string.Format("'{0}', '{1}', '{2}'", Id, Name, Description);
         }
     }
 }

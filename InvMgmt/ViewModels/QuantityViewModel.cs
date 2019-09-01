@@ -12,13 +12,15 @@ namespace InvMgmt.Information.ViewModels
         private Quantity quantity;
 
         public QuantityViewModel() { quantity = new Quantity(); }
-        public QuantityViewModel(int _total, int _today, int _weekly, int _monthly)
+        public QuantityViewModel(int _total, int _today, int _weekly, int _monthly, int _annually, int _usedTotal)
         {
             quantity = new Quantity();
             Total = _total;
             Today = _today;
             Weekly = _weekly;
             Monthly = _monthly;
+			Annually = _annually;
+			UsedTotal = _usedTotal;
         }
 
         public int Total
@@ -81,5 +83,22 @@ namespace InvMgmt.Information.ViewModels
                 NotifyPropertyChanged("Annually");
             }
         }
-    }
+
+		public int UsedTotal
+		{
+			get { return quantity.usedTotal; }
+			set
+			{
+				if (quantity.usedTotal == value)
+					return;
+				quantity.usedTotal = value;
+				NotifyPropertyChanged("UsedTotal");
+			}
+		}
+
+		public override string ToString()
+		{
+			return string.Format("{0}, {1}, {2}, {3}, {4}, {5}", Total, Today, Weekly, Monthly, Annually, UsedTotal);
+		}
+	}
 }

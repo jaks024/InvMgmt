@@ -10,7 +10,7 @@ namespace InvMgmt.Information.ViewModels
     {
         private Item item;
         public ItemViewModel() { item = new Item(); }
-        public ItemViewModel(string _id, string _name, string _desc, CategoryViewModel _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
+        public ItemViewModel(string _id, string _name, string _desc, string _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
         {
             item = new Item();
             Id = _id;
@@ -59,7 +59,7 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
-        public CategoryViewModel Category
+        public string Category
         {
             get { return item.Category; }
             set
@@ -109,7 +109,9 @@ namespace InvMgmt.Information.ViewModels
 
         public override string ToString()
         {
-            return string.Format("Id: {0}, Name: {1}, Desc: {2}", Id, Name, Description);
+            return string.Format("'{0}', '{1}', '{2}', '{3}', {4}, {5}, {6}", 
+				Id, Name, Description, Category, 
+				Quantity.ToString(), Price.ToString(), Detail.ToString());
         }
     }
 }

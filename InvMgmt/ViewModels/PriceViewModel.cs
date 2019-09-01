@@ -11,10 +11,11 @@ namespace InvMgmt.Information.ViewModels
         private Price price;
 
         public PriceViewModel() { price = new Price(); }
-        public PriceViewModel(double _currentPrice, double _regularPrice, double _salePrice)
+        public PriceViewModel(double _currentPrice, double _regularPrice, double _salePrice, bool _onSale)
         {
             price = new Price();
-            CurrentPrice = _currentPrice;
+			IsOnSale = _onSale; //infront to prevent value override
+			CurrentPrice = _currentPrice;
             RegularPrice = _regularPrice;
             SalePrice = _salePrice;
         }
@@ -69,7 +70,7 @@ namespace InvMgmt.Information.ViewModels
 
         public override string ToString()
         {
-            return string.Format("Current Price: {0}, Regular Price: {1}, Sale Price: {2}", CurrentPrice, RegularPrice, SalePrice);
+            return string.Format("{0}, {1}, {2}, {3}", CurrentPrice, RegularPrice, SalePrice, IsOnSale ? 1 : 0);
         }
     }
 }

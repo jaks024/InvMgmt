@@ -29,5 +29,11 @@ namespace InvMgmt.Information.ViewModels
 				NotifyPropertyChanged("SaveFolderPath");
 			}
 		}
+
+		public bool FirstLaunch
+		{
+			get { return manager.firstLaunch; }
+			set { manager.firstLaunch = value; }
+		}
 	}
 }
