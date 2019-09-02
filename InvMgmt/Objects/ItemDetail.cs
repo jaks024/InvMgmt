@@ -11,6 +11,7 @@ namespace InvMgmt.Information.Objects
         public string Company;
         public string Address;
         public string Phone;
+		public string Email;
         public DateTime Date = DateTime.Now;
     }
 }

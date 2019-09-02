@@ -20,7 +20,7 @@ namespace InvMgmt
 		private const string itemTableTemplate = "CREATE TABLE IF NOT EXISTS {0} (ID TEXT, NAME TEXT, DESC TEXT, CAT TEXT, " +
 			"Q_TAVALIABLE INT, Q_TODAY INT, Q_WEEK INT, Q_MONTH INT, Q_ANNUAL INT, Q_TOTAL INT, " +
 			"P_CURRENT DOUBLE, P_REGULAR DOUBLE, P_SALE DOUBLE, P_ONSALE INT, " +
-			"D_COMPANY TEXT, D_ADDRESS TEXT, D_PHONE TEXT, D_DATE TEXT)";
+			"D_COMPANY TEXT, D_ADDRESS TEXT, D_PHONE TEXT, D_EMAIL TEXT, D_DATE TEXT)";
 		public static void InitializeConnection(string _path, bool _firstTime)
 		{
 			if(_firstTime)
@@ -40,6 +40,8 @@ namespace InvMgmt
 				Console.WriteLine("created table");
 			}
 		}
+		
+		//inserts parameter item into table as well
 		public static void CreateItemTable(ItemViewModel _ivm)
 		{
 			CreateTable(itemTableTemplate, _ivm.Category);
@@ -78,7 +80,7 @@ namespace InvMgmt
 			return string.Format("INSERT INTO {0} (ID, NAME, DESC, CAT, " +
 			"Q_TAVALIABLE, Q_TODAY, Q_WEEK, Q_MONTH, Q_ANNUAL, Q_TOTAL, " +
 			"P_CURRENT, P_REGULAR, P_SALE, P_ONSALE, " +
-			"D_COMPANY, D_ADDRESS, D_PHONE, D_DATE) " +
+			"D_COMPANY, D_ADDRESS, D_PHONE, D_EMAIL, D_DATE) " +
 			"VALUES ({1})", _table, _values);
 		}
 
@@ -115,7 +117,7 @@ namespace InvMgmt
 					new PriceViewModel(
 						(double)reader["P_CURRENT"], (double)reader["P_REGULAR"], (double)reader["P_SALE"], (int)reader["P_ONSALE"] == 1 ? true : false),
 					new ItemDetailViewModel(
-						reader["D_COMPANY"].ToString(), reader["D_ADDRESS"].ToString(), reader["D_PHONE"].ToString(), DateTime.Parse(reader["D_DATE"].ToString()))));
+						reader["D_COMPANY"].ToString(), reader["D_ADDRESS"].ToString(), reader["D_PHONE"].ToString(), reader["D_EMAIL"].ToString(), DateTime.Parse(reader["D_DATE"].ToString()))));
 				}
 			}
 			return col;

@@ -303,6 +303,8 @@
                                         <ColumnDefinition Width="auto" MinWidth="100"/>
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="auto" MinWidth="100"/>
+                                        <ColumnDefinition Width="75"/>
+                                        <ColumnDefinition Width="auto" MinWidth="100"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="20"/>
@@ -323,6 +325,10 @@
                                     <Viewbox Margin="5 0" Grid.Row="1" Grid.Column="3">
                                         <DatePicker  Focusable="False" FontSize="14" CalendarStyle="{StaticResource styleCalendar}" Text="{Binding Detail.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                     </Viewbox>
+
+                                    <TextBlock Text="Email: " Grid.Column="4" Margin="5 0"/>
+                                    <TextBox Margin="5 0" Grid.Column="5" Text="{Binding Detail.Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
                                 </Grid>
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>

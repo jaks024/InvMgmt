@@ -11,12 +11,13 @@ namespace InvMgmt.Information.ViewModels
         private ItemDetail itemDetail;
 
         public ItemDetailViewModel() { itemDetail = new ItemDetail(); }
-        public ItemDetailViewModel(string _company, string _address, string _phone, DateTime _date)
+        public ItemDetailViewModel(string _company, string _address, string _phone, string _email, DateTime _date)
         {
             itemDetail = new ItemDetail();
             Company = _company;
             Address = _address;
             Phone = _phone;
+			Email = _email;
             Date = _date;
         }
 
@@ -56,7 +57,19 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
-        public DateTime Date
+		public string Email
+		{
+			get { return itemDetail.Email; }
+			set
+			{
+				if (itemDetail.Email == value)
+					return;
+				itemDetail.Email = value;
+				NotifyPropertyChanged("Email");
+			}
+		}
+
+		public DateTime Date
         {
             get { return itemDetail.Date; }
             set
@@ -70,7 +83,7 @@ namespace InvMgmt.Information.ViewModels
 
 		public override string ToString()
 		{
-			return string.Format("'{0}', '{1}', '{2}', '{3}'", Company, Address, Phone, DateTimeSQLite(Date));
+			return string.Format("'{0}', '{1}', '{2}', '{3}', '{4}'", Company, Address, Phone, Email, DateTimeSQLite(Date));
 		}
 		private string DateTimeSQLite(DateTime _datetime)
 		{

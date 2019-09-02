@@ -39,19 +39,19 @@ namespace InvMgmt
 			settingManager.ReadFromSetting();
 
 			//temp item start
-			/*
+			
             form.Id = "13123";
             form.Name = "dsfafdsfasf";
             form.Description = "dfjslkvja jdsflajvs afs";
-
+			
             AddCategoryToList();
-
-            itemForm.Name = "fdsvdnn";
+			
+			itemForm.Name = "fdsvdnn";
             itemForm.Description = "fdsvsv";
             itemForm.Id = "1231";
             AddNewItemToCategory(categoryManager.Categories[0]);
 			//temp item end
-			*/
+			
 
 			//setting data contexts
             gridNewCat.DataContext = form;
@@ -66,7 +66,10 @@ namespace InvMgmt
 			if(settingManager.SaveFileManager.FirstLaunch)
 				settingManager.NoLongerFirstLaunch();
 
-			AddCategoryToListDataBase();
+			//temp data
+			//SaveDataHandler.InsertCategoryToTable(categoryManager.Categories[0]);
+			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
+
 			AddNewItemToCategoryFromDatabase(SaveDataHandler.ReadItemTable(categoryManager.Categories[0].Name));
 		}
 
