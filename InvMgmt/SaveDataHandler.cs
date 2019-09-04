@@ -169,6 +169,21 @@ namespace InvMgmt
 			connection.Close();
 		}
 
+
+		public static void RemoveCategoryInTable(CategoryViewModel _cat)
+		{
+			connection.Open();
+			using (var command = new SQLiteCommand(connection))
+			{
+				command.CommandText = "DELETE FROM " + categoryName + " WHERE ID=:ID";
+				command.Parameters.Add("ID", System.Data.DbType.String).Value = _cat.Id;
+				command.ExecuteNonQuery();
+				command.CommandText = "DROP TABLE " + _cat.Id;
+				command.ExecuteNonQuery();
+			}
+			connection.Close();
+		}
+
 		public static void RemoveItemInTable(ItemViewModel _obj)
 		{
 			connection.Open();

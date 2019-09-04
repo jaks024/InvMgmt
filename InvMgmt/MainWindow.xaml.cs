@@ -121,6 +121,7 @@ namespace InvMgmt
         {
             if (dgExistingCat.SelectedItem == null)
                 return;
+			SaveDataHandler.RemoveCategoryInTable((CategoryViewModel)dgExistingCat.SelectedItem);
             categoryManager.RemoveCategoryFromList((CategoryViewModel)dgExistingCat.SelectedItem);
         }
 		#endregion
@@ -272,6 +273,12 @@ namespace InvMgmt
 			{
 				SaveDataHandler.UpdateCategoryInTable(c);
 			}
+		}
+
+		private void BtnInventoryDelete_Click(object sender, RoutedEventArgs e)
+		{
+			SaveDataHandler.RemoveItemInTable((ItemViewModel)dgItemList.SelectedItem);
+			categoryManager.Categories[categoryManager.CurrentCategoryIndex].RemoveItem((ItemViewModel)dgItemList.SelectedItem);
 		}
 	}
 }
