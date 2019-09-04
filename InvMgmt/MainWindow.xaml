@@ -10,7 +10,14 @@
 
     <Window.Resources>
         <DataTemplate x:Key="cbCategoryTemplate">
-            <TextBlock Text="{Binding Name}"/>
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}: {1}">
+                        <Binding Path="Id"/>
+                        <Binding Path="Name"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
         </DataTemplate>
         <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
             <Setter Property="Template">
@@ -86,9 +93,9 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Existing Categories" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                             <DataGrid Name="dgExistingCat" Grid.Row="1" Margin="5" ItemsSource="{Binding Categories}" SelectionMode="Single"
-                                    AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" LostFocus="DgExistingCat_LostFocus">
+                                <DataGrid.Columns>  
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
                                     <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridTextColumn Header="Item Count" Binding="{Binding ItemCount, Mode=OneWay}"/>
                                 </DataGrid.Columns>
@@ -139,7 +146,7 @@
 
                         <Label Grid.Row="1" Grid.Column="2" Content="Category *" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
                         <ComboBox Grid.Row="2" Grid.Column="2" Margin="5" Width="100" 
-                                  Name="cbNewItemCategory" ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource cbCategoryTemplate}">
+                                  Name="cbNewItemCategory" ItemsSource="{Binding Categories}" SelectedIndex="0" ItemTemplate="{StaticResource cbCategoryTemplate}">
                         </ComboBox>
 
                         <Label Grid.Row="1" Grid.Column="3" Content="Description *" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
@@ -214,7 +221,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
-                            <ComboBox Width="100" Name="cbSortByCategory" ItemTemplate="{StaticResource cbCategoryTemplate}"
+                            <ComboBox Width="200" Name="cbSortByCategory" ItemTemplate="{StaticResource cbCategoryTemplate}"
                                       ItemsSource="{Binding Categories}" SelectedIndex="{Binding CurrentCategoryIndex}"
                                       SelectionChanged="CmbSortByCategory_SelectionChanged"/>
                         </StackPanel>
@@ -240,7 +247,7 @@
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
                               ItemsSource="{Binding Items}" SelectionChanged="DgItemList_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}"/>

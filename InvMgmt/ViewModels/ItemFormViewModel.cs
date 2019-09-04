@@ -129,8 +129,21 @@ namespace InvMgmt.Information.ViewModels
                     !string.IsNullOrWhiteSpace(Description) ? true : false;
             }
         }
+		public bool IsIdValid(CategoryManagerViewModel _man)
+		{
+			for (int i = 0; i < _man.CategoryCount; i++)
+			{
+				_man.CurrentCategoryIndex = i;
+				for (int j = 0; j < _man.Items.Count; j++)
+				{
+					if (_man.Items[j].Id.Equals(Id))
+						return false;
+				}
+			}
+			return true;
+		}
 
-        public bool CanAddItem
+		public bool CanAddItem
         {
             get
             {

@@ -71,7 +71,17 @@ namespace InvMgmt.Information.ViewModels
             return !string.IsNullOrWhiteSpace(Id) || !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(Description) ? true : false;
         }
 
-        public override string ToString()
+		public bool IsIdValid(CategoryManagerViewModel _man)
+		{
+			for (int i = 0; i < _man.CategoryCount; i++)
+			{
+				if (_man.Categories[i].Id.Equals(Id))
+					return false;
+			}
+			return true;
+		}
+
+		public override string ToString()
         {
             return string.Format("Id: {0},  Name: {1},  Desc: {2}", Id, Name, Description);
         }

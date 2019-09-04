@@ -39,7 +39,7 @@ namespace InvMgmt
 			settingManager.ReadFromSetting();
 
 			//temp item start
-			
+			/*
             form.Id = "13123";
             form.Name = "dsfafdsfasf";
             form.Description = "dfjslkvja jdsflajvs afs";
@@ -52,7 +52,7 @@ namespace InvMgmt
             AddNewItemToCategory(categoryManager.Categories[0]);
 			//temp item end
 			
-
+	*/
 			//setting data contexts
             gridNewCat.DataContext = form;
             gridNewItem.DataContext = itemForm;
@@ -70,32 +70,44 @@ namespace InvMgmt
 			//SaveDataHandler.InsertCategoryToTable(categoryManager.Categories[0]);
 			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
 
-			AddNewItemToCategoryFromDatabase(SaveDataHandler.ReadItemTable(categoryManager.Categories[0].Name));
+			AddCategoryToListDataBase();
+			AddNewItemToCategoryFromDatabase();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			base.OnClosing(e);
 			settingManager.WriteToSetting();
+			RewriteAllData();
 		}
 
 
 		#region add menu category section
 		private void BtnSubmitNewCat_Click(object sender, RoutedEventArgs e)
         {
-            if (!form.IsAllFieldFull())
-                return;
+			if (!form.IsAllFieldFull())
+			{
+				MessageBox.Show("All fields with asterisk must be filled.");
+				return;
+			}
+			if (!form.IsIdValid(categoryManager))
+			{
+				MessageBox.Show("An item with the same ID already exists. ID must be unique.");
+				return;
+			}
             AddCategoryToList();
         }
 
         private void AddCategoryToList()
         {
             categoryManager.AddCategoryToList(form.GetCategory);
+			SaveDataHandler.InsertCategoryToTable(form.GetCategory);
+			SaveDataHandler.CreateItemTable(form.GetCategory.Id);
             form.Reset();
         }
 		private void AddCategoryToListDataBase()
 		{
-			categoryManager.AddCategoryToList(SaveDataHandler.ReadCategoryTable());
+			categoryManager.AddCategoryToListFromDatabase(SaveDataHandler.ReadCategoryTable());
 		}
 
         private void BtnClearNewCat_Click(object sender, RoutedEventArgs e)
@@ -116,23 +128,36 @@ namespace InvMgmt
 		#region add menu item selection
 		private void BtnSubmitNewItem_Click(object sender, RoutedEventArgs e)
         {
-            if (itemForm.CanAddItem && !categoryManager.IsCategoryEmpty && cbNewItemCategory.SelectedItem != null)
-            {
-                AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem);
-                //Console.WriteLine("added: " + categoryManager.Items[0].ToString());
-            }
+			Console.WriteLine("selected index " + cbNewItemCategory.SelectedIndex);
+
+			if (cbNewItemCategory.SelectedIndex == -1 || !itemForm.CanAddItem || categoryManager.IsCategoryEmpty)
+			{
+				MessageBox.Show("All fields with asterisk must be filled.");
+				return;
+			}
+			if (!itemForm.IsIdValid(categoryManager))
+			{
+				MessageBox.Show("An item with the same ID already exists. ID must be unique.");
+				return;
+			}
+			AddNewItemToCategory((CategoryViewModel)cbNewItemCategory.SelectedItem);
+            
         }
         private void AddNewItemToCategory(CategoryViewModel _cat)
         {
             categoryManager.AddNewItemToCategory(_cat, itemForm.GetItem);
-            dgExistingCat.Items.Refresh();
-            NewItemReset();
-        }
-		private void AddNewItemToCategoryFromDatabase(ObservableCollection<ItemViewModel> _items)
-		{
-			categoryManager.AddListItemToCategoryFromDatabase(_items);
+			SaveDataHandler.InsertItemToTable(itemForm.GetItem);
 			dgExistingCat.Items.Refresh();
 			NewItemReset();
+        }
+		private void AddNewItemToCategoryFromDatabase()
+		{
+			for(int i = 0; i < categoryManager.CategoryCount; i++)
+			{
+				categoryManager.AddListItemToCategoryFromDatabase(i, SaveDataHandler.ReadItemTable(categoryManager.Categories[i].Id));
+			}
+			categoryManager.NotifyItemAddedFroMDatabase();
+			dgExistingCat.Items.Refresh();
 		}
 
 		private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
@@ -206,7 +231,7 @@ namespace InvMgmt
         {
             if (dgItemList.SelectedItem == null)
                 return;
-            cmbChangeItemCategory.SelectedItem = categoryManager.FindCategoryUsingName(((ItemViewModel)dgItemList.SelectedItem).Category);
+            cmbChangeItemCategory.SelectedItem = categoryManager.FindCategoryUsingId(((ItemViewModel)dgItemList.SelectedItem).Category);
             
         }
 
@@ -229,5 +254,24 @@ namespace InvMgmt
 
 		#endregion
 
+		private void RewriteAllData()
+		{
+			foreach(CategoryViewModel c in categoryManager.Categories)
+			{
+				SaveDataHandler.UpdateCategoryInTable(c);
+				foreach(ItemViewModel i in c.Items)
+				{
+					SaveDataHandler.UpdateItemInTable(i);
+				}
+			}
+		}
+
+		private void DgExistingCat_LostFocus(object sender, RoutedEventArgs e)
+		{
+			foreach (CategoryViewModel c in categoryManager.Categories)
+			{
+				SaveDataHandler.UpdateCategoryInTable(c);
+			}
+		}
 	}
 }

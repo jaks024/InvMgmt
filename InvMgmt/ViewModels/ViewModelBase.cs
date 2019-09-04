@@ -16,8 +16,6 @@ namespace InvMgmt.Information.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
-        
-        //public abstract bool IsAllFieldEmpty();
-    }
+		//public abstract bool IsAllFieldEmpty();
+	}
 }

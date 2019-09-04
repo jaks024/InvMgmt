@@ -74,9 +74,10 @@ namespace InvMgmt.Information.ViewModels
         }
 		public void AddItem(ObservableCollection<ItemViewModel> _item)
 		{
-			foreach(var i in _item)
+			foreach(ItemViewModel i in _item)
 			{
 				category.Items.Add(i);
+				Console.WriteLine("added new item ");
 			}
 		}
 		public void RemoveItem(ItemViewModel _item)

@@ -25,7 +25,6 @@ namespace InvMgmt.Information.ViewModels
             get { return price.CurrentPrice; }
             set
             {
-                Console.WriteLine(value);
                 if (price.CurrentPrice == value)
                     return;
                 price.CurrentPrice = value;

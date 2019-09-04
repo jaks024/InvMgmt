@@ -41,16 +41,17 @@ namespace InvMgmt.Information.ViewModels
 
         public void ChangeSingleItemCategory(ItemViewModel _item, CategoryViewModel _changeTo)
         {
-            FindCategoryUsingName(_item.Category).RemoveItem(_item);
-            _item.Category = _changeTo.Name;
+            FindCategoryUsingId(_item.Category).RemoveItem(_item);
+			SaveDataHandler.SwapItemTable(_item, _changeTo.Id);
+			_item.Category = _changeTo.Id;
             Categories[Categories.IndexOf(_changeTo)].AddItem(_item);
         }
 
-		public CategoryViewModel FindCategoryUsingName(string _name)
+		public CategoryViewModel FindCategoryUsingId(string _name)
 		{
 			for(int i = 0; i < categoryCount; i++)
 			{
-				if (Categories[i].Name.Equals(_name))
+				if (Categories[i].Id.Equals(_name))
 					return Categories[i];
 			}
 			return Categories[0];
@@ -77,6 +78,14 @@ namespace InvMgmt.Information.ViewModels
             Categories.Add(_cat);
             UpdateCategoryCount();
         }
+		public void AddCategoryToListFromDatabase(ObservableCollection<CategoryViewModel> _cat)
+		{
+			foreach(CategoryViewModel c in _cat)
+			{
+				Categories.Add(c);
+			}
+			UpdateCategoryCount();
+		}
 
         public void RemoveCategoryFromList(CategoryViewModel _cat)
         {
@@ -86,15 +95,18 @@ namespace InvMgmt.Information.ViewModels
 
         public void AddNewItemToCategory(CategoryViewModel _cat, ItemViewModel _item)
         {
-            _item.Category = _cat.Name;
+            _item.Category = _cat.Id;
             Categories[Categories.IndexOf(_cat)].AddItem(_item);
             NotifyPropertyChanged("Items");
         }
-		public void AddListItemToCategoryFromDatabase(ObservableCollection<ItemViewModel> _item)
+		public void AddListItemToCategoryFromDatabase(int index, ObservableCollection<ItemViewModel> _item)
 		{
 			if (_item.Count == 0)
 				return;
-			FindCategoryUsingName(_item[0].Category).AddItem(_item);
+			Categories[index].AddItem(_item);
+		}
+		public void NotifyItemAddedFroMDatabase()
+		{
 			NotifyPropertyChanged("Items");
 		}
 		private void UpdateCategoryCount()

@@ -85,7 +85,7 @@ namespace InvMgmt.Information.ViewModels
 		{
 			return string.Format("'{0}', '{1}', '{2}', '{3}', '{4}'", Company, Address, Phone, Email, DateTimeSQLite(Date));
 		}
-		private string DateTimeSQLite(DateTime _datetime)
+		public string DateTimeSQLite(DateTime _datetime)
 		{
 			string dateTimeFormat = "{0}-{1}-{2} {3}:{4}:{5}.{6}";
 			return string.Format(dateTimeFormat, _datetime.Year, _datetime.Month, _datetime.Day, _datetime.Hour, _datetime.Minute, _datetime.Second, _datetime.Millisecond);
