@@ -29,7 +29,8 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
-        public ObservableCollection<ItemViewModel> Items
+		//used in xaml view
+        public ObservableCollection<ItemViewModel> SelectedCategoryItems
         {
             get
             {
@@ -69,10 +70,18 @@ namespace InvMgmt.Information.ViewModels
                     return;
                 manager.currentCategoryIndex = value;
                 NotifyPropertyChanged("CurrentCategoryIndex");
-                NotifyPropertyChanged("Items");
+                NotifyPropertyChanged("SelectedCategoryItems");
             }
         }
 
+		public CategoryViewModel CurrentSelectedCategory
+		{
+			get { return Categories[CurrentCategoryIndex]; }
+		}
+		public void RefreshInventoryItemCount()
+		{
+			CurrentSelectedCategory.RefreshItemCount();
+		}
         public void AddCategoryToList(CategoryViewModel _cat)
         {
             Categories.Add(_cat);
@@ -80,34 +89,33 @@ namespace InvMgmt.Information.ViewModels
         }
 		public void AddCategoryToListFromDatabase(ObservableCollection<CategoryViewModel> _cat)
 		{
-			foreach(CategoryViewModel c in _cat)
+			for(int i = 0; i < _cat.Count; i++)
 			{
-				Categories.Add(c);
+				Categories.Add(_cat[i]);
 			}
 			UpdateCategoryCount();
+			NotifyPropertyChanged("Categories");
 		}
 
         public void RemoveCategoryFromList(CategoryViewModel _cat)
         {
             Categories.Remove(_cat);
             UpdateCategoryCount();
-        }
+			NotifyPropertyChanged("Categories");
+		}
 
         public void AddNewItemToCategory(CategoryViewModel _cat, ItemViewModel _item)
         {
             _item.Category = _cat.Id;
             Categories[Categories.IndexOf(_cat)].AddItem(_item);
-            NotifyPropertyChanged("Items");
+			NotifyPropertyChanged("SelectedCategoryItems");
         }
 		public void AddListItemToCategoryFromDatabase(int index, ObservableCollection<ItemViewModel> _item)
 		{
 			if (_item.Count == 0)
 				return;
 			Categories[index].AddItem(_item);
-		}
-		public void NotifyItemAddedFroMDatabase()
-		{
-			NotifyPropertyChanged("Items");
+			NotifyPropertyChanged("SelectedCategoryItems");
 		}
 		private void UpdateCategoryCount()
         {

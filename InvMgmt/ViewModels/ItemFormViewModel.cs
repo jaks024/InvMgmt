@@ -134,9 +134,9 @@ namespace InvMgmt.Information.ViewModels
 			for (int i = 0; i < _man.CategoryCount; i++)
 			{
 				_man.CurrentCategoryIndex = i;
-				for (int j = 0; j < _man.Items.Count; j++)
+				for (int j = 0; j < _man.SelectedCategoryItems.Count; j++)
 				{
-					if (_man.Items[j].Id.Equals(Id))
+					if (_man.SelectedCategoryItems[j].Id.Equals(Id))
 						return false;
 				}
 			}

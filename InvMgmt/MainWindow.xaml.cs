@@ -31,9 +31,9 @@ namespace InvMgmt
         public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
 
 		public SettingManager settingManager = new SettingManager();
-        public MainWindow()
-        {
-            InitializeComponent();
+		public MainWindow()
+		{
+			InitializeComponent();
 
 			//setting loading
 			settingManager.ReadFromSetting();
@@ -54,22 +54,21 @@ namespace InvMgmt
 			
 	*/
 			//setting data contexts
-            gridNewCat.DataContext = form;
-            gridNewItem.DataContext = itemForm;
-            gridExistingCat.DataContext = categoryManager;
-            cbNewItemCategory.DataContext = categoryManager;
-            tabInventory.DataContext = categoryManager;
-            cmbChangeItemCategory.DataContext = categoryManager;
+			gridNewCat.DataContext = form;
+			gridNewItem.DataContext = itemForm;
+			gridExistingCat.DataContext = categoryManager;
+			cbNewItemCategory.DataContext = categoryManager;
+			tabInventory.DataContext = categoryManager;
+			cmbChangeItemCategory.DataContext = categoryManager;
 			tbSaveFolderPath.DataContext = settingManager.SaveFileManager;
 
 			SaveDataHandler.InitializeConnection("data.sqlite", settingManager.SaveFileManager.FirstLaunch);
-			if(settingManager.SaveFileManager.FirstLaunch)
+			if (settingManager.SaveFileManager.FirstLaunch)
 				settingManager.NoLongerFirstLaunch();
 
 			//temp data
 			//SaveDataHandler.InsertCategoryToTable(categoryManager.Categories[0]);
 			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
-
 			AddCategoryToListDataBase();
 			AddNewItemToCategoryFromDatabase();
 		}
@@ -148,7 +147,6 @@ namespace InvMgmt
         {
             categoryManager.AddNewItemToCategory(_cat, itemForm.GetItem);
 			SaveDataHandler.InsertItemToTable(itemForm.GetItem);
-			dgExistingCat.Items.Refresh();
 			NewItemReset();
         }
 		private void AddNewItemToCategoryFromDatabase()
@@ -157,8 +155,6 @@ namespace InvMgmt
 			{
 				categoryManager.AddListItemToCategoryFromDatabase(i, SaveDataHandler.ReadItemTable(categoryManager.Categories[i].Id));
 			}
-			categoryManager.NotifyItemAddedFroMDatabase();
-			dgExistingCat.Items.Refresh();
 		}
 
 		private void BtnClearNewItem_Click(object sender, RoutedEventArgs e)
@@ -174,7 +170,8 @@ namespace InvMgmt
         private void CmbSortByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dgItemList.Items.Refresh();
-        }
+			categoryManager.RefreshInventoryItemCount();
+		}
 
         private void TextBoxDoubleOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -257,28 +254,43 @@ namespace InvMgmt
 
 		private void RewriteAllData()
 		{
-			foreach(CategoryViewModel c in categoryManager.Categories)
+			SaveDataHandler.OpenConnection();
+			for(int i = 0; i < categoryManager.CategoryCount; i++)
 			{
-				SaveDataHandler.UpdateCategoryInTable(c);
-				foreach(ItemViewModel i in c.Items)
+				SaveDataHandler.UpdateCategoryInTableManualConnection(categoryManager.Categories[i]);
+				for(int x = 0; x < categoryManager.Categories[i].Items.Count; x++)
 				{
-					SaveDataHandler.UpdateItemInTable(i);
+					SaveDataHandler.UpdateItemInTableManualConnection(categoryManager.Categories[i].Items[x]);
 				}
 			}
+			SaveDataHandler.CloseConnection();
 		}
 
 		private void DgExistingCat_LostFocus(object sender, RoutedEventArgs e)
 		{
-			foreach (CategoryViewModel c in categoryManager.Categories)
-			{
-				SaveDataHandler.UpdateCategoryInTable(c);
-			}
+			SaveDataHandler.OpenConnection();
+			for (int i = 0; i < categoryManager.CategoryCount; i++)
+				SaveDataHandler.UpdateCategoryInTableManualConnection(categoryManager.Categories[i]);
+
+			SaveDataHandler.CloseConnection();
 		}
 
 		private void BtnInventoryDelete_Click(object sender, RoutedEventArgs e)
 		{
+			if (dgItemList.SelectedIndex == -1)
+				return;
 			SaveDataHandler.RemoveItemInTable((ItemViewModel)dgItemList.SelectedItem);
 			categoryManager.Categories[categoryManager.CurrentCategoryIndex].RemoveItem((ItemViewModel)dgItemList.SelectedItem);
+		}
+
+		private void DgItemList_LostFocus(object sender, RoutedEventArgs e)
+		{
+			SaveDataHandler.OpenConnection();
+			for(int i = 0; i < categoryManager.SelectedCategoryItems.Count; i++)
+			{
+				SaveDataHandler.UpdateItemInTableManualConnection(categoryManager.SelectedCategoryItems[i]);
+			}
+			SaveDataHandler.CloseConnection();
 		}
 	}
 }

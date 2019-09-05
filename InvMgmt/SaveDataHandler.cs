@@ -23,10 +23,13 @@ namespace InvMgmt
 			"D_COMPANY TEXT, D_ADDRESS TEXT, D_PHONE TEXT, D_EMAIL TEXT, D_DATE TEXT)";
 		public static void InitializeConnection(string _path, bool _firstTime)
 		{
+			if (connection != null)
+				return;
 			if (_firstTime)
 				SQLiteConnection.CreateFile("data.sqlite");
 			connection = new SQLiteConnection("Data Source=" + _path + ";Version=3");
-			CreateTable(categoryTableTemplate, categoryName);
+			if(_firstTime)
+				CreateTable(categoryTableTemplate, categoryName);
 		}
 
 		private static void CreateTable(string _template, string _name)
@@ -34,7 +37,7 @@ namespace InvMgmt
 			connection.Open();
 			using (var command = new SQLiteCommand(string.Format(_template, _name), connection))
 			{
-				Console.WriteLine(command.CommandText);
+				//Console.WriteLine(command.CommandText);
 				command.ExecuteNonQuery();
 				connection.Close();
 			}
@@ -81,7 +84,8 @@ namespace InvMgmt
 		public static ObservableCollection<CategoryViewModel> ReadCategoryTable()
 		{
 			ObservableCollection<CategoryViewModel> c = new ObservableCollection<CategoryViewModel>();
-			connection.Open();
+			if(connection.State == System.Data.ConnectionState.Closed)
+				connection.Open();
 			using (var command = new SQLiteCommand("SELECT * FROM " + categoryName, connection))
 			using (var reader = command.ExecuteReader())
 			{
@@ -90,15 +94,17 @@ namespace InvMgmt
 					c.Add(new CategoryViewModel(
 						reader["ID"].ToString(), reader["NAME"].ToString(), reader["DESC"].ToString()));
 				}
-				connection.Close();
 			}
+			if(connection.State == System.Data.ConnectionState.Open)
+				connection.Close();
 			return c;
 		}
 
 		public static ObservableCollection<ItemViewModel> ReadItemTable(string _catName)
 		{
 			ObservableCollection<ItemViewModel> col = new ObservableCollection<ItemViewModel>();
-			connection.Open();
+			if (connection.State == System.Data.ConnectionState.Closed)
+				connection.Open();
 			using (var command = new SQLiteCommand("SELECT * FROM " + _catName, connection))
 			using (var reader = command.ExecuteReader())
 			{
@@ -113,14 +119,14 @@ namespace InvMgmt
 					new ItemDetailViewModel(
 						reader["D_COMPANY"].ToString(), reader["D_ADDRESS"].ToString(), reader["D_PHONE"].ToString(), reader["D_EMAIL"].ToString(), DateTime.Parse(reader["D_DATE"].ToString()))));
 				}
-				connection.Close();
 			}
+			if (connection.State == System.Data.ConnectionState.Open)
+				connection.Close();
 			return col;
 		}
 
-		public static void UpdateCategoryInTable(CategoryViewModel _obj)
+		public static void UpdateCategoryInTableManualConnection(CategoryViewModel _obj)
 		{
-			connection.Open();
 			using (var command = new SQLiteCommand(connection))
 			{
 				command.CommandText = "UPDATE " + categoryName + " SET NAME = :name, DESC = :desc WHERE ID=:id";
@@ -129,11 +135,9 @@ namespace InvMgmt
 				command.Parameters.Add("id", System.Data.DbType.String).Value = _obj.Id;
 				command.ExecuteNonQuery();
 			}
-			connection.Close();
 		}
-		public static void UpdateItemInTable(ItemViewModel _obj)
+		public static void UpdateItemInTableManualConnection(ItemViewModel _obj)
 		{
-			connection.Open();
 			using (var command = new SQLiteCommand(connection))
 			{
 				command.CommandText = "UPDATE " + _obj.Category + " SET " +
@@ -166,9 +170,16 @@ namespace InvMgmt
 				command.Parameters.Add("ID", System.Data.DbType.String).Value = _obj.Id;
 				command.ExecuteNonQuery();
 			}
-			connection.Close();
 		}
 
+		public static void OpenConnection()
+		{
+			connection.Open();
+		}
+		public static void CloseConnection()
+		{
+			connection.Close();
+		}
 
 		public static void RemoveCategoryInTable(CategoryViewModel _cat)
 		{

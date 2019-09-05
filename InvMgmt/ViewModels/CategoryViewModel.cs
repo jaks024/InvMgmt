@@ -66,24 +66,34 @@ namespace InvMgmt.Information.ViewModels
                 NotifyPropertyChanged("Items");
             }
         }
-        public string ItemCount { get { return Items.Count.ToString(); } }
+		//for xaml view
+        public string ItemCount { get { return Items.Count.ToString(); } }	
+		public void RefreshItemCount()
+		{
+			NotifyPropertyChanged("ItemCount");
+		}
 
         public void AddItem(ItemViewModel _item)
         {
             category.Items.Add(_item);
-        }
+			NotifyPropertyChanged("ItemCount");
+			NotifyPropertyChanged("Item");
+		}
 		public void AddItem(ObservableCollection<ItemViewModel> _item)
 		{
-			foreach(ItemViewModel i in _item)
+			for(int i = 0; i < _item.Count; i++)
 			{
-				category.Items.Add(i);
-				Console.WriteLine("added new item ");
+				category.Items.Add(_item[i]);
 			}
+			NotifyPropertyChanged("ItemCount");
+			NotifyPropertyChanged("Item");
 		}
 		public void RemoveItem(ItemViewModel _item)
         {
             category.Items.Remove(_item);
-        }
+			NotifyPropertyChanged("ItemCount");
+			NotifyPropertyChanged("Item");
+		}
 
         public override string ToString()
         {
