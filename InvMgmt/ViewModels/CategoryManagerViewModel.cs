@@ -76,7 +76,7 @@ namespace InvMgmt.Information.ViewModels
 
 		public CategoryViewModel CurrentSelectedCategory
 		{
-			get { return Categories[CurrentCategoryIndex]; }
+			get { return CurrentCategoryIndex >= Categories.Count ? null : Categories[CurrentCategoryIndex]; }
 		}
 		public void RefreshInventoryItemCount()
 		{
