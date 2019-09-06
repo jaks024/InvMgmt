@@ -34,8 +34,8 @@ namespace InvMgmt.Information.ViewModels
         {
             get
             {
-                if (IsCategoryEmpty)
-                    return null;
+                if (IsCategoryEmpty() || CurrentCategoryIndex == -1)
+                    return new ObservableCollection<ItemViewModel>();
                 return manager.Categories[CurrentCategoryIndex].Items;
             }
         }
@@ -76,10 +76,12 @@ namespace InvMgmt.Information.ViewModels
 
 		public CategoryViewModel CurrentSelectedCategory
 		{
-			get { return CurrentCategoryIndex >= Categories.Count ? null : Categories[CurrentCategoryIndex]; }
+			get { return IsCategoryEmpty() || CurrentCategoryIndex == -1 ? new CategoryViewModel() : Categories[CurrentCategoryIndex]; }
 		}
 		public void RefreshInventoryItemCount()
 		{
+			if (CurrentSelectedCategory == null)
+				return;
 			CurrentSelectedCategory.RefreshItemCount();
 		}
         public void AddCategoryToList(CategoryViewModel _cat)
@@ -121,9 +123,9 @@ namespace InvMgmt.Information.ViewModels
         {
             CategoryCount = Categories.Count;
         }
-        public bool IsCategoryEmpty
+        public bool IsCategoryEmpty()
         {
-            get { return CategoryCount > 0 ? false : true; }
+            return CategoryCount == 0 ? true : false; 
         }
     }
 }

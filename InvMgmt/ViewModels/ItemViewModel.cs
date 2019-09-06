@@ -34,8 +34,11 @@ namespace InvMgmt.Information.ViewModels
                 Console.WriteLine(item.Id);
             }
         }
-
-        public string Name
+		public string IdDb
+		{
+			get { return "[" + Id + "]"; }
+		}
+		public string Name
         {
             get { return item.Name; }
             set

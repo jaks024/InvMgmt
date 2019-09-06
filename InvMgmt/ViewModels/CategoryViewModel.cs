@@ -31,6 +31,10 @@ namespace InvMgmt.Information.ViewModels
                 NotifyPropertyChanged("Id");
             }
         }
+		public string IdDb
+		{
+			get { return "[" + Id + "]"; }
+		}
         public string Name
         {
             get { return category.Name; }

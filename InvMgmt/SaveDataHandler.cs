@@ -32,12 +32,21 @@ namespace InvMgmt
 				CreateTable(categoryTableTemplate, categoryName);
 		}
 
+		public static void InitializeConnection(string _path)
+		{
+			if (connection != null)
+				return;
+			SQLiteConnection.CreateFile("data.sqlite");
+			connection = new SQLiteConnection("Data Source=" + _path + ";Version=3");
+			CreateTable(categoryTableTemplate, categoryName);
+		}
+
 		private static void CreateTable(string _template, string _name)
 		{
 			connection.Open();
 			using (var command = new SQLiteCommand(string.Format(_template, _name), connection))
 			{
-				//Console.WriteLine(command.CommandText);
+				Console.WriteLine(command.CommandText);
 				command.ExecuteNonQuery();
 				connection.Close();
 			}
@@ -53,15 +62,17 @@ namespace InvMgmt
 			connection.Open();
 			using (var command = new SQLiteCommand(CategoryInsertString(_cvm.ToString()), connection))
 			{
+				Console.WriteLine(_cvm.ToString());
 				command.ExecuteNonQuery();
 				connection.Close();
 			}
 		}
 
+		private static string SquareWrap(string x) { return "[" + x + "]"; }
 		public static void InsertItemToTable(ItemViewModel _ivm)
 		{
 			connection.Open();
-			using (var command = new SQLiteCommand(ItemInsertString(_ivm.Category, _ivm.ToString()), connection))
+			using (var command = new SQLiteCommand(ItemInsertString(SquareWrap(_ivm.Category), _ivm.ToString()), connection))
 			{
 				command.ExecuteNonQuery();
 				connection.Close();
@@ -132,7 +143,7 @@ namespace InvMgmt
 				command.CommandText = "UPDATE " + categoryName + " SET NAME = :name, DESC = :desc WHERE ID=:id";
 				command.Parameters.Add("name", System.Data.DbType.String).Value = _obj.Name;
 				command.Parameters.Add("desc", System.Data.DbType.String).Value = _obj.Description;
-				command.Parameters.Add("id", System.Data.DbType.String).Value = _obj.Id;
+				command.Parameters.Add("id", System.Data.DbType.String).Value = _obj.IdDb;
 				command.ExecuteNonQuery();
 			}
 		}
@@ -140,7 +151,7 @@ namespace InvMgmt
 		{
 			using (var command = new SQLiteCommand(connection))
 			{
-				command.CommandText = "UPDATE " + _obj.Category + " SET " +
+				command.CommandText = "UPDATE " + SquareWrap(_obj.Category) + " SET " +
 					"NAME = :NAME, DESC = :DESC, CAT = :CAT, " +
 					"Q_TAVALIABLE = :Q_TAVALIABLE, Q_TODAY = :Q_TODAY, Q_WEEK = :Q_WEEK, Q_MONTH = :Q_MONTH, Q_ANNUAL = :Q_ANNUAL, Q_TOTAL = :Q_TOTAL, " +
 					"P_CURRENT = :P_CURRENT, P_REGULAR = :P_REGULAR, P_SALE = :P_SALE, P_ONSALE = :P_ONSALE, " +
@@ -148,7 +159,7 @@ namespace InvMgmt
 					"WHERE ID=:ID";
 				command.Parameters.Add("NAME", System.Data.DbType.String).Value = _obj.Name;
 				command.Parameters.Add("DESC", System.Data.DbType.String).Value = _obj.Description;
-				command.Parameters.Add("CAT", System.Data.DbType.String).Value = _obj.Category;
+				command.Parameters.Add("CAT", System.Data.DbType.String).Value = SquareWrap(_obj.Category);
 
 				command.Parameters.Add("Q_TAVALIABLE", System.Data.DbType.Int32).Value = _obj.Quantity.Total;
 				command.Parameters.Add("Q_TODAY", System.Data.DbType.Int32).Value = _obj.Quantity.Today;
@@ -167,7 +178,7 @@ namespace InvMgmt
 				command.Parameters.Add("D_PHONE", System.Data.DbType.String).Value = _obj.Detail.Phone;
 				command.Parameters.Add("D_EMAIL", System.Data.DbType.String).Value = _obj.Detail.Email;
 				command.Parameters.Add("D_DATE", System.Data.DbType.String).Value = _obj.Detail.DateTimeSQLite(_obj.Detail.Date);
-				command.Parameters.Add("ID", System.Data.DbType.String).Value = _obj.Id;
+				command.Parameters.Add("ID", System.Data.DbType.String).Value = _obj.IdDb;
 				command.ExecuteNonQuery();
 			}
 		}
@@ -189,7 +200,7 @@ namespace InvMgmt
 				command.CommandText = "DELETE FROM " + categoryName + " WHERE ID=:ID";
 				command.Parameters.Add("ID", System.Data.DbType.String).Value = _cat.Id;
 				command.ExecuteNonQuery();
-				command.CommandText = "DROP TABLE " + _cat.Id;
+				command.CommandText = "DROP TABLE " + _cat.IdDb;
 				command.ExecuteNonQuery();
 			}
 			connection.Close();
@@ -200,7 +211,7 @@ namespace InvMgmt
 			connection.Open();
 			using (var command = new SQLiteCommand(connection))
 			{
-				command.CommandText = "DELETE FROM " + _obj.Category + " WHERE ID=:ID";
+				command.CommandText = "DELETE FROM " + SquareWrap(_obj.Category) + " WHERE ID=:ID";
 				command.Parameters.Add("ID", System.Data.DbType.String).Value = _obj.Id;
 				command.ExecuteNonQuery();
 			}

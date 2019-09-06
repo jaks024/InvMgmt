@@ -66,6 +66,7 @@ namespace InvMgmt
 			if (settingManager.SaveFileManager.FirstLaunch)
 				settingManager.NoLongerFirstLaunch();
 
+			//SaveDataHandler.InitializeConnection("data.sqlite");
 			//temp data
 			//SaveDataHandler.InsertCategoryToTable(categoryManager.Categories[0]);
 			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
@@ -101,7 +102,7 @@ namespace InvMgmt
         {
             categoryManager.AddCategoryToList(form.GetCategory);
 			SaveDataHandler.InsertCategoryToTable(form.GetCategory);
-			SaveDataHandler.CreateItemTable(form.GetCategory.Id);
+			SaveDataHandler.CreateItemTable(form.GetCategory.IdDb);
             form.Reset();
         }
 		private void AddCategoryToListDataBase()
@@ -130,7 +131,7 @@ namespace InvMgmt
         {
 			Console.WriteLine("selected index " + cbNewItemCategory.SelectedIndex);
 
-			if (cbNewItemCategory.SelectedIndex == -1 || !itemForm.CanAddItem || categoryManager.IsCategoryEmpty)
+			if (cbNewItemCategory.SelectedIndex == -1 || !itemForm.CanAddItem || categoryManager.IsCategoryEmpty())
 			{
 				MessageBox.Show("All fields with asterisk must be filled.");
 				return;
@@ -153,7 +154,7 @@ namespace InvMgmt
 		{
 			for(int i = 0; i < categoryManager.CategoryCount; i++)
 			{
-				categoryManager.AddListItemToCategoryFromDatabase(i, SaveDataHandler.ReadItemTable(categoryManager.Categories[i].Id));
+				categoryManager.AddListItemToCategoryFromDatabase(i, SaveDataHandler.ReadItemTable(categoryManager.Categories[i].IdDb));
 			}
 		}
 
