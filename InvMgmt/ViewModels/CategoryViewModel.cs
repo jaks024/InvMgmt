@@ -70,12 +70,6 @@ namespace InvMgmt.Information.ViewModels
                 NotifyPropertyChanged("Items");
             }
         }
-		//for xaml view
-        public string ItemCount { get { return Items.Count.ToString(); } }	
-		public void RefreshItemCount()
-		{
-			NotifyPropertyChanged("ItemCount");
-		}
 
         public void AddItem(ItemViewModel _item)
         {

@@ -82,7 +82,12 @@ namespace InvMgmt.Information.ViewModels
 		{
 			if (CurrentSelectedCategory == null)
 				return;
-			CurrentSelectedCategory.RefreshItemCount();
+			NotifyPropertyChanged("SelectedCategoryItemCount");
+		}
+
+		public int SelectedCategoryItemCount
+		{
+			get { return IsCategoryEmpty() || CurrentCategoryIndex == -1 ? 0 : CurrentSelectedCategory.Items.Count; }
 		}
         public void AddCategoryToList(CategoryViewModel _cat)
         {

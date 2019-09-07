@@ -143,7 +143,7 @@ namespace InvMgmt
 				command.CommandText = "UPDATE " + categoryName + " SET NAME = :name, DESC = :desc WHERE ID=:id";
 				command.Parameters.Add("name", System.Data.DbType.String).Value = _obj.Name;
 				command.Parameters.Add("desc", System.Data.DbType.String).Value = _obj.Description;
-				command.Parameters.Add("id", System.Data.DbType.String).Value = _obj.IdDb;
+				command.Parameters.Add("id", System.Data.DbType.String).Value = _obj.Id;
 				command.ExecuteNonQuery();
 			}
 		}
@@ -159,7 +159,7 @@ namespace InvMgmt
 					"WHERE ID=:ID";
 				command.Parameters.Add("NAME", System.Data.DbType.String).Value = _obj.Name;
 				command.Parameters.Add("DESC", System.Data.DbType.String).Value = _obj.Description;
-				command.Parameters.Add("CAT", System.Data.DbType.String).Value = SquareWrap(_obj.Category);
+				command.Parameters.Add("CAT", System.Data.DbType.String).Value = _obj.Category;
 
 				command.Parameters.Add("Q_TAVALIABLE", System.Data.DbType.Int32).Value = _obj.Quantity.Total;
 				command.Parameters.Add("Q_TODAY", System.Data.DbType.Int32).Value = _obj.Quantity.Today;
@@ -178,7 +178,7 @@ namespace InvMgmt
 				command.Parameters.Add("D_PHONE", System.Data.DbType.String).Value = _obj.Detail.Phone;
 				command.Parameters.Add("D_EMAIL", System.Data.DbType.String).Value = _obj.Detail.Email;
 				command.Parameters.Add("D_DATE", System.Data.DbType.String).Value = _obj.Detail.DateTimeSQLite(_obj.Detail.Date);
-				command.Parameters.Add("ID", System.Data.DbType.String).Value = _obj.IdDb;
+				command.Parameters.Add("ID", System.Data.DbType.String).Value = _obj.Id;
 				command.ExecuteNonQuery();
 			}
 		}

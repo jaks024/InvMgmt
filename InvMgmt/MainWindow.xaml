@@ -132,6 +132,7 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="35"/>
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="35"/>
                         </Grid.RowDefinitions>
@@ -192,8 +193,12 @@
                         <DatePicker Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" HorizontalAlignment="Left" 
                                     Text="{Binding Detail.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Focusable="False"/>
 
-                        <Label Grid.Row="8" Grid.Column="3" Content="Address" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
-                        <TextBox Grid.Row="9" Grid.RowSpan="2" Grid.Column="3" Margin="5" Width="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" 
+                        <Label Grid.Row="8" Grid.Column="3" Content="Email" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="9" Grid.Column="3" Margin="5" AcceptsReturn="True" Width="200" VerticalScrollBarVisibility="Auto"
+                                 Text="{Binding Detail.Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        
+                        <Label Grid.Row="10" Content="Address" Margin="5 0 0 0" VerticalAlignment="Bottom"/>
+                        <TextBox Grid.Row="11" Grid.ColumnSpan="3" Margin="5" Width="320" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                                  Text="{Binding Detail.Address, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                         <Button Name="btnClearNewItem" Grid.Row="11" Grid.Column="3" Width="95" HorizontalAlignment="Left" Content="Clear" Margin="5"
@@ -239,7 +244,7 @@
                         </StackPanel>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
-                            <TextBlock Name="tbInventoryItemCount" Text="{Binding CurrentSelectedCategory.ItemCount, StringFormat='Item Count: {0}', Mode=OneWay}" VerticalAlignment="Center" Width="100"/>
+                            <TextBlock Name="tbInventoryItemCount" Text="{Binding SelectedCategoryItemCount, StringFormat='Item Count: {0}', Mode=OneWay}" VerticalAlignment="Center" Width="100"/>
                             <Button x:Name="btnInventoryDelete" Content="Delete" Margin="5 0" Width="50" Click="BtnInventoryDelete_Click"/>
                         </StackPanel>
                     </Grid>
@@ -248,55 +253,55 @@
                               ItemsSource="{Binding SelectedCategoryItems}" SelectionChanged="DgItemList_SelectionChanged" SelectionMode="Single" LostFocus="DgItemList_LostFocus">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}"/>
                             <DataGridTemplateColumn Header="Total Quantity" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Quantity.Total, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus"/>
+                                        <TextBox Text="{Binding Quantity.Total, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Used Today" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Quantity.Today, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus"/>
+                                        <TextBox Text="{Binding Quantity.Today, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Used Weekly" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Quantity.Weekly, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus" />
+                                        <TextBox Text="{Binding Quantity.Weekly, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Used Monthly" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Quantity.Monthly, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus" />
+                                        <TextBox Text="{Binding Quantity.Monthly, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="7" LostFocus="TextBoxIntOnlyValidation_LostFocus" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Current Price" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Price.CurrentPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
+                                        <TextBox Text="{Binding Price.CurrentPrice, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Regular Price" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Price.RegularPrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
+                                        <TextBox Text="{Binding Price.RegularPrice, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Sale Price" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Price.SalePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
+                                        <TextBox Text="{Binding Price.SalePrice, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="9" LostFocus="TextBoxDoubleOnlyValidation_LostFocus"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -319,22 +324,22 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Text="Company: " Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Column="1" Text="{Binding Detail.Company, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Column="1" Text="{Binding Detail.Company, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                                    
                                     <TextBlock Text="Address: " Grid.Row="1" Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Address, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Address, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                                     <TextBlock Text="Phone: " Grid.Column="2" Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Column="3" Text="{Binding Detail.Phone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Column="3" Text="{Binding Detail.Phone, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                                     
                                     <TextBlock Text="Date: " Grid.Row="1" Grid.Column="2" Margin="5 0"/>
                                     <Viewbox Margin="5 0" Grid.Row="1" Grid.Column="3">
-                                        <DatePicker  Focusable="False" FontSize="14" CalendarStyle="{StaticResource styleCalendar}" Text="{Binding Detail.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                        <DatePicker  Focusable="False" FontSize="14" CalendarStyle="{StaticResource styleCalendar}" Text="{Binding Detail.Date, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                                     </Viewbox>
 
                                     <TextBlock Text="Email: " Grid.Column="4" Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Column="5" Text="{Binding Detail.Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Column="5" Text="{Binding Detail.Email, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
 
                                 </Grid>
                             </DataTemplate>

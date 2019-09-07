@@ -176,7 +176,8 @@ namespace InvMgmt
 
         private void TextBoxDoubleOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (((TextBox)sender).Text.Length == 0)
+			e.Handled = true;
+			if (((TextBox)sender).Text.Length == 0)
             {
                 ((TextBox)sender).Text = "0";
                 return;
@@ -196,11 +197,12 @@ namespace InvMgmt
                 return;
             }
             ((TextBox)sender).Text = temp.ToString();
-        }
+			((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
+		}
 
         private void TextBoxIntOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (((TextBox)sender).Text.Length == 0)
+			if (((TextBox)sender).Text.Length == 0)
             {
                 ((TextBox)sender).Text = "0";
                 return;
@@ -211,16 +213,17 @@ namespace InvMgmt
             {
                 ((TextBox)sender).Text = "0";
                 MessageBox.Show("This field is integer only");
-                return;
+				return;
             }
             if(temp < 0)
             {
                 ((TextBox)sender).Text = "0";
                 MessageBox.Show("This field cannot be negative");
-                return;
+				return;
             }
             ((TextBox)sender).Text = temp.ToString("N0");
-        }
+			((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
+		}
 
 		#endregion
 
