@@ -8,7 +8,7 @@ using InvMgmt.Information.Objects;
 
 namespace InvMgmt.Information.ViewModels
 {
-    public class CategoryViewModel : ViewModelBase
+    public class CategoryViewModel : ViewModelBase, ISearchable
     {
         private Category category;
 
@@ -59,6 +59,7 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
+
         public ObservableCollection<ItemViewModel> Items
         {
             get { return category.Items; }
@@ -97,5 +98,10 @@ namespace InvMgmt.Information.ViewModels
         {
             return string.Format("'{0}', '{1}', '{2}'", Id, Name, Description);
         }
+
+		public string SearchQuery()
+		{
+			return Id + "/" + Name + "/" + Description;
+		}
     }
 }

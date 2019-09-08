@@ -100,5 +100,10 @@ namespace InvMgmt.Information.ViewModels
 		{
 			return string.Format("{0}, {1}, {2}, {3}, {4}, {5}", Total, Today, Weekly, Monthly, Annually, UsedTotal);
 		}
+
+		public string SearchQuery()
+		{
+			return Today.ToString() + "/" + Weekly.ToString() + "/" + Monthly.ToString() + "/" + Annually.ToString() + "/" + UsedTotal.ToString();
+		}
 	}
 }

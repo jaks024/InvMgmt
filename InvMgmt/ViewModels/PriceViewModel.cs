@@ -71,5 +71,10 @@ namespace InvMgmt.Information.ViewModels
         {
             return string.Format("{0}, {1}, {2}, {3}", CurrentPrice, RegularPrice, SalePrice, IsOnSale ? 1 : 0);
         }
+
+		public string SearchQuery()
+		{
+			return CurrentPrice.ToString() + "/" + SalePrice.ToString() + "/" + RegularPrice.ToString() + "/" + (IsOnSale ? "sale" : "not");
+		}
     }
 }

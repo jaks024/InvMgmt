@@ -256,6 +256,7 @@ namespace InvMgmt
 
 		#endregion
 
+		#region database changes
 		private void RewriteAllData()
 		{
 			SaveDataHandler.OpenConnection();
@@ -295,6 +296,22 @@ namespace InvMgmt
 				SaveDataHandler.UpdateItemInTableManualConnection(categoryManager.SelectedCategoryItems[i]);
 			}
 			SaveDataHandler.CloseConnection();
+		}
+		#endregion
+
+		#region search
+		private void BtnSearch_Click(object sender, RoutedEventArgs e)
+		{
+			SearchSystem s = new SearchSystem();
+			categoryManager.SetCurrentItemToSeached(s.GetSearchedItem(tbItemSearch.Text, categoryManager.SelectedCategoryItems));
+		}
+
+		#endregion
+
+		private void BtnClear_Click(object sender, RoutedEventArgs e)
+		{
+			tbItemSearch.Clear();
+			categoryManager.SetCurrentItemAllToVisible();
 		}
 	}
 }

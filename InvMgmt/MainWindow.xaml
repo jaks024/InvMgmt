@@ -9,6 +9,7 @@
         Title="InvMngt" Height="720" Width="1280">
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <DataTemplate x:Key="cbCategoryTemplate">
             <TextBlock>
                 <TextBlock.Text>
@@ -44,7 +45,7 @@
 
         <TabControl Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left">
             <TabItem Header="Add" Height="35" Width="100">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" FocusManager.IsFocusScope="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
@@ -97,7 +98,7 @@
                                 <DataGrid.Columns>  
                                     <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
                                     <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridTextColumn Header="Item Count" Binding="{Binding ItemCount, Mode=OneWay}"/>
+                                    <DataGridTextColumn Header="Item Count" Binding="{Binding Items.Count, Mode=OneWay}"/>
                                 </DataGrid.Columns>
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
@@ -233,24 +234,33 @@
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1">
                             <TextBox Name="tbItemSearch"
-                                 Grid.Row="1" Width="225"/>
-                            <Button Content="Search"
-                               Margin="5 0" Width="50" />
+                                 Grid.Row="1" Width="170"/>
+                            <Button Content="Search" Name="btnSearch"
+                               Margin="5 0 0 0" Width="50" Click="BtnSearch_Click"/>
+                            <Button Content="Clear" Name="btnClear"
+                               Margin="5 0 0 0" Width="50" Click="BtnClear_Click"/>
                         </StackPanel>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2">
-                            <ComboBox Width="200" Name="cmbChangeItemCategory" SelectionChanged="CmbChangeItemCategory_SelectionChanged"
+                            <TextBlock Text="Change Category" Width="100" VerticalAlignment="Center" />
+                            <ComboBox Width="175" Name="cmbChangeItemCategory" SelectionChanged="CmbChangeItemCategory_SelectionChanged"
                                        ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource cbCategoryTemplate}"/>
                         </StackPanel>
 
                         <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
-                            <TextBlock Name="tbInventoryItemCount" Text="{Binding SelectedCategoryItemCount, StringFormat='Item Count: {0}', Mode=OneWay}" VerticalAlignment="Center" Width="100"/>
+                            <TextBlock Name="tbInventoryItemCount" Text="{Binding SelectedCategoryItems.Count, StringFormat='Item Count: {0}', Mode=OneWay}" VerticalAlignment="Center" Width="100"/>
                             <Button x:Name="btnInventoryDelete" Content="Delete" Margin="5 0" Width="50" Click="BtnInventoryDelete_Click"/>
                         </StackPanel>
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
+                              CanUserSortColumns="True"
                               ItemsSource="{Binding SelectedCategoryItems}" SelectionChanged="DgItemList_SelectionChanged" SelectionMode="Single" LostFocus="DgItemList_LostFocus">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Visibility" Value="{Binding Visible, Converter={StaticResource BoolToVisibility}}"/>
+                            </Style>
+                        </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>

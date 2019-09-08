@@ -132,5 +132,39 @@ namespace InvMgmt.Information.ViewModels
         {
             return CategoryCount == 0 ? true : false; 
         }
+
+		public void SetCurrentItemToSeached(ObservableCollection<ItemViewModel> _item)
+		{
+			for (int i = 0; i < _item.Count; i++)
+			{
+				for (int x = 0; x < SelectedCategoryItems.Count; x++)
+				{
+					if (SelectedCategoryItems[x].Id != _item[i].Id && i == 0)
+					{
+						SelectedCategoryItems[x].Visible = false;
+					}
+					if (SelectedCategoryItems[x].Id == _item[i].Id && i > 0 && !SelectedCategoryItems[x].Visible)
+					{
+						SelectedCategoryItems[x].Visible = true;
+					}
+				}
+			}
+			//for(int i = 0; i <SelectedCategoryItems.Count; i++)
+			//{
+			//	if(_item.IndexOf(SelectedCategoryItems[i]) == -1)
+			//		SelectedCategoryItems[i].Visible = false;
+			//}
+		}
+
+
+
+		public void SetCurrentItemAllToVisible()
+		{
+			for(int i = 0; i < SelectedCategoryItemCount; i++)
+			{
+				if (!SelectedCategoryItems[i].Visible)
+					SelectedCategoryItems[i].Visible = true;
+			}
+		}
     }
 }

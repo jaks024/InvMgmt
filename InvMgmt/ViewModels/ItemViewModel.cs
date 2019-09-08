@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using InvMgmt.Information.Objects;
 namespace InvMgmt.Information.ViewModels
 {
-    public class ItemViewModel : ViewModelBase
-    {
+    public class ItemViewModel : ViewModelBase, ISearchable
+	{
         private Item item;
         public ItemViewModel() { item = new Item(); }
         public ItemViewModel(string _id, string _name, string _desc, string _cat, QuantityViewModel _quantity, PriceViewModel _price, ItemDetailViewModel _detail)
@@ -74,7 +74,14 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
-        public QuantityViewModel Quantity
+		private bool visible = true;
+		public bool Visible
+		{
+			get { return visible; }
+			set { visible = value; NotifyPropertyChanged("Visible"); }
+		}
+
+		public QuantityViewModel Quantity
         {
             get { return item.Quantity; }
             set
@@ -116,5 +123,11 @@ namespace InvMgmt.Information.ViewModels
 				Id, Name, Description, Category, 
 				Quantity.ToString(), Price.ToString(), Detail.ToString());
         }
-    }
+
+		public string SearchQuery()
+		{
+			return Id + "/" + Name + "/" + Category + "/"  + Description + "/"
+				+ Quantity.SearchQuery() + "/" + Price.SearchQuery() + "/" + Detail.SearchQuery();
+		}
+	}
 }

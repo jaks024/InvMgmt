@@ -74,9 +74,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ISearchable.cs" />
     <Compile Include="Objects\CategoryManager.cs" />
     <Compile Include="Objects\SaveSetting.cs" />
     <Compile Include="SaveDataHandler.cs" />
+    <Compile Include="SearchSystem.cs" />
     <Compile Include="SettingManager.cs" />
     <Compile Include="ViewModels\CategoryManagerViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
