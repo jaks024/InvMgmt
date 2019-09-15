@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvMgmt"
         mc:Ignorable="d"
-        Title="InvMngt" Height="720" Width="1280">
+        Title="InvMngt" Height="720" Width="1280"
+        ResizeMode="CanMinimize">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
@@ -358,7 +359,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Settings" Height="35" Width="100">
+            <TabItem Header="Settings" Height="35" Width="100" IsEnabled="False">
                 <Grid Background="GhostWhite">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="500"/>
@@ -376,9 +377,6 @@
                     </DockPanel>
                     
                 </Grid>
-            </TabItem>
-            <TabItem Header="TabItem" Height="50" Width="100">
-                <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
 
