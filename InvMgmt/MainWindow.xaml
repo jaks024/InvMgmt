@@ -359,6 +359,29 @@
                 </Grid>
             </TabItem>
 
+            <TabItem Header="History" Name="tabHistory" Height="35" Width="100">
+                <Grid Background="WhiteSmoke" FocusManager.IsFocusScope="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="500"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Recent History"/>
+                    <ListBox Name="lbRecentHistory" Grid.Row="1">
+                        <ListBoxItem>
+                            
+                        </ListBoxItem>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+
             <TabItem Header="Settings" Height="35" Width="100" IsEnabled="False">
                 <Grid Background="GhostWhite">
                     <Grid.ColumnDefinitions>
