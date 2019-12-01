@@ -72,9 +72,23 @@ namespace InvMgmt.Information.ViewModels
             return string.Format("{0}, {1}, {2}, {3}", CurrentPrice, RegularPrice, SalePrice, IsOnSale ? 1 : 0);
         }
 
+		public string ToStringDetailed()
+		{						
+			return string.Format("Prices -\t\t Current: {0},  Regular: {1},  Sale: {2},  On Sale: {3}", CurrentPrice, RegularPrice, SalePrice, IsOnSale ? 1 : 0);
+		}
 		public string SearchQuery()
 		{
 			return CurrentPrice.ToString() + "/" + SalePrice.ToString() + "/" + RegularPrice.ToString() + "/" + (IsOnSale ? "sale" : "not");
 		}
-    }
+
+
+		//public override bool Equals(object obj)
+		//{
+		//	PriceViewModel p = (PriceViewModel)obj;
+		//	if (CurrentPrice == p.CurrentPrice && RegularPrice == p.RegularPrice
+		//		&& SalePrice == p.SalePrice && IsOnSale == p.IsOnSale)
+		//		return true;
+		//	return false;
+		//}
+	}
 }

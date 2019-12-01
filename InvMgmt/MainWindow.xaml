@@ -255,7 +255,7 @@
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
-                              CanUserSortColumns="True"
+                              CanUserSortColumns="True" RowEditEnding="DgItemList_CellEditEnding"
                               ItemsSource="{Binding SelectedCategoryItems}" SelectionChanged="DgItemList_SelectionChanged" SelectionMode="Single" LostFocus="DgItemList_LostFocus">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}">
@@ -359,26 +359,40 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="History" Name="tabHistory" Height="35" Width="100">
+            <TabItem Header="History" Name="tabHistory" Height="35" Width="100" Margin="-1,0,1,0" VerticalAlignment="Bottom">
                 <Grid Background="WhiteSmoke" FocusManager.IsFocusScope="True">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="500"/>
+                        <ColumnDefinition Width="800"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Content="Recent History"/>
-                    <ListBox Name="lbRecentHistory" Grid.Row="1">
-                        <ListBoxItem>
-                            
-                        </ListBoxItem>
-                        <ListBox.ItemTemplate>
+                    <DataGrid Name="dgRecentHistory" Grid.Row="1" AutoGenerateColumns="False" RowDetailsVisibilityMode="VisibleWhenSelected"
+                              CanUserSortColumns="True" IsReadOnly="True" CanUserAddRows="False" 
+                              ItemsSource="{Binding Histories}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time, UpdateSourceTrigger=LostFocus, Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Action" Binding="{Binding Name, UpdateSourceTrigger=LostFocus, Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Path" Binding="{Binding Path, UpdateSourceTrigger=LostFocus, Mode=OneWay}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
-                                
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="15"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="795"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="1" Margin="5 0" TextWrapping="Wrap" Text="{Binding Detail, Mode=OneWay}"/>
+                                </Grid>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
                 </Grid>
             </TabItem>
 

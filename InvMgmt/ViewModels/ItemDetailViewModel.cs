@@ -85,6 +85,10 @@ namespace InvMgmt.Information.ViewModels
 		{
 			return string.Format("'{0}', '{1}', '{2}', '{3}', '{4}'", Company, Address, Phone, Email, DateTimeSQLite(Date));
 		}
+		public string ToStringDetailed()
+		{						
+			return string.Format("Details -\t\t Company: {0},  Address: {1},  Phone: {2},  Email: {3},  Date: {4}", Company, Address, Phone, Email, DateTimeSQLite(Date));
+		}
 		public string DateTimeSQLite(DateTime _datetime)
 		{
 			return string.Format("{0}-{1}-{2} {3}:{4}:{5}.{6}", _datetime.Year, _datetime.Month, _datetime.Day, _datetime.Hour, _datetime.Minute, _datetime.Second, _datetime.Millisecond);
@@ -94,5 +98,14 @@ namespace InvMgmt.Information.ViewModels
 		{
 			return Company + "/" + Address + "/" + Phone + "/" + Email + "/" + Date.ToLongDateString() + "/" + DateTimeSQLite(Date);
 		}
+
+		//public override bool Equals(object obj)
+		//{
+		//	ItemDetailViewModel i = (ItemDetailViewModel)obj;
+		//	if (Company.Equals(i.Company) && Address.Equals(i.Address) && Phone.Equals(i.Phone)
+		//		&& Email.Equals(i.Email) && Date.Equals(i.Date))
+		//		return true;
+		//	return false;
+		//}
 	}
 }

@@ -124,10 +124,26 @@ namespace InvMgmt.Information.ViewModels
 				Quantity.ToString(), Price.ToString(), Detail.ToString());
         }
 
+		public string ToStringDetailed()
+		{						 
+			return string.Format("General -\t Id: {0},  Name: {1},  Category: {2},  Description: {3}\n{4}\n{5}\n{6}",
+				Id, Name, Category, Description,
+				Quantity.ToStringDetailed(), Price.ToStringDetailed(), Detail.ToStringDetailed());
+		}
+
 		public string SearchQuery()
 		{
 			return Id + "/" + Name + "/" + Category + "/"  + Description + "/"
 				+ Quantity.SearchQuery() + "/" + Price.SearchQuery() + "/" + Detail.SearchQuery();
 		}
+
+		//public override bool Equals(object obj)
+		//{
+		//	ItemViewModel x = (ItemViewModel)obj;
+		//	if (Name.Equals(x.Name) && Category.Equals(x.Category) && Description.Equals(x.Description)
+		//		&& Quantity.Equals(x.Quantity) && Price.Equals(x.Price) && Detail.Equals(x.Detail))
+		//		return true;
+		//	return false;
+		//}
 	}
 }

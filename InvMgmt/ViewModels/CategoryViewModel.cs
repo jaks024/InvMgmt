@@ -99,6 +99,11 @@ namespace InvMgmt.Information.ViewModels
             return string.Format("'{0}', '{1}', '{2}'", Id, Name, Description);
         }
 
+		public string ToStringDetailed()
+		{
+			return string.Format("Id: {0}, Name: {1}, Description: {2}", Id, Name, Description);
+		}
+
 		public string SearchQuery()
 		{
 			return Id + "/" + Name + "/" + Description;

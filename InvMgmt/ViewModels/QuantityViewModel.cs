@@ -101,9 +101,23 @@ namespace InvMgmt.Information.ViewModels
 			return string.Format("{0}, {1}, {2}, {3}, {4}, {5}", Total, Today, Weekly, Monthly, Annually, UsedTotal);
 		}
 
+		public string ToStringDetailed()
+		{
+			return string.Format("Quantities -\t Total: {0},  Today: {1},  Weekly: {2},  Monthly: {3},  Annually: {4},  Used Total: {5}", Total, Today, Weekly, Monthly, Annually, UsedTotal);
+		}
+
 		public string SearchQuery()
 		{
 			return Today.ToString() + "/" + Weekly.ToString() + "/" + Monthly.ToString() + "/" + Annually.ToString() + "/" + UsedTotal.ToString();
 		}
+
+		//public override bool Equals(object obj)
+		//{
+		//	QuantityViewModel q = (QuantityViewModel)obj;
+		//	if (Total == q.Total && Today == q.Today && Weekly == q.Weekly
+		//		&& Monthly == q.Monthly && Annually == q.Annually && UsedTotal == q.UsedTotal)
+		//		return true;
+		//	return false;
+		//}
 	}
 }

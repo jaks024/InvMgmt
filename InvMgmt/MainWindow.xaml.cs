@@ -31,6 +31,7 @@ namespace InvMgmt
         public CategoryManagerViewModel categoryManager { get; } = new CategoryManagerViewModel();
 
 		public SettingManager settingManager = new SettingManager();
+		public HistoryManagerViewModel historyManager { get; } = new HistoryManagerViewModel();
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -61,6 +62,7 @@ namespace InvMgmt
 			tabInventory.DataContext = categoryManager;
 			cmbChangeItemCategory.DataContext = categoryManager;
 			tbSaveFolderPath.DataContext = settingManager.SaveFileManager;
+			dgRecentHistory.DataContext = historyManager;
 
 			SaveDataHandler.InitializeConnection("data.sqlite", settingManager.SaveFileManager.FirstLaunch);
 			if (settingManager.SaveFileManager.FirstLaunch)
@@ -103,6 +105,9 @@ namespace InvMgmt
             categoryManager.AddCategoryToList(form.GetCategory);
 			SaveDataHandler.InsertCategoryToTable(form.GetCategory);
 			SaveDataHandler.CreateItemTable(form.GetCategory.IdDb);
+
+			HistoryAddNewCategory(form.GetCategory);
+
             form.Reset();
         }
 		private void AddCategoryToListDataBase()
@@ -148,6 +153,9 @@ namespace InvMgmt
         {
             categoryManager.AddNewItemToCategory(_cat, itemForm.GetItem);
 			SaveDataHandler.InsertItemToTable(itemForm.GetItem);
+
+			HistoryAddNewItem(itemForm.GetItem);
+
 			NewItemReset();
         }
 		private void AddNewItemToCategoryFromDatabase()
@@ -234,7 +242,10 @@ namespace InvMgmt
             if (dgItemList.SelectedItem == null)
                 return;
             cmbChangeItemCategory.SelectedItem = categoryManager.FindCategoryUsingId(((ItemViewModel)dgItemList.SelectedItem).Category);
-            
+
+			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
+			if(x != null)
+				historyTempItem = new ItemViewModel(x.Id, x.Name, x.Description, x.Category, x.Quantity, x.Price, x.Detail);
         }
 
         private void CmbChangeItemCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -306,12 +317,40 @@ namespace InvMgmt
 			categoryManager.SetCurrentItemToSeached(s.GetSearchedItem(tbItemSearch.Text, categoryManager.SelectedCategoryItems));
 		}
 
-		#endregion
-
 		private void BtnClear_Click(object sender, RoutedEventArgs e)
 		{
 			tbItemSearch.Clear();
 			categoryManager.SetCurrentItemAllToVisible();
+		}
+
+		#endregion
+
+		#region history
+		private ItemViewModel historyTempItem;
+		private void HistoryAddNewCategory(CategoryViewModel cat)
+		{
+			historyManager.AddNewHistoryEntry(HistoryActionType.Added, cat.Name, cat.ToStringDetailed(), "Adding new category");
+		}
+		private void HistoryAddNewItem(ItemViewModel item)
+		{
+			historyManager.AddNewHistoryEntry(HistoryActionType.Added, item.Name, item.ToStringDetailed(), "Added to " + item.Category);
+		}
+		private void HistoryChangeItem(ItemViewModel item, string changes)
+		{
+			historyManager.AddNewHistoryEntry(HistoryActionType.Changed, item.Name, changes, "Child of " + item.Category);
+		}
+		private void HistoryRemoveItem()
+		{
+			
+		}
+		#endregion
+
+		private void DgItemList_CellEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+		{
+			Console.WriteLine("called");
+			string changes = historyManager.GetCompareItemChanges(historyTempItem, (ItemViewModel)e.Row.Item).Trim();
+			if(!changes.Equals(""))
+				HistoryChangeItem(historyTempItem, changes);
 		}
 	}
 }
