@@ -40,12 +40,13 @@ namespace InvMgmt.Information.ViewModels
             }
         }
 
-        public void ChangeSingleItemCategory(ItemViewModel _item, CategoryViewModel _changeTo)
+        public void ChangeSingleItemCategory(ItemViewModel _item, CategoryViewModel _changeTo, out ItemViewModel x)
         {
             FindCategoryUsingId(_item.Category).RemoveItem(_item);
 			SaveDataHandler.SwapItemTable(_item, _changeTo.Id);
 			_item.Category = _changeTo.Id;
             Categories[Categories.IndexOf(_changeTo)].AddItem(_item);
+			x = _item;
         }
 
 		public CategoryViewModel FindCategoryUsingId(string _name)

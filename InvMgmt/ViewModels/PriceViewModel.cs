@@ -19,7 +19,14 @@ namespace InvMgmt.Information.ViewModels
             RegularPrice = _regularPrice;
             SalePrice = _salePrice;
         }
-
+		public PriceViewModel(PriceViewModel p)
+		{
+			price = new Price();
+			IsOnSale = p.IsOnSale;
+			CurrentPrice = p.CurrentPrice;
+			RegularPrice = p.RegularPrice;
+			SalePrice = p.SalePrice;
+		}
         public double CurrentPrice
         {
             get { return price.CurrentPrice; }

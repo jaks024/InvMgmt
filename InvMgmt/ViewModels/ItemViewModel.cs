@@ -21,6 +21,17 @@ namespace InvMgmt.Information.ViewModels
             Price = _price;
             Detail = _detail;
         }
+		public ItemViewModel(ItemViewModel i)
+		{
+			item = new Item();
+			Id = i.Id;
+			Name = i.Name;
+			Description = i.Description;
+			Category = i.Category;
+			Quantity = new QuantityViewModel(i.Quantity);
+			Price = new PriceViewModel(i.Price);
+			Detail = new ItemDetailViewModel(i.Detail);
+		}
 
         public string Id
         {

@@ -54,34 +54,37 @@ namespace InvMgmt.Information.ViewModels
 
 		public string GetCompareItemChanges(ItemViewModel x, ItemViewModel y)
 		{
+			if (x == null || y == null)
+				return "";
+
 			string changes = "";
-			if (!x.Name.Equals(y.Name))
+			if (!x.Name.Equals(y.Name, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nNAME changed from '{0}' to '{1}'", x.Name, y.Name); 
 			
-			if (!x.Category.Equals(y.Category))
+			if (!x.Category.Equals(y.Category, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nCATEGORY changed from '{0}' to '{1}'", x.Category, y.Category);
 			
-			if (!x.Description.Equals(y.Description))
+			if (!x.Description.Equals(y.Description, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nDESCRIPTION changed from '{0}' to '{1}'", x.Description, y.Description);
 			
 
-			if (!x.Detail.Company.Equals(y.Detail.Company))
+			if (!x.Detail.Company.Equals(y.Detail.Company, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nCOMPANY changed from '{0}' to '{1}'", x.Detail.Company, y.Detail.Company);
 			
-			if (!x.Detail.Address.Equals(y.Detail.Address))
+			if (!x.Detail.Address.Equals(y.Detail.Address, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nADDRESS changed from '{0}' to '{1}'", x.Detail.Address, y.Detail.Address);
 			
-			if (!x.Detail.Phone.Equals(y.Detail.Phone))
+			if (!x.Detail.Phone.Equals(y.Detail.Phone, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nPHONE changed from '{0}' to '{1}'", x.Detail.Phone, y.Detail.Phone);
 			
-			if (!x.Detail.Email.Equals(y.Detail.Email))
+			if (!x.Detail.Email.Equals(y.Detail.Email, StringComparison.InvariantCultureIgnoreCase))
 				changes += string.Format("\nEMAIL changed from '{0}' to '{1}'", x.Detail.Email, y.Detail.Email);
 			
 			if (!x.Detail.Date.Equals(y.Detail.Date))
 				changes += string.Format("\nDATE changed from '{0}' to '{1}'", x.Detail.Date, y.Detail.Date);
 
-			Console.WriteLine("x " + x.Price.CurrentPrice);
-			Console.WriteLine("y " + y.Price.CurrentPrice);
+			Console.WriteLine("x " + x.Quantity.Total);
+			Console.WriteLine("y " + y.Quantity.Total);
 			if (x.Price.CurrentPrice != y.Price.CurrentPrice)
 				changes += string.Format("\nCURRENT PRICE changed from '{0}' to '{1}'", x.Price.CurrentPrice, y.Price.CurrentPrice);
 			
@@ -113,6 +116,20 @@ namespace InvMgmt.Information.ViewModels
 			if (x.Quantity.UsedTotal != y.Quantity.UsedTotal)
 				changes += string.Format("\nQUANTITY USED TOTAL changed from '{0}' to '{1}'", x.Quantity.UsedTotal, y.Quantity.UsedTotal);
 			
+			return changes;
+		}
+
+		public string GetCompareCategoryChange(CategoryViewModel x, CategoryViewModel y)
+		{
+			if (x == null || y == null)
+				return "";
+			string changes = "";
+			if (!x.Name.Equals(y.Name, StringComparison.InvariantCultureIgnoreCase))
+				changes += string.Format("\nNAME changed from '{0}' to '{1}'", x.Name, y.Name);
+			Console.WriteLine("x: " + x.Name);
+			Console.WriteLine("y: " + y.Name);
+			if (!x.Description.Equals(y.Description, StringComparison.InvariantCultureIgnoreCase))
+				changes += string.Format("\nDESCRIPTION changed from '{0}' to '{1}'", x.Description, y.Description);
 			return changes;
 		}
 

@@ -20,6 +20,13 @@ namespace InvMgmt.Information.ViewModels
             Name = _name;
             Description = _desc;
         }
+		public CategoryViewModel(CategoryViewModel cat)
+		{
+			category = new Category();
+			Id = cat.Id;
+			Name = cat.Name;
+			Description = cat.Description;
+		}
         public string Id
         {
             get { return category.Id; }

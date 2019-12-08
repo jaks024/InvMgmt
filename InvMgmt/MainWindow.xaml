@@ -95,17 +95,14 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Existing Categories" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                             <DataGrid Name="dgExistingCat" Grid.Row="1" Margin="5" ItemsSource="{Binding Categories}" SelectionMode="Single"
-                                    AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" LostFocus="DgExistingCat_LostFocus">
-                                <DataGrid.Columns>  
+                                    AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" LostFocus="DgExistingCat_LostFocus"
+                                      SelectionChanged="DgExistingCat_SelectionChanged" RowEditEnding="DgExistingCat_RowEditEnding" CellEditEnding="DgExistingCat_CellEditEnding">
+                                <DataGrid.Columns>
                                     <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                                     <DataGridTextColumn Header="Item Count" Binding="{Binding Items.Count, Mode=OneWay}"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                                 </DataGrid.Columns>
-                                <DataGrid.RowDetailsTemplate>
-                                    <DataTemplate>
-                                        <TextBox Margin="5 0" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
-                                    </DataTemplate>
-                                </DataGrid.RowDetailsTemplate>
                             </DataGrid>
                             <TextBlock Name="tbCatCount" Grid.Row="2" Text="{Binding CategoryCount, StringFormat='Categories: {0}', Mode=OneWay}" VerticalAlignment="Center" Margin="5 0 0 0" Width="100" HorizontalAlignment="Left"/>
                             <Button Name="btnRemoveExistingCat" Grid.Row="2" Width="95" HorizontalAlignment="Right" Content="Delete" Margin="5"
@@ -255,7 +252,7 @@
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
-                              CanUserSortColumns="True" RowEditEnding="DgItemList_CellEditEnding"
+                              CanUserSortColumns="True" RowEditEnding="DgItemList_CellEditEnding" CellEditEnding="DgItemList_CellEditEnding_Accum"
                               ItemsSource="{Binding SelectedCategoryItems}" SelectionChanged="DgItemList_SelectionChanged" SelectionMode="Single" LostFocus="DgItemList_LostFocus">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}">
@@ -363,6 +360,7 @@
                 <Grid Background="WhiteSmoke" FocusManager.IsFocusScope="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="800"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
@@ -382,17 +380,35 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="15"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="795"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="1" Margin="5 0" TextWrapping="Wrap" Text="{Binding Detail, Mode=OneWay}"/>
+                                    <TextBlock Margin="5 0" TextWrapping="Wrap" Text="{Binding Detail, Mode=OneWay}"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
+
+                    <Label Grid.Column="1" Content="Options" Margin="5 0"/>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Save Directory" Margin="5 0"/>
+                        <TextBox Grid.Row="1" IsReadOnly="True" Margin="5 5" Width="250"/>
+                        <Button Grid.Row="1" Margin="5 5" Grid.Column="1" Content="Change" Width="80"/>
+
+                        <Button Grid.Row="2" Grid.Column="1" Margin="5 0" Content="Save to PDF"/>
+                    </Grid>
                 </Grid>
             </TabItem>
 

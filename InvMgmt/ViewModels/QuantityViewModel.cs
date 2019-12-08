@@ -22,6 +22,16 @@ namespace InvMgmt.Information.ViewModels
 			Annually = _annually;
 			UsedTotal = _usedTotal;
         }
+		public QuantityViewModel(QuantityViewModel q)
+		{
+			quantity = new Quantity();
+			Total = q.Total;
+			Today = q.Today;
+			Weekly = q.Weekly;
+			Monthly = q.Monthly;
+			Annually = q.Annually;
+			UsedTotal = q.UsedTotal;
+		}
 
         public int Total
         {

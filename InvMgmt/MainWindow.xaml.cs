@@ -126,7 +126,13 @@ namespace InvMgmt
         {
             if (dgExistingCat.SelectedItem == null)
                 return;
-			SaveDataHandler.RemoveCategoryInTable((CategoryViewModel)dgExistingCat.SelectedItem);
+			CategoryViewModel temp = (CategoryViewModel)dgExistingCat.SelectedItem;
+			HistoryRemoveCategory(temp);
+			foreach(ItemViewModel item in temp.Items)
+			{
+				HistoryRemoveItem(item);
+			}
+			SaveDataHandler.RemoveCategoryInTable(temp);
             categoryManager.RemoveCategoryFromList((CategoryViewModel)dgExistingCat.SelectedItem);
         }
 		#endregion
@@ -206,6 +212,10 @@ namespace InvMgmt
             }
             ((TextBox)sender).Text = temp.ToString();
 			((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
+			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
+			if (x != null)
+				DgItemList_CellEditEnding(x);
 		}
 
         private void TextBoxIntOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
@@ -231,6 +241,10 @@ namespace InvMgmt
             }
             ((TextBox)sender).Text = temp.ToString("N0");
 			((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
+			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
+			if (x != null)
+				DgItemList_CellEditEnding(x);
 		}
 
 		#endregion
@@ -245,15 +259,19 @@ namespace InvMgmt
 
 			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
 			if(x != null)
-				historyTempItem = new ItemViewModel(x.Id, x.Name, x.Description, x.Category, x.Quantity, x.Price, x.Detail);
+				historyTempItem = new ItemViewModel(x);
         }
 
         private void CmbChangeItemCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgItemList.SelectedItem == null)
                 return;
-            categoryManager.ChangeSingleItemCategory(((ItemViewModel)dgItemList.SelectedItem), ((CategoryViewModel)cmbChangeItemCategory.SelectedItem));
-        }
+			ItemViewModel temp = new ItemViewModel();
+
+			categoryManager.ChangeSingleItemCategory((ItemViewModel)dgItemList.SelectedItem, (CategoryViewModel)cmbChangeItemCategory.SelectedItem, out temp);
+			if(historyTempItem != null)
+				HistoryChangeItemCategory(temp);
+		}
 
 		#endregion
 
@@ -295,7 +313,9 @@ namespace InvMgmt
 		{
 			if (dgItemList.SelectedIndex == -1)
 				return;
-			SaveDataHandler.RemoveItemInTable((ItemViewModel)dgItemList.SelectedItem);
+			ItemViewModel temp = (ItemViewModel)dgItemList.SelectedItem;
+			HistoryRemoveItem(temp);
+			SaveDataHandler.RemoveItemInTable(temp);
 			categoryManager.Categories[categoryManager.CurrentCategoryIndex].RemoveItem((ItemViewModel)dgItemList.SelectedItem);
 		}
 
@@ -327,30 +347,83 @@ namespace InvMgmt
 
 		#region history
 		private ItemViewModel historyTempItem;
+		private ItemViewModel accumTempItem;
+		private CategoryViewModel historyTempCategory;
+		private CategoryViewModel accumTempCategory;
 		private void HistoryAddNewCategory(CategoryViewModel cat)
 		{
-			historyManager.AddNewHistoryEntry(HistoryActionType.Added, cat.Name, cat.ToStringDetailed(), "Adding new category");
+			historyManager.AddNewHistoryEntry(HistoryActionType.Added, cat.Id, cat.ToStringDetailed(), "Added new category");
 		}
 		private void HistoryAddNewItem(ItemViewModel item)
 		{
-			historyManager.AddNewHistoryEntry(HistoryActionType.Added, item.Name, item.ToStringDetailed(), "Added to " + item.Category);
+			historyManager.AddNewHistoryEntry(HistoryActionType.Added, item.Name, item.ToStringDetailed(), "Added to: " + item.Category);
 		}
 		private void HistoryChangeItem(ItemViewModel item, string changes)
 		{
-			historyManager.AddNewHistoryEntry(HistoryActionType.Changed, item.Name, changes, "Child of " + item.Category);
+			historyManager.AddNewHistoryEntry(HistoryActionType.Changed, item.Name, changes, "Child of: " + item.Category);
 		}
-		private void HistoryRemoveItem()
+		private void HistoryChangeItemCategory(ItemViewModel item)
 		{
-			
+			if(!historyTempItem.Category.Equals(item.Category))
+				historyManager.AddNewHistoryEntry(HistoryActionType.Changed, item.Name, string.Format("\nCATEGORY changed from '{0}' to '{1}'", historyTempItem.Category, item.Category), "Child of " + item.Category);
+		}
+		private void HistoryChangeCategoryDetail(CategoryViewModel cat, string changes)
+		{
+			historyManager.AddNewHistoryEntry(HistoryActionType.Changed, cat.Id, changes, "Changed category details");
+		}
+		private void HistoryRemoveItem(ItemViewModel item)
+		{
+			historyManager.AddNewHistoryEntry(HistoryActionType.Removed, item.Name, item.ToStringDetailed(), "Removed from category: " + item.Category);
+		}
+		private void HistoryRemoveCategory(CategoryViewModel cat)
+		{
+			historyManager.AddNewHistoryEntry(HistoryActionType.Removed, cat.Id, cat.ToStringDetailed(), "Removed this category");
 		}
 		#endregion
 
 		private void DgItemList_CellEditEnding(object sender, DataGridRowEditEndingEventArgs e)
 		{
+			HistoryRecord();
+		}
+
+		private void HistoryRecord()
+		{
 			Console.WriteLine("called");
-			string changes = historyManager.GetCompareItemChanges(historyTempItem, (ItemViewModel)e.Row.Item).Trim();
-			if(!changes.Equals(""))
+			string changes = historyManager.GetCompareItemChanges(historyTempItem, accumTempItem).Trim();
+			if (!changes.Equals(""))
 				HistoryChangeItem(historyTempItem, changes);
+		}
+		private void DgItemList_CellEditEnding(ItemViewModel i)
+		{
+			accumTempItem = i;
+			Console.WriteLine("accum");
+		}
+
+		private void DgItemList_CellEditEnding_Accum(object sender, DataGridCellEditEndingEventArgs e)
+		{
+			accumTempItem = (ItemViewModel)e.Row.Item;
+			Console.WriteLine("accum");
+		}
+
+		private void DgExistingCat_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (dgExistingCat.SelectedItem == null)
+				return;
+
+			historyTempCategory = new CategoryViewModel((CategoryViewModel)dgExistingCat.SelectedItem);
+		}
+
+		private void DgExistingCat_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+		{
+			Console.WriteLine("category history called");
+			string changes = historyManager.GetCompareCategoryChange(historyTempCategory, accumTempCategory).Trim();
+			if (!changes.Equals(""))
+				HistoryChangeCategoryDetail(historyTempCategory, changes);
+		}
+
+		private void DgExistingCat_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+		{
+			accumTempCategory = (CategoryViewModel)e.Row.Item;
 		}
 	}
 }

@@ -20,6 +20,15 @@ namespace InvMgmt.Information.ViewModels
 			Email = _email;
             Date = _date;
         }
+		public ItemDetailViewModel(ItemDetailViewModel i)
+		{
+			itemDetail = new ItemDetail();
+			Company = i.Company;
+			Address = i.Address;
+			Phone = i.Phone;
+			Email = i.Email;
+			Date = i.Date;
+		}
 
         public string Company
         {
