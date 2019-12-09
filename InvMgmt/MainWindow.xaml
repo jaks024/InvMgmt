@@ -44,8 +44,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left">
-            <TabItem Header="Add" Height="35" Width="100">
+        <TabControl Name="mainTabControl" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left">
+            <TabItem Header="Add" Height="35" Width="100" TabIndex="0">
                 <Grid Background="#FFE5E5E5" FocusManager.IsFocusScope="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -207,7 +207,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Inventory" Name="tabInventory" Height="35" Width="100">
+            <TabItem Header="Inventory" Name="tabInventory" Height="35" Width="100" TabIndex="1">
                 <Grid Background="GhostWhite">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
@@ -252,7 +252,7 @@
                     </Grid>
 
                     <DataGrid Grid.Row="1" Grid.Column="1" Name="dgItemList" AutoGenerateColumns="False" CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected"
-                              CanUserSortColumns="True" RowEditEnding="DgItemList_CellEditEnding" CellEditEnding="DgItemList_CellEditEnding_Accum"
+                              CanUserSortColumns="True"  CellEditEnding="DgItemList_CellEditEnding_Accum"
                               ItemsSource="{Binding SelectedCategoryItems}" SelectionChanged="DgItemList_SelectionChanged" SelectionMode="Single" LostFocus="DgItemList_LostFocus">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}">
@@ -332,22 +332,22 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Text="Company: " Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Column="1" Text="{Binding Detail.Company, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Column="1" Text="{Binding Detail.Company, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" LostFocus="DgRowDetail_LostFocus"/>
 
                                    
                                     <TextBlock Text="Address: " Grid.Row="1" Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Address, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Row="1" Grid.Column="1" Text="{Binding Detail.Address, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" LostFocus="DgRowDetail_LostFocus"/>
 
                                     <TextBlock Text="Phone: " Grid.Column="2" Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Column="3" Text="{Binding Detail.Phone, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Column="3" Text="{Binding Detail.Phone, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" LostFocus="DgRowDetail_LostFocus"/>
                                     
                                     <TextBlock Text="Date: " Grid.Row="1" Grid.Column="2" Margin="5 0"/>
                                     <Viewbox Margin="5 0" Grid.Row="1" Grid.Column="3">
-                                        <DatePicker  Focusable="False" FontSize="14" CalendarStyle="{StaticResource styleCalendar}" Text="{Binding Detail.Date, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                        <DatePicker  Focusable="False" FontSize="14" CalendarStyle="{StaticResource styleCalendar}" Text="{Binding Detail.Date, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" LostFocus="DgRowDetail_LostFocus"/>
                                     </Viewbox>
 
                                     <TextBlock Text="Email: " Grid.Column="4" Margin="5 0"/>
-                                    <TextBox Margin="5 0" Grid.Column="5" Text="{Binding Detail.Email, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                    <TextBox Margin="5 0" Grid.Column="5" Text="{Binding Detail.Email, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" LostFocus="DgRowDetail_LostFocus"/>
 
                                 </Grid>
                             </DataTemplate>
@@ -356,7 +356,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="History" Name="tabHistory" Height="35" Width="100" Margin="-1,0,1,0" VerticalAlignment="Bottom">
+            <TabItem Header="History" Name="tabHistory" Height="35" Width="100" Margin="-1,0,1,0" VerticalAlignment="Bottom" TabIndex="2">
                 <Grid Background="WhiteSmoke" FocusManager.IsFocusScope="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="800"/>

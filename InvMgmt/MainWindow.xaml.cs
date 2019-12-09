@@ -32,6 +32,8 @@ namespace InvMgmt
 
 		public SettingManager settingManager = new SettingManager();
 		public HistoryManagerViewModel historyManager { get; } = new HistoryManagerViewModel();
+
+		private HistoryFileWriter historyFileWriter = new HistoryFileWriter();
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -74,6 +76,8 @@ namespace InvMgmt
 			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
 			AddCategoryToListDataBase();
 			AddNewItemToCategoryFromDatabase();
+
+			historyFileWriter.CreatePdf();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -215,7 +219,7 @@ namespace InvMgmt
 
 			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
 			if (x != null)
-				DgItemList_CellEditEnding(x);
+				DgItemList_CellTextboxEditEnding(x);
 		}
 
         private void TextBoxIntOnlyValidation_LostFocus(object sender, RoutedEventArgs e)
@@ -244,7 +248,7 @@ namespace InvMgmt
 
 			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
 			if (x != null)
-				DgItemList_CellEditEnding(x);
+				DgItemList_CellTextboxEditEnding(x);
 		}
 
 		#endregion
@@ -256,6 +260,9 @@ namespace InvMgmt
             if (dgItemList.SelectedItem == null)
                 return;
             cmbChangeItemCategory.SelectedItem = categoryManager.FindCategoryUsingId(((ItemViewModel)dgItemList.SelectedItem).Category);
+
+			
+			HistoryRecord();
 
 			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
 			if(x != null)
@@ -269,8 +276,11 @@ namespace InvMgmt
 			ItemViewModel temp = new ItemViewModel();
 
 			categoryManager.ChangeSingleItemCategory((ItemViewModel)dgItemList.SelectedItem, (CategoryViewModel)cmbChangeItemCategory.SelectedItem, out temp);
-			if(historyTempItem != null)
-				HistoryChangeItemCategory(temp);
+			if (historyTempItem != null)
+				DgItemList_CellTextboxEditEnding(temp);
+			//HistoryChangeItemCategory(temp);
+
+			HistoryRecord();
 		}
 
 		#endregion
@@ -327,6 +337,8 @@ namespace InvMgmt
 				SaveDataHandler.UpdateItemInTableManualConnection(categoryManager.SelectedCategoryItems[i]);
 			}
 			SaveDataHandler.CloseConnection();
+
+			HistoryRecord();
 		}
 		#endregion
 
@@ -388,12 +400,19 @@ namespace InvMgmt
 
 		private void HistoryRecord()
 		{
-			Console.WriteLine("called");
+			if (historyTempItem == null || accumTempItem == null)
+				return;
+			if (!historyTempItem.Id.Equals(accumTempItem.Id))
+				return;
+
+					Console.WriteLine("called");
 			string changes = historyManager.GetCompareItemChanges(historyTempItem, accumTempItem).Trim();
 			if (!changes.Equals(""))
 				HistoryChangeItem(historyTempItem, changes);
+			historyTempItem = null;
+			accumTempItem = null;
 		}
-		private void DgItemList_CellEditEnding(ItemViewModel i)
+		private void DgItemList_CellTextboxEditEnding(ItemViewModel i)
 		{
 			accumTempItem = i;
 			Console.WriteLine("accum");
@@ -424,6 +443,13 @@ namespace InvMgmt
 		private void DgExistingCat_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
 		{
 			accumTempCategory = (CategoryViewModel)e.Row.Item;
+		}
+
+		private void DgRowDetail_LostFocus(object sender, RoutedEventArgs e)
+		{
+			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
+			if (x != null)
+				DgItemList_CellTextboxEditEnding(x);
 		}
 	}
 }

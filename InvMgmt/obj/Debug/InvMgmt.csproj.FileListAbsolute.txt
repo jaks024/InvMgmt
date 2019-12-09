@@ -48,3 +48,9 @@ C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\EntityFramework.SqlSer
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.xml
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\System.Data.SQLite.dll.config
 C:\Users\ye774\Documents\GitHub\InvMgmt\InvMgmt\obj\Debug\InvMgmt.csproj.CopyComplete
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\PdfSharp-wpf.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\PdfSharp.Charting-wpf.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\PdfSharp-wpf.xml
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\PdfSharp.Charting-wpf.xml
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\de\PdfSharp-wpf.resources.dll
+C:\Users\Jackson\Documents\GitHub\InvMgmt\InvMgmt\bin\Debug\de\PdfSharp.Charting-wpf.resources.dll
