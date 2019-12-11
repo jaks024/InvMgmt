@@ -44,7 +44,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TabControl Name="mainTabControl" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left">
+        <TabControl Name="mainTabControl" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="639" Width="1272" TabStripPlacement="Left"
+                    SelectionChanged="MainTabControl_SelectionChanged">
             <TabItem Header="Add" Height="35" Width="100" TabIndex="0">
                 <Grid Background="#FFE5E5E5" FocusManager.IsFocusScope="True">
                     <Grid.ColumnDefinitions>
@@ -407,7 +408,7 @@
                         <TextBox Grid.Row="1" IsReadOnly="True" Margin="5 5" Width="250"/>
                         <Button Grid.Row="1" Margin="5 5" Grid.Column="1" Content="Change" Width="80"/>
 
-                        <Button Grid.Row="2" Grid.Column="1" Margin="5 0" Content="Save to PDF"/>
+                        <Button Grid.Row="2" Grid.Column="1" Margin="5 0" Content="Save to PDF" Click="HistorySaveToFile_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>

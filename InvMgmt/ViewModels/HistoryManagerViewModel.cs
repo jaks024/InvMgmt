@@ -138,5 +138,23 @@ namespace InvMgmt.Information.ViewModels
 			Histories.Remove(h);
 			NotifyPropertyChanged("Histories");
 		}
+
+		public List<string> GetAllHistories()
+		{
+			List<string> content = new List<string>();
+			for (int i = 0; i < Histories.Count; i++)
+			{
+				string[] s = Histories[i].ToSaveString().Split(
+					new[] { "\r\n", "\r", "\n" },
+					StringSplitOptions.None
+				); ;
+				
+				content.Add(s[0]);
+				for (int x = 1; x < s.Length; x++)
+					content.Add("        " + s[x]);
+
+			}
+			return content;
+		}
 	}
 }

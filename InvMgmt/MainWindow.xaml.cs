@@ -76,8 +76,6 @@ namespace InvMgmt
 			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
 			AddCategoryToListDataBase();
 			AddNewItemToCategoryFromDatabase();
-
-			historyFileWriter.CreatePdf();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -261,7 +259,9 @@ namespace InvMgmt
                 return;
             cmbChangeItemCategory.SelectedItem = categoryManager.FindCategoryUsingId(((ItemViewModel)dgItemList.SelectedItem).Category);
 
-			
+
+			Console.WriteLine("selection changed");
+
 			HistoryRecord();
 
 			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
@@ -280,6 +280,7 @@ namespace InvMgmt
 				DgItemList_CellTextboxEditEnding(temp);
 			//HistoryChangeItemCategory(temp);
 
+			Console.WriteLine("item category changed");
 			HistoryRecord();
 		}
 
@@ -338,7 +339,8 @@ namespace InvMgmt
 			}
 			SaveDataHandler.CloseConnection();
 
-			HistoryRecord();
+			//Console.WriteLine("data grid lost focus");
+			//HistoryRecord();
 		}
 		#endregion
 
@@ -393,19 +395,14 @@ namespace InvMgmt
 		}
 		#endregion
 
-		private void DgItemList_CellEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-		{
-			HistoryRecord();
-		}
-
 		private void HistoryRecord()
 		{
-			if (historyTempItem == null || accumTempItem == null)
+			if (historyTempItem == null || accumTempItem == null || dgItemList.SelectedItem == null)
 				return;
 			if (!historyTempItem.Id.Equals(accumTempItem.Id))
 				return;
 
-					Console.WriteLine("called");
+					Console.WriteLine("recorded history ");
 			string changes = historyManager.GetCompareItemChanges(historyTempItem, accumTempItem).Trim();
 			if (!changes.Equals(""))
 				HistoryChangeItem(historyTempItem, changes);
@@ -414,14 +411,14 @@ namespace InvMgmt
 		}
 		private void DgItemList_CellTextboxEditEnding(ItemViewModel i)
 		{
-			accumTempItem = i;
-			Console.WriteLine("accum");
+			accumTempItem = new ItemViewModel(i);
+			Console.WriteLine("1. cell edit ending accumulated");
 		}
 
 		private void DgItemList_CellEditEnding_Accum(object sender, DataGridCellEditEndingEventArgs e)
 		{
-			accumTempItem = (ItemViewModel)e.Row.Item;
-			Console.WriteLine("accum");
+			accumTempItem = new ItemViewModel((ItemViewModel)e.Row.Item);
+			Console.WriteLine("2. cell edit ending accumulated");
 		}
 
 		private void DgExistingCat_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -450,6 +447,30 @@ namespace InvMgmt
 			ItemViewModel x = (ItemViewModel)dgItemList.SelectedItem;
 			if (x != null)
 				DgItemList_CellTextboxEditEnding(x);
+		}
+
+		private void HistorySaveToFile_Click(object sender, RoutedEventArgs e)
+		{
+			List<string> content = historyManager.GetAllHistories();
+			if (content.Count == 0)
+			{
+				MessageBox.Show("There are no entries to save");
+				return;
+			}
+			historyFileWriter.WriteToFile(content);
+			MessageBox.Show("Histories saved to PDF");
+		}
+
+		private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (e.Source is TabControl)
+			{
+				if (tabHistory.IsSelected)
+				{
+					HistoryRecord();
+				}
+			}
+			
 		}
 	}
 }

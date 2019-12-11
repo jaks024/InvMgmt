@@ -7,6 +7,8 @@ using InvMgmt.Information.ViewModels;
 using System.Collections.ObjectModel;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
+
 namespace InvMgmt
 {
 	public class HistoryFileWriter
@@ -25,6 +27,26 @@ namespace InvMgmt
 			doc.Save(filename);
 
 			
+		}
+
+		public void WriteToFile(List<string> content)
+		{
+			PdfDocument doc = new PdfDocument();
+			PdfPage page = doc.AddPage();
+			XGraphics gfx = XGraphics.FromPdfPage(page);
+			XTextFormatter tf = new XTextFormatter(gfx);
+			XFont font = new XFont("Verdana", 10, XFontStyle.Regular);
+
+			for(int i = 0; i < content.Count; i++)
+			{
+				tf.DrawString(content[i], font, XBrushes.Black,
+					new XRect(40, 15 * i, page.Width - 40, 100), XStringFormats.TopLeft);
+			}
+
+			
+
+			string filename = "test.pdf";
+			doc.Save(filename);
 		}
 
 	}
