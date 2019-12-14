@@ -39,13 +39,13 @@ namespace InvMgmt.Information.ViewModels
 			switch (action)
 			{
 				case HistoryActionType.Added:
-					name = "Added " + name;
+					name = "ADDED '" + name + "'";
 					break;
 				case HistoryActionType.Changed:
-					name = "Changed " + name;
+					name = "CHANGED '" + name + "'";
 					break;
 				default:
-					name = "Removed " + name;
+					name = "REMOVED '" + name + "'";
 					break;
 			}
 			Histories.Add(new HistoryItemViewModel(path, name, detail, DateTime.Now));
@@ -59,62 +59,62 @@ namespace InvMgmt.Information.ViewModels
 
 			string changes = "";
 			if (!x.Name.Equals(y.Name, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nNAME changed from '{0}' to '{1}'", x.Name, y.Name); 
+				changes += string.Format("\nNAME changed FROM '{0}' TO '{1}'", x.Name, y.Name); 
 			
 			if (!x.Category.Equals(y.Category, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nCATEGORY changed from '{0}' to '{1}'", x.Category, y.Category);
+				changes += string.Format("\nCATEGORY changed FROM '{0}' TO '{1}'", x.Category, y.Category);
 			
 			if (!x.Description.Equals(y.Description, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nDESCRIPTION changed from '{0}' to '{1}'", x.Description, y.Description);
+				changes += string.Format("\nDESCRIPTION changed FROM '{0}' TO '{1}'", x.Description, y.Description);
 			
 
 			if (!x.Detail.Company.Equals(y.Detail.Company, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nCOMPANY changed from '{0}' to '{1}'", x.Detail.Company, y.Detail.Company);
+				changes += string.Format("\nCOMPANY changed FROM '{0}' TO '{1}'", x.Detail.Company, y.Detail.Company);
 			
 			if (!x.Detail.Address.Equals(y.Detail.Address, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nADDRESS changed from '{0}' to '{1}'", x.Detail.Address, y.Detail.Address);
+				changes += string.Format("\nADDRESS changed FROM '{0}' TO '{1}'", x.Detail.Address, y.Detail.Address);
 			
 			if (!x.Detail.Phone.Equals(y.Detail.Phone, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nPHONE changed from '{0}' to '{1}'", x.Detail.Phone, y.Detail.Phone);
+				changes += string.Format("\nPHONE changed FROM '{0}' TO '{1}'", x.Detail.Phone, y.Detail.Phone);
 			
 			if (!x.Detail.Email.Equals(y.Detail.Email, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nEMAIL changed from '{0}' to '{1}'", x.Detail.Email, y.Detail.Email);
+				changes += string.Format("\nEMAIL changed FROM '{0}' TO '{1}'", x.Detail.Email, y.Detail.Email);
 			
 			if (!x.Detail.Date.Equals(y.Detail.Date))
-				changes += string.Format("\nDATE changed from '{0}' to '{1}'", x.Detail.Date, y.Detail.Date);
+				changes += string.Format("\nDATE changed FROM '{0}' TO '{1}'", x.Detail.Date, y.Detail.Date);
 
 			Console.WriteLine("x " + x.Quantity.Total);
 			Console.WriteLine("y " + y.Quantity.Total);
 			if (x.Price.CurrentPrice != y.Price.CurrentPrice)
-				changes += string.Format("\nCURRENT PRICE changed from '{0}' to '{1}'", x.Price.CurrentPrice, y.Price.CurrentPrice);
+				changes += string.Format("\nCURRENT PRICE changed FROM '{0}' TO '{1}'", x.Price.CurrentPrice, y.Price.CurrentPrice);
 			
 			if (x.Price.RegularPrice != y.Price.RegularPrice)
-				changes += string.Format("\nREGULAR PRICE changed from '{0}' to '{1}'", x.Price.RegularPrice, y.Price.RegularPrice);
+				changes += string.Format("\nREGULAR PRICE changed FROM '{0}' TO '{1}'", x.Price.RegularPrice, y.Price.RegularPrice);
 			
 			if (x.Price.SalePrice != y.Price.SalePrice)
-				changes += string.Format("\nSALE PRICE changed from '{0}' to '{1}'", x.Price.SalePrice, y.Price.SalePrice);
+				changes += string.Format("\nSALE PRICE changed FROM '{0}' TO '{1}'", x.Price.SalePrice, y.Price.SalePrice);
 			
 			if (x.Price.IsOnSale != y.Price.IsOnSale)
-				changes += string.Format("\nIS ON SALE changed from '{0}' to '{1}'", x.Price.IsOnSale, y.Price.IsOnSale);
+				changes += string.Format("\nIS ON SALE changed FROM '{0}' TO '{1}'", x.Price.IsOnSale, y.Price.IsOnSale);
 			
 
 			if(x.Quantity.Total != y.Quantity.Total)
-				changes += string.Format("\nQUANTITY TOTAL changed from '{0}' to '{1}'", x.Quantity.Total, y.Quantity.Total);
+				changes += string.Format("\nQUANTITY TOTAL changed FROM '{0}' TO '{1}'", x.Quantity.Total, y.Quantity.Total);
 			
 			if (x.Quantity.Today != y.Quantity.Today)
-				changes += string.Format("\nQUANTITY TODAY changed from '{0}' to '{1}'", x.Quantity.Today, y.Quantity.Today);
+				changes += string.Format("\nQUANTITY TODAY changed FROM '{0}' TO '{1}'", x.Quantity.Today, y.Quantity.Today);
 			
 			if (x.Quantity.Weekly != y.Quantity.Weekly)
-				changes += string.Format("\nQUANTITY WEEKLY changed from '{0}' to '{1}'", x.Quantity.Weekly, y.Quantity.Weekly);
+				changes += string.Format("\nQUANTITY WEEKLY changed FROM '{0}' TO '{1}'", x.Quantity.Weekly, y.Quantity.Weekly);
 			
 			if (x.Quantity.Monthly != y.Quantity.Monthly)
-				changes += string.Format("\nQUANTITY MONTHLY changed from '{0}' to '{1}'", x.Quantity.Monthly, y.Quantity.Monthly);
+				changes += string.Format("\nQUANTITY MONTHLY changed FROM '{0}' TO '{1}'", x.Quantity.Monthly, y.Quantity.Monthly);
 			
 			if (x.Quantity.Annually != y.Quantity.Annually)
-				changes += string.Format("\nQUANTITY ANNUALLY changed from '{0}' to '{1}'", x.Quantity.Annually, y.Quantity.Annually);
+				changes += string.Format("\nQUANTITY ANNUALLY changed FROM '{0}' TO '{1}'", x.Quantity.Annually, y.Quantity.Annually);
 			
 			if (x.Quantity.UsedTotal != y.Quantity.UsedTotal)
-				changes += string.Format("\nQUANTITY USED TOTAL changed from '{0}' to '{1}'", x.Quantity.UsedTotal, y.Quantity.UsedTotal);
+				changes += string.Format("\nQUANTITY USED TOTAL changed FROM '{0}' TO '{1}'", x.Quantity.UsedTotal, y.Quantity.UsedTotal);
 			
 			return changes;
 		}
@@ -125,11 +125,11 @@ namespace InvMgmt.Information.ViewModels
 				return "";
 			string changes = "";
 			if (!x.Name.Equals(y.Name, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nNAME changed from '{0}' to '{1}'", x.Name, y.Name);
+				changes += string.Format("\nNAME changed FROM '{0}' TO '{1}'", x.Name, y.Name);
 			Console.WriteLine("x: " + x.Name);
 			Console.WriteLine("y: " + y.Name);
 			if (!x.Description.Equals(y.Description, StringComparison.InvariantCultureIgnoreCase))
-				changes += string.Format("\nDESCRIPTION changed from '{0}' to '{1}'", x.Description, y.Description);
+				changes += string.Format("\nDESCRIPTION changed FROM '{0}' TO '{1}'", x.Description, y.Description);
 			return changes;
 		}
 
@@ -139,20 +139,20 @@ namespace InvMgmt.Information.ViewModels
 			NotifyPropertyChanged("Histories");
 		}
 
-		public List<string> GetAllHistories()
+		public string GetAllHistories()
 		{
-			List<string> content = new List<string>();
+			String content = "";
 			for (int i = 0; i < Histories.Count; i++)
 			{
-				string[] s = Histories[i].ToSaveString().Split(
-					new[] { "\r\n", "\r", "\n" },
+				string[] temp = Histories[i].ToSaveString().Split(
+					new[] {"\n" },
 					StringSplitOptions.None
 				); ;
-				
-				content.Add(s[0]);
-				for (int x = 1; x < s.Length; x++)
-					content.Add("        " + s[x]);
 
+				string combined = temp[0] + "\n";
+				for (int x = 1; x < temp.Length; x++)
+					combined += "\t" + temp[x] + "\n";
+				content += combined + "\n\n";
 			}
 			return content;
 		}

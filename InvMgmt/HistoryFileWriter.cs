@@ -5,48 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using InvMgmt.Information.ViewModels;
 using System.Collections.ObjectModel;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
-using PdfSharp.Drawing.Layout;
+
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
+using MigraDoc.RtfRendering;
+using System.Diagnostics;
 
 namespace InvMgmt
 {
 	public class HistoryFileWriter
 	{
 
-		public void CreatePdf()
+
+		public void WriteToFile(string content)
 		{
-			PdfDocument doc = new PdfDocument();
-			PdfPage page = doc.AddPage();
-			XGraphics gfx = XGraphics.FromPdfPage(page);
-			XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
-			gfx.DrawString("test test", font, XBrushes.Black,
-				new XRect(0, 0, page.Width, page.Height), XStringFormats.TopLeft);
 
-			string filename = "test.pdf";
-			doc.Save(filename);
+			//PdfDocument doc = new PdfDocument();
+			//PdfPage page = doc.AddPage();
+			//XGraphics gfx = XGraphics.FromPdfPage(page);
+			//XTextFormatter tf = new XTextFormatter(gfx);
+			//XFont font = new XFont("Verdana", 10, XFontStyle.Regular);
 
+			//tf.DrawString("Histories of " + DateTime.Today.ToString("d MMM yyyy") + "\n\n" + content, font, XBrushes.Black,
+			//		new XRect(40, 40, page.Width - 80, page.Height), XStringFormats.TopLeft);
+
+			//string filename = "test.pdf";
+			//doc.Save(filename);
+
+			Document document = new Document();
+			Section sec = document.AddSection();
+			Paragraph para = sec.AddParagraph();
+			para.Format.Alignment = ParagraphAlignment.Left;
+			para.Format.Font.Size = 11;
+			para.Format.Font.Color = Colors.Black;
+			para.Format.LineSpacing = 1;
 			
-		}
+			para.AddText("Histories of " + DateTime.Today.ToString("d MMM yyyy"));
+			para.AddLineBreak();
+			para.AddLineBreak();
+			para.AddText(content);
 
-		public void WriteToFile(List<string> content)
-		{
-			PdfDocument doc = new PdfDocument();
-			PdfPage page = doc.AddPage();
-			XGraphics gfx = XGraphics.FromPdfPage(page);
-			XTextFormatter tf = new XTextFormatter(gfx);
-			XFont font = new XFont("Verdana", 10, XFontStyle.Regular);
+			PdfDocumentRenderer rend = new PdfDocumentRenderer(true);
+			rend.Document = document;
+			rend.RenderDocument();
 
-			for(int i = 0; i < content.Count; i++)
-			{
-				tf.DrawString(content[i], font, XBrushes.Black,
-					new XRect(40, 15 * i, page.Width - 40, 100), XStringFormats.TopLeft);
-			}
-
-			
-
-			string filename = "test.pdf";
-			doc.Save(filename);
+			string fileName = DateTime.Today.ToString("d_MMM_yyyy") + "_History.pdf";
+			rend.PdfDocument.Save(fileName);
+			Process.Start(fileName);
 		}
 
 	}

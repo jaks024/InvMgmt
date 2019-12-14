@@ -49,7 +49,7 @@ namespace InvMgmt.Information.ViewModels
 		public string ToSaveString()
 		{
 			//[ = split
-			return string.Format("{0} - {1} --- {2}, {3}\n{4}", Id, Time, Name, Path, Detail);
+			return string.Format("{0} - {1}. {2}, {3}\n{4}", Id, Time, Name, Path, Detail);
 		}
 	}
 }

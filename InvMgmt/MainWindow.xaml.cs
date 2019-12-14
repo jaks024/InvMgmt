@@ -451,8 +451,8 @@ namespace InvMgmt
 
 		private void HistorySaveToFile_Click(object sender, RoutedEventArgs e)
 		{
-			List<string> content = historyManager.GetAllHistories();
-			if (content.Count == 0)
+			string content = historyManager.GetAllHistories();
+			if (content.Length == 0)
 			{
 				MessageBox.Show("There are no entries to save");
 				return;
