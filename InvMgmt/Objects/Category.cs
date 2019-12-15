@@ -9,9 +9,9 @@ namespace InvMgmt.Information.Objects
 {
     public class Category
     {
-        public string Id;
-        public string Name;
-        public string Description;
+        public string Id = "";
+        public string Name = "";
+        public string Description = "";
         public ObservableCollection<ItemViewModel> Items = new ObservableCollection<ItemViewModel>();
 
     }

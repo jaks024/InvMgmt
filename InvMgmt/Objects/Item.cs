@@ -8,10 +8,10 @@ namespace InvMgmt.Information.Objects
 {
     public class Item 
     {
-        public string Id;
-        public string Name;
-        public string Description;
-        public string Category;
+        public string Id = "";
+        public string Name = "";
+        public string Description = "";
+        public string Category = "";
         public QuantityViewModel Quantity = new QuantityViewModel();
         public PriceViewModel Price = new PriceViewModel();
         public ItemDetailViewModel Detail = new ItemDetailViewModel();

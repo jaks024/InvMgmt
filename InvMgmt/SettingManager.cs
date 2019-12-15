@@ -19,6 +19,11 @@ namespace InvMgmt
 			{
 				SaveFileManager.SaveFolderPath = Properties.Settings.Default["SaveFolderPath"].ToString();
 				SaveFileManager.FirstLaunch = (bool)Properties.Settings.Default["FirstLaunch"];
+				if(Properties.Settings.Default["HistorySaveFolderPath"].ToString().Length == 0)
+					SaveFileManager.HistorySaveFolderPath = System.AppDomain.CurrentDomain.BaseDirectory + "History";
+				else
+					SaveFileManager.HistorySaveFolderPath = Properties.Settings.Default["HistorySaveFolderPath"].ToString();
+
 			}
 			catch (Exception e)
 			{
@@ -35,6 +40,7 @@ namespace InvMgmt
 		public void WriteToSetting()
 		{
 			Properties.Settings.Default["SaveFolderPath"] = SaveFileManager.SaveFolderPath;
+			Properties.Settings.Default["HistorySaveFolderPath"] = SaveFileManager.HistorySaveFolderPath;
 			Properties.Settings.Default["FirstLaunch"] = SaveFileManager.FirstLaunch;
 			Properties.Settings.Default.Save();
 		}
@@ -51,6 +57,22 @@ namespace InvMgmt
 					}
 				}
 				return "";
+			}
+		}
+
+		public string GetPathFolderDialogHistory
+		{
+			get
+			{
+				using (var fbd = new FolderBrowserDialog())
+				{
+					DialogResult result = fbd.ShowDialog();
+					if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+					{
+						return fbd.SelectedPath;
+					}
+				}
+				return System.AppDomain.CurrentDomain.BaseDirectory + "History";
 			}
 		}
 	}

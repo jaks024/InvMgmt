@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
-using System.Data.SQLite.Linq;
 using InvMgmt.Information.Objects;
 using InvMgmt.Information.ViewModels;
 using System.Collections.ObjectModel;

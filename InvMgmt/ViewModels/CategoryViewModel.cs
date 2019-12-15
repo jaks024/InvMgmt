@@ -101,7 +101,29 @@ namespace InvMgmt.Information.ViewModels
 			NotifyPropertyChanged("Item");
 		}
 
-        public override string ToString()
+		public string GetAllItemTotals()
+		{
+			int totalQuantity, usedToday, usedWeekly, usedMonthly, usedAnnually, usedTotal;
+			totalQuantity = usedToday = usedWeekly = usedMonthly = usedAnnually = usedTotal = 0;
+			for (int i = 0; i < Items.Count; i++)
+			{
+				totalQuantity += Items[i].Quantity.Total;
+				usedToday += Items[i].Quantity.Today;
+				usedWeekly += Items[i].Quantity.Weekly;
+				usedMonthly += Items[i].Quantity.Monthly;
+				usedAnnually += Items[i].Quantity.Annually;
+				usedTotal += Items[i].Quantity.UsedTotal;
+			}
+			return string.Format("Total Avaliable: {0:N0}\n" +
+								"Total Sold Today: {1:N0}\n" +
+								"Total Sold Weekly: {2:N0}\n" +
+								"Total Sold Monthly: {3:N0}\n" +
+								"Total Sold Annually: {4:N0}\n" +
+								"Total Sold: {5:N0}", 
+								totalQuantity, usedToday, usedWeekly, usedMonthly, usedAnnually, usedTotal);
+		}
+
+		public override string ToString()
         {
             return string.Format("'{0}', '{1}', '{2}'", Id, Name, Description);
         }

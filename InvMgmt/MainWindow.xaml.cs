@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -65,6 +67,8 @@ namespace InvMgmt
 			cmbChangeItemCategory.DataContext = categoryManager;
 			tbSaveFolderPath.DataContext = settingManager.SaveFileManager;
 			dgRecentHistory.DataContext = historyManager;
+			tbHistorySavePath.DataContext = settingManager.SaveFileManager;
+
 
 			SaveDataHandler.InitializeConnection("data.sqlite", settingManager.SaveFileManager.FirstLaunch);
 			if (settingManager.SaveFileManager.FirstLaunch)
@@ -74,8 +78,19 @@ namespace InvMgmt
 			//temp data
 			//SaveDataHandler.InsertCategoryToTable(categoryManager.Categories[0]);
 			//SaveDataHandler.CreateItemTable(categoryManager.Categories[0].Items[0]);
+			try {
 			AddCategoryToListDataBase();
 			AddNewItemToCategoryFromDatabase();
+			}
+			catch (System.Data.SQLite.SQLiteException e)
+			{
+				Console.WriteLine("sql error save file error");
+				MessageBox.Show("Database error, try restarting the program.");
+				settingManager.SaveFileManager.FirstLaunch = true;
+				settingManager.WriteToSetting();
+				throw new System.Data.SQLite.SQLiteException();
+			}
+
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -184,7 +199,10 @@ namespace InvMgmt
             itemForm.Reset();
         }
 
-        private void CmbSortByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		#endregion
+
+		#region item menu item list modification
+		private void CmbSortByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dgItemList.Items.Refresh();
 			categoryManager.RefreshInventoryItemCount();
@@ -249,10 +267,6 @@ namespace InvMgmt
 				DgItemList_CellTextboxEditEnding(x);
 		}
 
-		#endregion
-
-		#region item menu item list modification
-
 		private void DgItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgItemList.SelectedItem == null)
@@ -282,6 +296,11 @@ namespace InvMgmt
 
 			Console.WriteLine("item category changed");
 			HistoryRecord();
+		}
+		private void ShowItemGridTotalAmount_Click(object sender, RoutedEventArgs e)
+		{
+			
+			MessageBox.Show(categoryManager.CurrentSelectedCategory.GetAllItemTotals());
 		}
 
 		#endregion
@@ -457,7 +476,9 @@ namespace InvMgmt
 				MessageBox.Show("There are no entries to save");
 				return;
 			}
-			historyFileWriter.WriteToFile(content);
+			System.IO.Directory.CreateDirectory(settingManager.SaveFileManager.HistorySaveFolderPath);
+
+			historyFileWriter.WriteToFile(content, settingManager.SaveFileManager.HistorySaveFolderPath);
 			MessageBox.Show("Histories saved to PDF");
 		}
 
@@ -471,6 +492,18 @@ namespace InvMgmt
 				}
 			}
 			
+		}
+
+		private void ChangeHistorySavePath_Button_Click(object sender, RoutedEventArgs e)
+		{
+			settingManager.SaveFileManager.HistorySaveFolderPath = settingManager.GetPathFolderDialogHistory;
+		}
+
+		private void OpenHistorySavePath_Button_Click(object sender, RoutedEventArgs e)
+		{
+			System.IO.Directory.CreateDirectory(settingManager.SaveFileManager.HistorySaveFolderPath);
+
+			Process.Start(settingManager.SaveFileManager.HistorySaveFolderPath);
 		}
 	}
 }

@@ -46,5 +46,17 @@ namespace InvMgmt.Properties {
                 this["FirstLaunch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HistorySaveFolderPath {
+            get {
+                return ((string)(this["HistorySaveFolderPath"]));
+            }
+            set {
+                this["HistorySaveFolderPath"] = value;
+            }
+        }
     }
 }

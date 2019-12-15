@@ -35,5 +35,17 @@ namespace InvMgmt.Information.ViewModels
 			get { return manager.firstLaunch; }
 			set { manager.firstLaunch = value; }
 		}
+
+		public string HistorySaveFolderPath
+		{
+			get { return manager.historySaveFolderPath; }
+			set
+			{
+				if (manager.historySaveFolderPath.Equals(value))
+					return;
+				manager.historySaveFolderPath = value;
+				NotifyPropertyChanged("HistorySaveFolderPath");
+			}
+		}
 	}
 }

@@ -10,6 +10,7 @@ using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using MigraDoc.RtfRendering;
 using System.Diagnostics;
+using System.IO;
 
 namespace InvMgmt
 {
@@ -17,7 +18,7 @@ namespace InvMgmt
 	{
 
 
-		public void WriteToFile(string content)
+		public void WriteToFile(string content, string savePath)
 		{
 
 			//PdfDocument doc = new PdfDocument();
@@ -49,7 +50,14 @@ namespace InvMgmt
 			rend.Document = document;
 			rend.RenderDocument();
 
-			string fileName = DateTime.Today.ToString("d_MMM_yyyy") + "_History.pdf";
+			string fileName = savePath + "\\0_" + DateTime.Today.ToString("d_MMM_yyyy") + "_History.pdf";
+			int count = 0;
+			while (File.Exists(fileName))
+			{
+				count++;
+				fileName = savePath + "\\" + count + "_" + DateTime.Today.ToString("d_MMM_yyyy") + "_History.pdf";
+			}
+
 			rend.PdfDocument.Save(fileName);
 			Process.Start(fileName);
 		}

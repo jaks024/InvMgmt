@@ -8,10 +8,10 @@ namespace InvMgmt.Information.Objects
 {
 	public class HistoryItem
 	{
-		public int Id;
-		public DateTime Time;
-		public string Path;
-		public string Name;
-		public string Detail;
+		public int Id = 0;
+		public DateTime Time = DateTime.Now;
+		public string Path = "";
+		public string Name = "";
+		public string Detail = "";
 	}
 }
